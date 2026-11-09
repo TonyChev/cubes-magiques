@@ -106,7 +106,7 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
 .logo .block:nth-child(odd){transform:rotate(-5deg)}
 .logo .block:nth-child(even){transform:rotate(4deg) translateY(-4px)}
 .logo-sub{font-weight:800;font-size:clamp(1.8rem,5.4vmin,2.8rem);line-height:1;margin-left:8px;color:var(--grape);text-shadow:0 3px 0 var(--paper)}
-.games{flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:minmax(132px,1fr);gap:clamp(16px,2.6vw,26px)}
+.games{flex:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(132px,1fr);gap:clamp(16px,2.6vw,26px)}
 .tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px;border-radius:30px}
 .tile-art{font-family:var(--f-letter);font-weight:700;font-size:clamp(2.6rem,7.5vmin,4.6rem);line-height:1;letter-spacing:.02em}
 .tile-art.emo{font-size:clamp(2.6rem,8vmin,4.8rem);text-shadow:none}
@@ -187,6 +187,20 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
 .wcard:active{transform:translateY(6px);box-shadow:inset 0 -12px 0 var(--c),0 2px 0 var(--ink)}
 .wcard.right{background:var(--leaf);color:#fff;--c:var(--shade)}
 
+/* ---------- memory ---------- */
+.mem{min-height:100%;display:flex;align-items:center;justify-content:center}
+.mem-grid{display:grid;gap:clamp(10px,2vw,18px);width:100%;max-width:min(100%,var(--mw))}
+.card{position:relative;aspect-ratio:3/4;border:0;background:none;padding:0;cursor:pointer;perspective:800px}
+.card .in{position:absolute;inset:0;transition:transform .45s;transform-style:preserve-3d}
+.card.up .in,.card.done .in{transform:rotateY(180deg)}
+.card .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:4px solid var(--ink);border-radius:20px;box-shadow:0 7px 0 var(--ink);display:grid;place-items:center}
+.card .back{background:var(--c);background-image:radial-gradient(circle at 50% 50%,var(--shine) 0 22%,transparent 23%);color:var(--paper);font:800 clamp(2rem,6vmin,3.4rem)/1 var(--f-display)}
+.card .front{background:var(--paper);transform:rotateY(180deg);font-family:var(--f-letter);font-weight:700;line-height:1;font-size:clamp(2.4rem,8vmin,4.6rem);color:var(--c)}
+.card .front.emo{font-size:clamp(2.6rem,9vmin,5rem)}
+.card.done .front{background:var(--mat);box-shadow:0 7px 0 var(--ink),0 0 0 5px var(--leaf)}
+.card.done{animation:tada .8s;cursor:default}
+@media (prefers-reduced-motion:reduce){.card .in{transition:none}}
+
 /* ---------- autocollants ---------- */
 .stickers{display:flex;flex-direction:column;gap:20px}
 .meter{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;background:var(--paper);border:4px solid var(--ink);border-radius:999px;box-shadow:0 6px 0 var(--ink);padding:8px 18px;align-self:center}
@@ -250,6 +264,7 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
 }
 @media (max-width:640px){
   .games{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:minmax(128px,auto)}
+  .card .face{border-radius:16px;border-width:3px}
   .round{width:56px;height:56px;font-size:1.6rem}
   .stars{font-size:1.3rem;padding:2px 10px 2px 6px}
   .stars .s{font-size:1.4rem}
@@ -308,15 +323,34 @@ const $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const stage=$('#stage'), bubble=$('#bubble'), homeBtn=$('#homeBtn');
 
 /* ================= données ================= */
-// [lettre, nom prononcé, mot, image]
+// [lettre, nom prononcé, [[mot, image], ...]]
 const ALPHA=[
- ['A','a','Abeille','🐝'],['B','bé','Ballon','🎈'],['C','cé','Carotte','🥕'],['D','dé','Dauphin','🐬'],
- ['E','eu','Éléphant','🐘'],['F','èf','Fraise','🍓'],['G','gé','Gâteau','🎂'],['H','ache','Hibou','🦉'],
- ['I','i','Île','🏝️'],['J','ji','Jus','🧃'],['K','ka','Koala','🐨'],['L','èl','Lion','🦁'],
- ['M','èm','Mouton','🐑'],['N','ène','Nuage','☁️'],['O','o','Orange','🍊'],['P','pé','Poisson','🐟'],
- ['Q','ku','Quilles','🎳'],['R','èr','Renard','🦊'],['S','èss','Soleil','☀️'],['T','té','Tortue','🐢'],
- ['U','u','Usine','🏭'],['V','vé','Vache','🐄'],['W','double vé','Wagon','🚃'],['X','ixe','Xylophone','🎼'],
- ['Y','i grec','Yoyo','🪀'],['Z','zèd','Zèbre','🦓']
+ ['A','a',[['Abeille','🐝'],['Avion','✈️'],['Ananas','🍍'],['Arbre','🌳'],['Araignée','🕷️'],['Arc-en-ciel','🌈'],['Ange','👼']]],
+ ['B','bé',[['Ballon','🎈'],['Banane','🍌'],['Bateau','⛵'],['Bébé','👶'],['Biberon','🍼'],['Bus','🚌'],['Baleine','🐋']]],
+ ['C','cé',[['Carotte','🥕'],['Canard','🦆'],['Camion','🚚'],['Cochon','🐷'],['Cadeau','🎁'],['Crocodile','🐊'],['Cœur','❤️']]],
+ ['D','dé',[['Dauphin','🐬'],['Dragon','🐉'],['Dinosaure','🦕'],['Dé','🎲'],['Dent','🦷'],['Donut','🍩']]],
+ ['E','eu',[['Éléphant','🐘'],['Étoile','⭐'],['Escargot','🐌'],['Écureuil','🐿️'],['Éponge','🧽']]],
+ ['F','èf',[['Fraise','🍓'],['Fleur','🌸'],['Fusée','🚀'],['Fromage','🧀'],['Feu','🔥'],['Fourmi','🐜'],['Frite','🍟']]],
+ ['G','gé',[['Gâteau','🎂'],['Glace','🍦'],['Gorille','🦍'],['Grenouille','🐸'],['Guitare','🎸'],['Gant','🧤']]],
+ ['H','ache',[['Hibou','🦉'],['Hérisson','🦔'],['Hélicoptère','🚁'],['Hamburger','🍔'],['Hippopotame','🦛'],['Hamster','🐹']]],
+ ['I','i',[['Île','🏝️'],['Iguane','🦎'],['Image','🖼️']]],
+ ['J','ji',[['Jus','🧃'],['Jouet','🧸'],['Jongleur','🤹'],['Jaguar','🐆'],['Journal','📰']]],
+ ['K','ka',[['Koala','🐨'],['Kangourou','🦘'],['Kiwi','🥝'],['Kayak','🛶'],['Kimono','👘']]],
+ ['L','èl',[['Lion','🦁'],['Lune','🌙'],['Lapin','🐰'],['Lait','🥛'],['Livre','📕'],['Licorne','🦄'],['Loup','🐺']]],
+ ['M','èm',[['Mouton','🐑'],['Maison','🏠'],['Moto','🏍️'],['Main','✋'],['Melon','🍈'],['Montagne','⛰️'],['Muffin','🧁']]],
+ ['N','ène',[['Nuage','☁️'],['Nez','👃'],['Nid','🪺'],['Neige','❄️'],['Note','🎵'],['Nounours','🧸']]],
+ ['O','o',[['Orange','🍊'],['Ours','🐻'],['Olive','🫒'],['Os','🦴'],['Orage','⛈️']]],
+ ['P','pé',[['Poisson','🐟'],['Pomme','🍎'],['Pingouin','🐧'],['Papillon','🦋'],['Pizza','🍕'],['Panda','🐼'],['Poule','🐔']]],
+ ['Q','ku',[['Quilles','🎳'],['Quatre','4️⃣']]],
+ ['R','èr',[['Renard','🦊'],['Robot','🤖'],['Requin','🦈'],['Raisin','🍇'],['Rose','🌹'],['Roi','🤴']]],
+ ['S','èss',[['Soleil','☀️'],['Serpent','🐍'],['Sapin','🎄'],['Souris','🐭'],['Saxophone','🎷'],['Singe','🐒']]],
+ ['T','té',[['Tortue','🐢'],['Tomate','🍅'],['Train','🚂'],['Tigre','🐯'],['Tambour','🥁'],['Tracteur','🚜'],['Tasse','☕']]],
+ ['U','u',[['Usine','🏭'],['Un','1️⃣'],['Ustensiles','🍴']]],
+ ['V','vé',[['Vache','🐄'],['Vélo','🚲'],['Voiture','🚗'],['Volcan','🌋'],['Violon','🎻'],['Valise','🧳']]],
+ ['W','double vé',[['Wagon','🚃'],['Wapiti','🦌']]],
+ ['X','ixe',[['Xylophone','🎼']]],
+ ['Y','i grec',[['Yoyo','🪀'],['Yeux','👀'],['Yack','🐃']]],
+ ['Z','zèd',[['Zèbre','🦓'],['Zéro','0️⃣']]]
 ];
 const NUM=['zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix'];
 // [image, singulier, pluriel, genre]
@@ -339,11 +373,13 @@ const PRAISE=['Bravo !','Super !','Génial !','Très bien !','Youpi !','Magnifiq
 const COLS=['--tomato','--tangerine','--leaf','--lagoon','--grape','--bubble'];
 const GAMES=[
  {id:'abc',name:"L'alphabet",art:'<span class="tile-art">ABC</span>',c:'--tomato'},
- {id:'find',name:'Trouve la lettre',art:'<span class="tile-art emo">🔍</span>',c:'--tangerine'},
- {id:'syll',name:'Les syllabes',art:'<span class="tile-art">MA</span>',c:'--grape'},
+ {id:'find',name:'Trouve la lettre',art:'<span class="tile-art emo">🔍</span>',c:'--lagoon'},
+ {id:'syll',name:'Les syllabes',art:'<span class="tile-art">MA</span>',c:'--tangerine'},
  {id:'read',name:'Lire des mots',art:'<span class="tile-art emo">📖</span>',c:'--bubble'},
  {id:'numbers',name:'Les chiffres',art:'<span class="tile-art">123</span>',c:'--leaf'},
- {id:'count',name:'Compter',art:'<span class="tile-art emo trio">🍎🍎🍎</span>',c:'--lagoon'}
+ {id:'count',name:'Compter',art:'<span class="tile-art emo trio">🍎🍎🍎</span>',c:'--grape'},
+ {id:'memory',name:'Memory',art:'<span class="tile-art emo">🃏</span>',c:'--tomato'},
+ {id:'stickers',name:'Mes autocollants',art:'<span class="tile-art emo">🎁</span>',c:'--sun'}
 ];
 
 /* ================= mémoire (ce navigateur seulement) ================= */
@@ -356,8 +392,14 @@ const state={
   screen:'splash',token:0,lastPrompt:''
 };
 function save(){try{localStorage.setItem(KEY,JSON.stringify({stars:state.stars,settings:state.settings}))}catch(e){}}
-const LV={find:0,count:0,read:0};
+const LV={find:0,count:0,read:0,mem:0};
 let pendingSticker=false,lastPick={};
+const bags={};
+function fromBag(key,list){
+  let b=bags[key];
+  if(!b||!b.length){b=bags[key]=shuffle(list);if(b.length>1&&b[b.length-1]===lastPick[key]){b.unshift(b.pop())}}
+  const x=b.pop();lastPick[key]=x;return x;
+}
 
 /* ================= utilitaires ================= */
 const rnd=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
@@ -518,7 +560,7 @@ SCREENS.home=function(){
     <div class="logo">${'CUBES'.split('').map((l,i)=>`<button class="block" style="--c:${col(i)}" data-l="${i}" aria-label="Lettre ${l}">${l}</button>`).join('')}<span class="logo-sub">magiques</span></div>
     <div class="games">${GAMES.map(g=>`<button class="block tile" style="--c:var(${g.c})" data-go="${g.id}">${g.art}<span class="tile-name">${g.name}</span></button>`).join('')}</div>
     <div class="home-foot">
-      <button class="block chest" data-go="stickers"><span class="e" aria-hidden="true">🎁</span><span>Mes autocollants</span></button>
+      <span></span>
       <button class="gear" id="gear" aria-label="Espace parents : maintenir appuyé 2 secondes"><span class="g" aria-hidden="true">⚙️</span><span>Parents : maintenir</span></button>
     </div>
   </div>`;
@@ -542,9 +584,11 @@ SCREENS.abc=function(){
     <button class="showcase" id="show" aria-label="Écouter encore"></button>
     <div class="letter-grid">${ALPHA.map((a,i)=>`<button class="block" style="--c:${col(i)}" data-i="${i}" aria-label="Lettre ${a[0]}">${label(a[0])}</button>`).join('')}</div>
   </div>`;
-  const show=$('#show');let cur=0;
+  const show=$('#show');let cur=0,curWord=null;
   const paint=(i,speak)=>{
-    cur=i;const [L,name,word,emo]=ALPHA[i];
+    cur=i;const [L,name,list]=ALPHA[i];
+    if(speak!=='again'||!curWord)curWord=fromBag('abc'+L,list);
+    const [word,emo]=curWord;
     const w=m==='upper'?word.toUpperCase():m==='lower'?word.toLowerCase():word;
     show.style.setProperty('--c',col(i));
     show.innerHTML=`<span class="big-letter">${L}<span class="low">${L.toLowerCase()}</span></span><span class="pic">${emo}</span><span class="word"><b>${w[0]}</b>${w.slice(1)}</span>`;
@@ -552,8 +596,8 @@ SCREENS.abc=function(){
     $$('.letter-grid .block',stage).forEach((b,k)=>b.classList.toggle('sel',k===i));
     if(speak)say(`${name} ... comme ${word.toLowerCase()} !`);
   };
-  $$('.letter-grid .block',stage).forEach(b=>b.onclick=()=>{sfx.pop();paint(+b.dataset.i,true)});
-  show.onclick=()=>paint(cur,true);
+  $$('.letter-grid .block',stage).forEach(b=>b.onclick=()=>{sfx.pop();curWord=null;paint(+b.dataset.i,true)});
+  show.onclick=()=>paint(cur,'again');
   paint(0,false);
   setPrompt("Touche une lettre !","L'alphabet ! Touche une lettre pour l'écouter.");
 };
@@ -670,7 +714,7 @@ SCREENS.syll=function(){
 /* ---------- lire ---------- */
 SCREENS.read=function(first){
   const pool=LV.read<5?WORDS.filter(w=>w[0].length<=4):WORDS;
-  const target=pickFresh(pool,'read');
+  const target=fromBag(LV.read<5?'readShort':'readAll',pool);
   const others=shuffle(WORDS.filter(w=>w!==target&&w[1]!==target[1]&&w[0][0]!==target[0][0])).slice(0,2);
   const opts=shuffle([target,...others]);
   const c=state.settings.case;
@@ -689,6 +733,41 @@ SCREENS.read=function(first){
     else{
       wrong++;lose(b,`Non, ici c'est écrit ${o[0]}. ${q}`);
       if(wrong>=2)$(`.wcard[data-i="${opts.indexOf(target)}"]`,stage).classList.add('hint');
+    }
+  });
+};
+
+/* ---------- memory ---------- */
+SCREENS.memory=function(first){
+  const pairs=LV.mem>=4?6:LV.mem>=2?4:3;
+  const m=roundCase();
+  const pool=[
+    ...shuffle(ALPHA).slice(0,4).map(a=>({k:'L'+a[0],show:caseIt(a[0],m),say:a[1],emo:false})),
+    ...shuffle([1,2,3,4,5,6,7,8,9]).slice(0,3).map(n=>({k:'N'+n,show:String(n),say:NUM[n],emo:false})),
+    ...shuffle(WORDS).slice(0,5).map(w=>({k:'W'+w[0],show:w[1],say:w[0],emo:true}))
+  ];
+  const chosen=shuffle(pool).slice(0,pairs);
+  const deck=shuffle(chosen.flatMap((c,i)=>[{...c,col:i},{...c,col:i}]));
+  const cols=pairs===3?3:4;
+  stage.innerHTML=`<div class="mem"><div class="mem-grid" style="grid-template-columns:repeat(${cols},minmax(0,1fr));--mw:${cols*175}px">${deck.map((c,i)=>`<button class="card" data-i="${i}" aria-label="Carte" style="--c:${col(c.col)}"><span class="in"><span class="face back">?</span><span class="face front ${c.emo?'emo':''}">${c.show}</span></span></button>`).join('')}</div></div>`;
+  setPrompt('Retrouve les paires !',(first?'Memory ! ':'')+'Retourne deux cartes pareilles !');
+  const cards=$$('.card',stage);let open=[],busy=false,found=0;
+  cards.forEach(b=>b.onclick=()=>{
+    if(busy||b.classList.contains('up')||b.classList.contains('done'))return;
+    const c=deck[+b.dataset.i];
+    b.classList.add('up');tone(560+open.length*120,.1,'triangle',.1);say(c.say);
+    open.push(b);
+    if(open.length<2)return;
+    const [a1,a2]=open;open=[];busy=true;
+    const same=deck[+a1.dataset.i].k===deck[+a2.dataset.i].k;
+    if(same){
+      setTimeout(()=>{
+        a1.classList.replace('up','done');a2.classList.replace('up','done');found++;busy=false;
+        if(found===pairs){LV.mem++;win(a2,'Tu as trouvé toutes les paires !',()=>SCREENS.memory())}
+        else{sfx.win();const r=a2.getBoundingClientRect();confetti(r.left+r.width/2,r.top+r.height/2,40);say(pick(['Une paire !','Bravo, pareil !','Super, une paire !']))}
+      },500);
+    }else{
+      setTimeout(()=>{sfx.oops();a1.classList.remove('up');a2.classList.remove('up');busy=false},1300);
     }
   });
 };
@@ -729,11 +808,12 @@ SCREENS.parents=function(){
       <p>${state.stars} étoile${state.stars>1?'s':''} gagnée${state.stars>1?'s':''} · ${got} autocollant${got>1?'s':''} sur ${STICKERS.length}. Un autocollant toutes les 5 étoiles. Les progrès restent dans ce navigateur, sur cet appareil.</p>
       <div class="confirm" id="reset"><button class="pbtn" id="r1">Remettre à zéro</button></div></section>
     <section class="pcard"><h3>Les jeux</h3><ul>
-      <li><b>L'alphabet</b> : chaque lettre avec son nom, un mot et une image (« B comme ballon »).</li>
+      <li><b>L'alphabet</b> : chaque lettre avec son nom, un mot et une image (« B comme ballon »). Le mot change à chaque fois : tous les mots d'une lettre passent avant qu'un mot revienne.</li>
       <li><b>Trouve la lettre</b> : la voix demande une lettre, l'enfant la touche parmi 3, puis 4 après quelques réussites.</li>
       <li><b>Les syllabes</b> : une consonne bleue + une voyelle rouge = une syllabe entendue (M + A = MA). C'est la base de la méthode syllabique.</li>
       <li><b>Lire des mots</b> : reconnaître un mot écrit parmi trois. Mots courts au début, puis plus longs.</li>
       <li><b>Les chiffres</b> : de 1 à 10, avec des objets qui apparaissent un par un en comptant.</li>
+      <li><b>Memory</b> : retrouver les paires (lettres, chiffres, images). Chaque carte retournée est dite à voix haute. 3 paires au début, puis 4, puis 6.</li>
       <li><b>Compter</b> : toucher les objets pour les compter, puis choisir le bon nombre. Jusqu'à 4 au début, puis jusqu'à 10.</li>
     </ul><p>Pas de chrono, pas de points perdus : une erreur donne un indice, et après deux erreurs la bonne réponse clignote.</p></section>
   </div>`;
