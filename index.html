@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-title" content="Cubes Magiques">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect x='6' y='6' width='88' height='88' rx='20' fill='%23FF5A4E' stroke='%232B2459' stroke-width='8'/%3E%3Ctext x='50' y='72' font-size='60' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3EA%3C/text%3E%3C/svg%3E">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%}img{max-width:100%}</style>
-<title>Les Cubes Magiques</title>
+<title>Les Jeux d'Alba et Mia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Baloo+2:wght@600;800&display=swap">
@@ -33,6 +33,11 @@
   --shade:rgba(0,0,0,.14);
   --shine:rgba(255,255,255,.38);
   --veil:rgba(43,36,89,.6);
+  /* Mia : nuit bleu canard + or */
+  --m-night:#0F2438;--m-panel:#173A55;--m-panel2:#1F4A6B;--m-shadow:#071522;
+  --m-gold:#FFC94A;--m-gold-d:#D9921A;--m-gold-l:#FFE9A6;--m-cream:#FFF6E0;
+  --m-coral:#FF7A6B;--m-mint:#3DD6A3;--m-sky:#5CB8FF;--m-lilac:#B996FF;
+  --m-line:rgba(255,246,224,.16);--m-glow:rgba(255,201,74,.22);--m-star:rgba(255,246,224,.10);
   --f-display:"Baloo 2","Arial Rounded MT Bold","Trebuchet MS",system-ui,sans-serif;
   --f-letter:"Andika","Century Gothic","Trebuchet MS",system-ui,sans-serif;
   color-scheme:light;
@@ -273,6 +278,126 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
 }
 @media (max-width:420px){ .owl{display:none} .bubble::before,.bubble::after{display:none} }
 
+/* ---------- écran « Qui joue ? » ---------- */
+.splash{justify-content:flex-start;overflow-y:auto}
+.who-inner{margin:auto;width:100%;display:flex;flex-direction:column;align-items:center;gap:clamp(20px,4vh,36px)}
+.who-title{margin:0;font-weight:800;font-size:clamp(2.2rem,8vmin,3.6rem);line-height:1;color:var(--ink);text-shadow:0 4px 0 var(--paper)}
+.who-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,3vw,30px);width:100%;max-width:880px}
+.who{border:5px solid var(--ink);border-radius:36px;box-shadow:0 10px 0 var(--ink);padding:24px 16px 28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;cursor:pointer;min-height:clamp(210px,42vh,380px);transition:transform .08s,box-shadow .08s;font-family:var(--f-display)}
+.who:active{transform:translateY(6px);box-shadow:0 4px 0 var(--ink)}
+.who.alba{background:var(--paper);color:var(--ink)}
+.who.mia{background:var(--m-night);color:var(--m-cream);background-image:radial-gradient(ellipse 90% 60% at 50% 120%,var(--m-glow),transparent 70%)}
+.who .av{font-size:clamp(3.4rem,11vmin,5.4rem);line-height:1}
+.who .nm{display:flex;gap:6px;align-items:center}
+.who.alba .nm .block{width:clamp(50px,10vmin,74px);aspect-ratio:1;font-size:clamp(1.9rem,5.8vmin,2.9rem);border-radius:14px;box-shadow:0 5px 0 var(--ink),inset 0 -5px 0 var(--shade),inset 0 4px 0 var(--shine)}
+.who.alba .nm .block:nth-child(odd){transform:rotate(-5deg)}
+.who.alba .nm .block:nth-child(even){transform:rotate(4deg)}
+.who.mia .nm{font-weight:800;font-size:clamp(3rem,10vmin,4.6rem);letter-spacing:.14em;color:var(--m-gold);line-height:1;text-shadow:0 4px 0 var(--m-gold-d)}
+.who .tg{font-weight:700;font-size:clamp(1.05rem,2.6vw,1.3rem);opacity:.85}
+@media (max-width:600px){.who-grid{grid-template-columns:minmax(0,1fr)}.who{min-height:0}}
+.swap{background:none;border:0;cursor:pointer;color:var(--ink-soft);font-family:var(--f-display);font-weight:700;font-size:1rem;padding:6px 8px}
+
+/* ---------- MIA : Le Grand Quiz ---------- */
+.mia-root{position:fixed;inset:0;z-index:30;overflow-y:auto;overflow-x:hidden;color:var(--m-cream);font-family:var(--f-display);
+  background:radial-gradient(ellipse 80% 45% at 50% 112%,var(--m-glow),transparent 70%) fixed,radial-gradient(circle at 22px 22px,var(--m-star) 1.4px,transparent 2.4px) 0 0/46px 46px,var(--m-night);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:calc(12px + env(safe-area-inset-top,0px)) calc(20px + env(safe-area-inset-bottom,0px))}
+.mia-root button{font-family:inherit}
+.m-btn{border:0;border-radius:999px;cursor:pointer;font-family:var(--f-display);font-weight:800;font-size:1.2rem;line-height:1.2;padding:12px 26px;background:var(--m-panel2);color:var(--m-cream);box-shadow:0 5px 0 var(--m-shadow);transition:transform .08s,box-shadow .08s,opacity .2s}
+.m-btn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--m-shadow)}
+.m-btn.gold{background:var(--m-gold);color:var(--m-night);box-shadow:0 5px 0 var(--m-gold-d)}
+.m-btn.big{font-size:clamp(1.5rem,5vmin,2.1rem);padding:14px 48px}
+.m-btn:disabled{opacity:.4;cursor:default;transform:none}
+.m-link{background:none;border:0;color:var(--m-cream);opacity:.85;font-weight:700;font-size:1.05rem;cursor:pointer;padding:8px 12px;text-decoration:underline;text-underline-offset:4px}
+.mia-root :focus-visible{outline:4px dashed var(--m-gold);outline-offset:4px}
+
+.mm{min-height:100%;max-width:640px;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.6vh,24px);text-align:center}
+.mm-coin{width:clamp(96px,22vmin,150px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:clamp(2.8rem,9vmin,4.4rem);line-height:1;color:var(--m-gold-d);
+  background:radial-gradient(circle at 35% 30%,var(--m-gold-l),var(--m-gold) 50%,var(--m-gold-d));box-shadow:inset 0 0 0 7px var(--m-gold-d),inset 0 0 0 11px var(--m-gold),0 8px 0 var(--m-shadow);animation:coin 4s ease-in-out infinite}
+.mm-coin.big{width:clamp(130px,30vmin,200px)}
+.mm h1{margin:0;font-weight:800;font-size:clamp(2.4rem,8vmin,3.8rem);line-height:1;color:var(--m-gold);text-wrap:balance}
+.mm h1 span{display:block;color:var(--m-cream);font-size:.62em;margin-top:6px}
+.mm-sub{margin:0;font-family:var(--f-letter);font-size:1.12rem;line-height:1.4;opacity:.9;max-width:34ch}
+.mm-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%}
+.stat{background:var(--m-panel);border:2px solid var(--m-line);border-radius:18px;padding:10px 6px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.stat b{font-size:clamp(1.05rem,3.6vw,1.5rem);color:var(--m-gold);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.stat span{font-size:.92rem;opacity:.8}
+.m-toggle{display:flex;align-items:center;gap:12px;background:var(--m-panel);border:2px solid var(--m-line);border-radius:999px;padding:8px 18px 8px 8px;color:var(--m-cream);cursor:pointer;font-weight:700;font-size:1.05rem}
+.m-toggle .sw{flex:none;width:52px;height:30px;border-radius:999px;background:var(--m-shadow);position:relative;transition:background .2s}
+.m-toggle .sw::after{content:"";position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--m-cream);transition:transform .2s}
+.m-toggle[aria-pressed="true"] .sw{background:var(--m-mint)}
+.m-toggle[aria-pressed="true"] .sw::after{transform:translateX(22px)}
+.mm-rules{background:var(--m-panel);border:2px solid var(--m-line);border-radius:20px;padding:12px 18px;text-align:left;font-family:var(--f-letter);font-size:1rem;line-height:1.45}
+.mm-rules p{margin:6px 0}
+.mm-rules b{color:var(--m-gold)}
+
+.mg{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.mg-top{display:flex;align-items:center;gap:12px}
+.m-round{flex:none;width:52px;height:52px;border-radius:50%;border:2px solid var(--m-line);background:var(--m-panel);color:var(--m-cream);font-size:1.4rem;cursor:pointer;display:grid;place-items:center;padding:0}
+.mg-prog{flex:1;min-width:0;text-align:center;font-weight:700;font-size:clamp(1rem,3vw,1.3rem);line-height:1.2}
+.mg-prog b{color:var(--m-gold);font-variant-numeric:tabular-nums}
+.pips{display:none;gap:4px;justify-content:center}
+.pips i{width:clamp(10px,4.4vw,18px);height:10px;border-radius:5px;background:var(--m-panel2)}
+.pips i.safe{box-shadow:0 0 0 2px var(--m-gold)}
+.pips i.done{background:var(--m-mint)}
+.pips i.cur{background:var(--m-gold)}
+.mg-main{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:22px;align-items:start}
+.mg-play{display:flex;flex-direction:column;gap:16px;min-width:0}
+.mg-cat{align-self:center;background:var(--m-panel);border:2px solid var(--m-line);border-radius:999px;padding:4px 16px;font-weight:700;font-size:1rem}
+.mg-q{background:linear-gradient(var(--m-panel2),var(--m-panel));border:3px solid var(--m-gold);border-radius:26px;padding:clamp(16px,3vw,26px);text-align:center;box-shadow:0 8px 0 var(--m-shadow)}
+.mg-q p{margin:0;font-family:var(--f-letter);font-weight:700;font-size:clamp(1.3rem,3.6vw,1.85rem);line-height:1.3;text-wrap:balance;overflow-wrap:anywhere}
+.mg-big{font-family:var(--f-letter);font-weight:700;font-size:clamp(2rem,7vmin,3.4rem);line-height:1.25;margin-bottom:10px;color:var(--m-gold);overflow-wrap:anywhere}
+.mg-ans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ans{display:flex;align-items:center;gap:12px;min-height:68px;padding:10px 14px;border-radius:20px;border:3px solid var(--m-line);background:var(--m-panel);color:var(--m-cream);font-family:var(--f-letter);font-weight:700;font-size:clamp(1.1rem,2.8vw,1.35rem);line-height:1.25;text-align:left;cursor:pointer;box-shadow:0 5px 0 var(--m-shadow);transition:transform .08s,background .2s,color .2s}
+.ans:active{transform:translateY(3px)}
+.ans .L{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--lc);color:var(--m-night);font-family:var(--f-display);font-weight:800;font-size:1.25rem}
+.ans .t{min-width:0;overflow-wrap:anywhere}
+.ans:nth-child(1){--lc:var(--m-coral)}
+.ans:nth-child(2){--lc:var(--m-sky)}
+.ans:nth-child(3){--lc:var(--m-mint)}
+.ans:nth-child(4){--lc:var(--m-lilac)}
+.ans.sel{background:var(--m-gold);color:var(--m-night);border-color:var(--m-gold)}
+.ans.wait{animation:mblink .5s steps(2) infinite}
+.ans.good{background:var(--m-mint);color:var(--m-night);border-color:var(--m-mint);animation:tada .8s}
+.ans.bad{background:var(--m-coral);color:var(--m-night);border-color:var(--m-coral);animation:shake .5s}
+.ans.gone{visibility:hidden}
+.ans:disabled{cursor:default}
+.mg-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.jokers{display:flex;gap:10px}
+.joker{position:relative;width:64px;height:64px;border-radius:50%;border:3px solid var(--m-gold);background:var(--m-panel2);color:var(--m-cream);cursor:pointer;display:grid;place-items:center;line-height:1;font-weight:800;font-size:1rem;padding:0}
+.joker .e{font-size:1.6rem}
+.joker:disabled{opacity:.35;cursor:default}
+.joker:disabled::after{content:"";position:absolute;left:8px;right:8px;top:50%;height:4px;margin-top:-2px;background:var(--m-coral);transform:rotate(-35deg);border-radius:2px}
+.owlsay{display:flex;gap:12px;align-items:center;background:var(--m-panel);border:2px solid var(--m-line);border-radius:18px;padding:10px 16px;font-family:var(--f-letter);font-size:1.15rem;line-height:1.35;margin-bottom:12px}
+.owlsay .e{font-size:2.6rem;line-height:1}
+.vote{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;height:150px;background:var(--m-panel);border:2px solid var(--m-line);border-radius:18px;padding:12px 12px 8px;margin-bottom:12px}
+.vbar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-height:0;font-weight:800;font-variant-numeric:tabular-nums}
+.vbar i{display:block;width:62%;height:var(--h);background:var(--m-gold);border-radius:8px 8px 3px 3px;max-height:calc(100% - 44px);animation:grow .8s ease-out}
+.vbar b{color:var(--m-gold)}
+.fb{background:var(--m-panel);border:3px solid var(--m-mint);border-radius:22px;padding:16px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;font-family:var(--f-letter);font-size:1.15rem;line-height:1.4}
+.fb.no{border-color:var(--m-coral)}
+.fb h3{margin:0;font-family:var(--f-display);font-size:1.7rem;line-height:1.1;color:var(--m-gold)}
+.fb p{margin:0;max-width:60ch}
+.mstop{display:flex;justify-content:center}
+.mconfirm{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;text-align:center;font-family:var(--f-letter);font-size:1.1rem}
+.ladder{display:flex;flex-direction:column;gap:3px;background:var(--m-panel);border:2px solid var(--m-line);border-radius:22px;padding:10px;position:sticky;top:0}
+.rung{display:flex;justify-content:space-between;gap:8px;padding:3px 12px;border-radius:999px;font-weight:700;font-size:1rem;line-height:1.5;font-variant-numeric:tabular-nums}
+.rung .n{opacity:.7;width:1.6em}
+.rung.safe{color:var(--m-gold)}
+.rung.done{opacity:.45}
+.rung.cur{background:var(--m-gold);color:var(--m-night);opacity:1}
+.mr{min-height:100%;max-width:600px;margin:0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center}
+.mr h2{margin:0;font-weight:800;font-size:clamp(2rem,7vmin,3.2rem);line-height:1.1;color:var(--m-gold);text-wrap:balance}
+.mr p{margin:0;font-family:var(--f-letter);font-size:1.2rem;line-height:1.4}
+.mr .amount{font-weight:800;font-size:clamp(2.8rem,11vmin,4.8rem);line-height:1;font-variant-numeric:tabular-nums}
+.mr-total{opacity:.85}
+.mr-total b{color:var(--m-gold)}
+@media (max-width:860px){.mg-main{grid-template-columns:minmax(0,1fr)}.ladder{display:none}.pips{display:flex}}
+@media (max-width:560px){.mg-ans{grid-template-columns:minmax(0,1fr)}.ans{min-height:58px}.m-round{width:46px;height:46px}}
+@keyframes mblink{0%{background:var(--m-gold)}100%{background:var(--m-gold-d)}}
+@keyframes coin{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.82)}}
+@keyframes grow{from{height:0}}
+
 /* ---------- animations ---------- */
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-6px) rotate(3deg)}}
 @keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
@@ -291,7 +416,7 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
 
 </head>
 <body>
-<div id="app">
+<div id="app" hidden>
   <header class="bar">
     <button class="round invisible" id="homeBtn" aria-label="Retour à l'accueil">🏠</button>
     <button class="talk" id="talk" aria-label="Écouter encore">
@@ -304,15 +429,23 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
 </div>
 
 <div class="splash" id="splash">
-  <div class="splash-owl" aria-hidden="true">🦉</div>
-  <div class="logo" aria-label="Les Cubes Magiques">
-    <span class="block" style="--c:var(--tomato)">C</span><span class="block" style="--c:var(--tangerine)">U</span><span class="block" style="--c:var(--leaf)">B</span><span class="block" style="--c:var(--lagoon)">E</span><span class="block" style="--c:var(--grape)">S</span>
-    <span class="logo-sub">magiques</span>
+  <div class="who-inner">
+    <h1 class="who-title">Qui joue ?</h1>
+    <div class="who-grid">
+      <button class="who alba" id="whoAlba" aria-label="Alba : les Cubes Magiques">
+        <span class="av" aria-hidden="true">🦉</span>
+        <span class="nm" aria-hidden="true"><span class="block" style="--c:var(--tomato)">A</span><span class="block" style="--c:var(--tangerine)">L</span><span class="block" style="--c:var(--leaf)">B</span><span class="block" style="--c:var(--lagoon)">A</span></span>
+        <span class="tg">Les Cubes Magiques</span>
+      </button>
+      <button class="who mia" id="whoMia" aria-label="Mia : le Grand Quiz">
+        <span class="av" aria-hidden="true">🏆</span>
+        <span class="nm" aria-hidden="true">MIA</span>
+        <span class="tg">Le Grand Quiz</span>
+      </button>
+    </div>
   </div>
-  <button class="block play" id="play" aria-label="Jouer">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3.5v17a1 1 0 0 0 1.5.86l14-8.5a1 1 0 0 0 0-1.72l-14-8.5A1 1 0 0 0 6 3.5z" fill="#fff" stroke="#2B2459" stroke-width="1.6" stroke-linejoin="round"/></svg>
-  </button>
 </div>
+<div class="mia-root" id="mia" hidden></div>
 <canvas id="confetti" aria-hidden="true"></canvas>
 
 <script>
@@ -560,7 +693,7 @@ SCREENS.home=function(){
     <div class="logo">${'CUBES'.split('').map((l,i)=>`<button class="block" style="--c:${col(i)}" data-l="${i}" aria-label="Lettre ${l}">${l}</button>`).join('')}<span class="logo-sub">magiques</span></div>
     <div class="games">${GAMES.map(g=>`<button class="block tile" style="--c:var(${g.c})" data-go="${g.id}">${g.art}<span class="tile-name">${g.name}</span></button>`).join('')}</div>
     <div class="home-foot">
-      <span></span>
+      <button class="swap" id="swap">👋 Qui joue ?</button>
       <button class="gear" id="gear" aria-label="Espace parents : maintenir appuyé 2 secondes"><span class="g" aria-hidden="true">⚙️</span><span>Parents : maintenir</span></button>
     </div>
   </div>`;
@@ -572,7 +705,8 @@ SCREENS.home=function(){
   gear.addEventListener('pointerdown',e=>{e.preventDefault();gear.classList.add('holding');gt=setTimeout(()=>{stop();go('parents')},2000)});
   ['pointerup','pointerleave','pointercancel'].forEach(ev=>gear.addEventListener(ev,stop));
   gear.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go('parents')}});
-  setPrompt('Choisis un jeu !',greeted?'Choisis un jeu !':'Bonjour ! Choisis un jeu !');
+  $('#swap').onclick=()=>{sfx.pop();showPicker()};
+  setPrompt('Choisis un jeu !',greeted?'Choisis un jeu !':'Bonjour Alba ! Choisis un jeu !');
   greeted=true;
 };
 
@@ -841,12 +975,565 @@ document.addEventListener('gesturestart',e=>e.preventDefault());
 let wake=null;
 async function keepAwake(){try{if('wakeLock' in navigator)wake=await navigator.wakeLock.request('screen')}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&state.screen!=='splash')keepAwake()});
-$('#play').onclick=()=>{
+function showPicker(){
+  state.token++;hush();closeModal();state.screen='splash';
+  $('#app').hidden=true;$('#mia').hidden=true;$('#splash').hidden=false;
+}
+$('#whoAlba').onclick=()=>{
   audio();sfx.win();
-  $('#splash').hidden=true;
-  keepAwake();
+  $('#splash').hidden=true;$('#app').hidden=false;
+  keepAwake();greeted=false;
   go('home');
 };
+$('#whoMia').onclick=()=>{
+  audio();sfx.win();
+  $('#splash').hidden=true;state.screen='mia';
+  keepAwake();
+  window.MIA.open();
+};
+window.KIT={say,hush,sfx,tone,confetti,shuffle,pick,audio,restart,showPicker,WORDS};
+})();
+</script>
+<script>
+/* =====================================================================
+   MIA — Le Grand Quiz (7 ans)
+   Questions générées à partir de modèles + banque écrite à la main.
+   ===================================================================== */
+(function(){
+"use strict";
+const K=window.KIT;
+const {say,hush,sfx,tone,confetti,shuffle,pick}=K;
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const root=$('#mia');
+const R=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const uniq=a=>[...new Set(a)];
+const cap=s=>{s=String(s);return s.charAt(0).toUpperCase()+s.slice(1)};
+
+function mk(cat,q,good,bads,opt){
+  good=String(good);
+  const b=uniq(bads.filter(x=>x!==undefined&&x!==null).map(String)).filter(x=>x!==good&&x!=='');
+  if(b.length<3)return null;
+  const answers=shuffle([good,...shuffle(b).slice(0,3)]);
+  return Object.assign({cat,q,answers,correct:answers.indexOf(good)},opt||{});
+}
+const near=(n,ds,min)=>uniq(ds.map(d=>n+d)).filter(x=>x!==n&&x>=(min===undefined?0:min));
+
+const CAT={
+  maths:{n:'Maths',e:'🔢'},francais:{n:'Français',e:'📚'},animaux:{n:'Animaux',e:'🐾'},monde:{n:'Le monde',e:'🌍'},
+  sciences:{n:'Sciences',e:'🔬'},temps:{n:'Le temps',e:'⏰'},culture:{n:'Contes et culture',e:'🎭'},logique:{n:'Logique',e:'🧩'}
+};
+const GEN={};Object.keys(CAT).forEach(c=>GEN[c]=[]);
+const add=(cat,lv,f)=>GEN[cat].push({lv,f});
+
+/* ---------------- MATHS ---------------- */
+const NAMES=[['Léa','elle'],['Tom','il'],['Inès','elle'],['Hugo','il'],['Jade','elle'],['Nathan','il'],['Lina','elle'],['Louis','il'],['Alba','elle'],['Mia','elle'],['Gabriel','il'],['Chloé','elle'],['Adam','il'],['Rose','elle'],['Jules','il'],['Zoé','elle']];
+const THINGS=['billes','bonbons','images','crayons','fleurs','perles','cartes','pommes','gâteaux','autocollants','coquillages','livres','ballons','châtaignes'];
+
+add('maths',[1,2,3],lv=>{const [a,b]=lv===1?[R(1,9),R(1,9)]:lv===2?[R(10,40),R(2,29)]:[R(25,69),R(16,29)];const n=a+b;
+  return mk('maths',`Combien font ${a} + ${b} ?`,n,near(n,[1,-1,2,-2,10,-10]))});
+add('maths',[1,2,3],lv=>{let a,b;if(lv===1){a=R(4,15);b=R(1,a-1)}else if(lv===2){a=R(20,60);b=R(5,19)}else{a=R(50,100);b=R(11,49)}const n=a-b;
+  return mk('maths',`Combien font ${a} − ${b} ?`,n,near(n,[1,-1,2,-2,10,-10]),{say:`Combien font ${a} moins ${b} ?`})});
+add('maths',[2,3],lv=>{const t=lv===2?pick([2,5,10]):pick([3,4,6,7,8,9]);const k=lv===2?R(1,10):R(2,9);const n=t*k;
+  return mk('maths',`Combien font ${t} × ${k} ?`,n,[t*(k+1),t*(k-1),n+1,n-1,t+k,n+10].filter(x=>x>0),{say:`Combien font ${t} fois ${k} ?`,explain:`${t} × ${k} = ${n}.`})});
+add('maths',[1,2],lv=>{if(lv===1){const a=R(1,10),n=2*a;return mk('maths',`Quel est le double de ${a} ?`,n,[n+1,n-1,a,n+2,a+1],{explain:`Le double, c'est ${a} + ${a} = ${n}.`})}
+  const a=R(2,25)*2,h=a/2;return mk('maths',`Quelle est la moitié de ${a} ?`,h,[h+1,h-1,a,h+2,a-2],{explain:`La moitié de ${a}, c'est ${h}, car ${h} + ${h} = ${a}.`})});
+add('maths',[1,2],lv=>{const n=lv===1?R(5,30):R(30,99);const after=Math.random()<.5;const g=after?n+1:n-1;
+  return mk('maths',`Quel nombre vient juste ${after?'après':'avant'} ${n} ?`,g,[after?n-1:n+1,g+1,g-1,n+10,n-10,g+10].filter(x=>x>=0))});
+add('maths',[1,2,3],lv=>{const hi=lv===1?20:lv===2?100:1000;const s=new Set();while(s.size<4)s.add(R(1,hi));const a=[...s];const big=Math.random()<.6;const g=big?Math.max(...a):Math.min(...a);
+  return mk('maths',`Quel est le plus ${big?'grand':'petit'} nombre ?`,g,a)});
+add('maths',[1,2,3],lv=>{const step=lv===1?pick([1,2,10]):lv===2?pick([2,5,10,3]):pick([3,4,5,25,9]);const down=lv>1&&Math.random()<.3;
+  const st=down?R(step*5,step*5+20):R(0,lv===1?10:20);const seq=[0,1,2,3].map(k=>down?st-k*step:st+k*step);const g=down?st-4*step:st+4*step;
+  return mk('maths','Quel nombre vient ensuite ?',g,[g+1,g-1,g+step,g-step,g+2].filter(x=>x>=0),{big:seq.join(', ')+', …',say:`Quel nombre vient ensuite : ${seq.join(', ')} ?`,explain:`On ${down?'enlève':'ajoute'} ${step} à chaque fois.`})});
+add('maths',[1,2,3],lv=>{const [nm,pr]=pick(NAMES);const th=pick(THINGS);const P=cap(pr);const kind=lv===1?R(0,1):lv===2?R(0,2):R(0,3);
+  if(kind===0){const a=R(2,lv===1?9:30),b=R(1,lv===1?9:20);return mk('maths',`${nm} a ${a} ${th}. ${P} en reçoit ${b} de plus. Combien en a-t-${pr} maintenant ?`,a+b,near(a+b,[1,-1,2,-2,10]),{explain:`${a} + ${b} = ${a+b}.`})}
+  if(kind===1){const a=R(5,lv===1?12:40),b=R(1,a-1);return mk('maths',`${nm} a ${a} ${th}. ${P} en donne ${b} à un ami. Combien lui en reste-t-il ?`,a-b,near(a-b,[1,-1,2,-2,10]),{explain:`${a} − ${b} = ${a-b}.`})}
+  if(kind===2){const t=pick([2,5,10]),k=R(2,6);return mk('maths',`${nm} range ses ${th} dans ${k} boîtes. Il y en a ${t} dans chaque boîte. Combien y en a-t-il en tout ?`,t*k,[t*k+t,t*k-t,t+k,t*k+1],{explain:`${k} boîtes de ${t}, c'est ${k} × ${t} = ${t*k}.`})}
+  const k=pick([2,3,4,5]),n=k*R(2,6);return mk('maths',`${nm} partage ${n} ${th} entre ${k} enfants. Chacun en reçoit autant. Combien chaque enfant en a-t-il ?`,n/k,[n/k+1,n/k-1,n-k,n/k+2,k],{explain:`${n} partagé en ${k}, c'est ${n/k} chacun.`})});
+add('maths',[2,3],()=>{const n=R(11,99);
+  if(Math.random()<.5){const g=Math.floor(n/10);return mk('maths',`Combien y a-t-il de dizaines dans ${n} ?`,g,[n%10,g+1,g-1,n,10].filter(x=>x>=0),{explain:`${n}, c'est ${g} dizaines et ${n%10} unités.`})}
+  const g=n%10;return mk('maths',`Quel est le chiffre des unités dans ${n} ?`,g,[Math.floor(n/10),(g+1)%10,(g+9)%10,n],{explain:`Dans ${n}, le chiffre des unités est le dernier : ${g}.`})});
+add('maths',[2,3],lv=>{const parts=[[lv===3?R(0,2):0,10,'billet'],[R(0,2),5,'billet'],[R(0,3),2,'pièce'],[R(0,3),1,'pièce']].filter(p=>p[0]>0);
+  if(parts.length<2)return null;const sum=parts.reduce((s,p)=>s+p[0]*p[1],0);
+  const t=parts.map(p=>`${p[0]} ${p[2]}${p[0]>1?'s':''} de ${p[1]} €`);const list=t.slice(0,-1).join(', ')+' et '+t[t.length-1];
+  return mk('maths',`J'ai ${list}. Combien d'euros ai-je en tout ?`,sum+' €',[sum+1,sum-1,sum+2,sum+5,sum-2].filter(x=>x>0).map(x=>x+' €'),{explain:parts.map(p=>`${p[0]} × ${p[1]} €`).join(' + ')+` = ${sum} €.`})});
+
+/* ---------------- FRANÇAIS ---------------- */
+const PLUR=[['cheval','chevaux'],['journal','journaux'],['animal','animaux'],['bateau','bateaux'],['gâteau','gâteaux'],['cadeau','cadeaux'],['jeu','jeux'],['cheveu','cheveux'],['chou','choux'],['bijou','bijoux'],['genou','genoux'],['caillou','cailloux'],['hibou','hiboux'],['œil','yeux'],['oiseau','oiseaux'],['château','châteaux'],['feu','feux'],['nez','nez'],['souris','souris'],['bras','bras'],['travail','travaux'],['chat','chats'],['ami','amis'],['clou','clous'],['trou','trous'],['bal','bals'],['festival','festivals'],['noix','noix']];
+const FEM=[['chanteur','chanteuse'],['acteur','actrice'],['lion','lionne'],['roi','reine'],['prince','princesse'],['boulanger','boulangère'],['danseur','danseuse'],['coq','poule'],['cheval','jument'],['directeur','directrice'],['loup','louve'],['garçon','fille'],['oncle','tante'],['père','mère'],['frère','sœur'],['neveu','nièce'],['instituteur','institutrice'],['chien','chienne'],['cousin','cousine'],['voisin','voisine'],['sportif','sportive'],['gentil','gentille'],['boucher','bouchère'],['vendeur','vendeuse'],['comte','comtesse'],['tigre','tigresse'],['canard','cane'],['taureau','vache'],['parrain','marraine'],['empereur','impératrice']];
+const CONTR=[['grand','petit'],['chaud','froid'],['jour','nuit'],['haut','bas'],['rapide','lent'],['plein','vide'],['ouvert','fermé'],['gentil','méchant'],['propre','sale'],['lourd','léger'],['dur','mou'],['long','court'],['jeune','vieux'],['content','triste'],['devant','derrière'],['dessus','dessous'],['entrer','sortir'],['monter','descendre'],['gagner','perdre'],['rire','pleurer'],['allumer','éteindre'],['commencer','finir'],['toujours','jamais'],['beaucoup','peu'],['clair','foncé'],['sec','mouillé'],['facile','difficile'],['premier','dernier'],['riche','pauvre'],['fort','faible'],['vrai','faux'],['blanc','noir'],['debout','assis'],['dedans','dehors'],['avant','après'],['près','loin'],['acheter','vendre'],['donner','prendre'],['oui','non'],['épais','mince'],['large','étroit'],['tôt','tard'],['lever','coucher'],['réveillé','endormi'],['bruyant','silencieux'],['calme','agité'],['doux','rugueux'],['poser','soulever']];
+const SYLL=[['chat',1],['pain',1],['lit',1],['sac',1],['bol',1],['train',1],['loup',1],['feu',1],['nez',1],['riz',1],['ballon',2],['lapin',2],['vélo',2],['moto',2],['gâteau',2],['maison',2],['bébé',2],['papa',2],['cadeau',2],['jardin',2],['robot',2],['canard',2],['mouton',2],['bonbon',2],['tapis',2],['chocolat',3],['papillon',3],['éléphant',3],['ananas',3],['kangourou',3],['domino',3],['pyjama',3],['animal',3],['cinéma',3],['kimono',3],['télévision',4],['rhinocéros',4],['caméléon',4],['ordinateur',4],['alligator',4],['éléphanteau',4],['hippocampe',3]];
+const SPELL=['maison','papillon','chocolat','éléphant','téléphone','girafe','crayon','école','cartable','oiseau','fromage','bonjour','château','poisson','pomme','vacances','famille','cheval','citron','chaussure','dimanche','toujours','beaucoup','lapin','renard','ballon','tortue','soleil','garçon','fenêtre','photo','cerise','banane','grenouille','escargot','cadeau','gâteau','bateau','princesse','pharmacie','qualité','quatre','montagne','couleur','dauphin','mouton','parapluie','sorcière','trottinette','jardin'];
+function misspell(w){
+  const out=new Set();
+  const rules=[[/ll/,'l'],[/mm/,'m'],[/nn/,'n'],[/pp/,'p'],[/ss/,'s'],[/tt/,'t'],[/ff/,'f'],[/rr/,'r'],[/ph/,'f'],[/qu/,'k'],[/c([aou])/,'k$1'],[/ç/,'ss'],[/eau/,'o'],[/au/,'o'],[/é/,'er'],[/é/,'e'],[/è/,'ai'],[/ê/,'è'],[/â/,'a'],[/ô/,'o'],[/an/,'en'],[/en/,'an'],[/ain/,'in'],[/oi/,'oa'],[/([aeiouy])s([aeiouy])/,'$1z$2'],[/([aeiou])([lmnprt])([aeiou])/,'$1$2$2$3'],[/([^e])$/,'$1e'],[/[tdsx]$/,''],[/g([ei])/,'j$1'],[/ge/,'je'],[/ou/,'u'],[/on/,'om'],[/in/,'ein'],[/c([ei])/,'s$1']];
+  for(const [re,rp] of rules){if(re.test(w)){const v=w.replace(re,rp);if(v!==w&&v.length>2)out.add(v)}}
+  return [...out];
+}
+const VERBS=['manger','courir','chanter','jouer','dormir','lire','sauter','nager','dessiner','écrire','parler','danser','marcher','regarder','grimper','cuisiner'];
+const NOUNS=['chat','maison','table','école','jardin','voiture','fleur','livre','soleil','ami','cartable','pomme','ballon','forêt','girafe','bateau'];
+const ADJS=['grand','petit','joli','rouge','rapide','gentil','content','fort','doux','chaud','gourmand','rigolo','sage','bleu','énorme','minuscule'];
+const ARTW=[['chat','le'],['livre','le'],['ballon','le'],['gâteau','le'],['vélo','le'],['jardin','le'],['crayon','le'],['lapin','le'],['soleil','le'],['table','la'],['pomme','la'],['maison','la'],['fleur','la'],['voiture','la'],['lune','la'],['fenêtre','la'],['poupée','la'],['mer','la'],['arbre',"l'"],['oiseau',"l'"],['école',"l'"],['avion',"l'"],['orange',"l'"],['éléphant',"l'"],['étoile',"l'"],['ours',"l'"],['île',"l'"],['chats','les'],['fleurs','les'],['enfants','les'],['bonbons','les']];
+const CONJ=[{inf:'être',f:['suis','es','est','sommes','êtes','sont'],tail:'à la maison'},{inf:'avoir',f:['ai','as','a','avons','avez','ont'],tail:'un vélo'},{inf:'aller',f:['vais','vas','va','allons','allez','vont'],tail:'à la plage'},{inf:'jouer',f:['joue','joues','joue','jouons','jouez','jouent'],tail:'au ballon'},{inf:'chanter',f:['chante','chantes','chante','chantons','chantez','chantent'],tail:'une chanson'},{inf:'faire',f:['fais','fais','fait','faisons','faites','font'],tail:'un gâteau'},{inf:'finir',f:['finis','finis','finit','finissons','finissez','finissent'],tail:'le puzzle'}];
+const PRON=['je','tu','il','nous','vous','ils'];
+
+add('francais',[2,3],()=>{const [s,p]=pick(PLUR);const un=(s==='souris'||s==='noix')?'une':'un';
+  const bads=[s+'s',s+'x',s+'es',s.replace(/al$/,'aus'),s.replace(/(au|eu)$/,'$1s'),s.replace(/ou$/,'oux'),s.replace(/ou$/,'ous'),s.replace(/ail$/,'ails'),s.replace(/al$/,'als'),p+'s'];
+  return mk('francais',`Quel est le pluriel de « ${un} ${s} » ?`,'des '+p,uniq(bads).filter(x=>x!==s||s===p).map(x=>'des '+x),{explain:`On écrit : ${un} ${s}, des ${p}.`,noRead:true})});
+add('francais',[1,2],()=>{const [m,f]=pick(FEM);return mk('francais',`Quel est le féminin de « ${m} » ?`,f,[m+'e',m+'esse',m+'euse',...shuffle(FEM).slice(0,6).map(x=>x[1])])});
+add('francais',[1,2,3],()=>{const pr=pick(CONTR);const [w,g]=Math.random()<.5?pr:[pr[1],pr[0]];
+  return mk('francais',`Quel est le contraire de « ${w} » ?`,g,shuffle(CONTR).filter(p=>p!==pr).slice(0,6).map(p=>p[Math.random()<.5?0:1]))});
+add('francais',[1,2],lv=>{const A='ABCDEFGHIJKLMNOPQRSTUVWXYZ';const after=lv===1||Math.random()<.5;const i=after?R(0,24):R(1,25);const g=A[after?i+1:i-1];
+  return mk('francais',`Quelle lettre vient juste ${after?'après':'avant'} la lettre ${A[i]} ?`,g,[A[after?i-1:i+1],A[(i+2)%26],A[(i+24)%26],A[(i+5)%26],A[(i+13)%26]])});
+add('francais',[2,3],lv=>{const W=K.WORDS.map(w=>w[0]).filter(w=>!/^œ/.test(w));let ws;
+  for(let t=0;t<30;t++){ws=shuffle(W).slice(0,4);const f=new Set(ws.map(w=>w[0].normalize('NFD')[0]));if(lv===2?f.size===4:f.size<4)break}
+  const sorted=[...ws].sort((a,b)=>a.localeCompare(b,'fr'));
+  return mk('francais',"Quel mot vient en premier dans l'ordre alphabétique ?",sorted[0],ws,{explain:`Dans l'ordre du dictionnaire : ${sorted.join(', ')}.`})});
+add('francais',[1,2],()=>{const [w,n]=pick(SYLL);return mk('francais',`Combien de syllabes entends-tu dans « ${w} » ?`,n,[1,2,3,4,5],{say:`Combien de syllabes entends-tu dans le mot ${w} ?`,noRead:true})});
+add('francais',[2,3],()=>{const w=pick(SPELL);const v=misspell(w);if(v.length<3)return null;return mk('francais','Quel mot est bien écrit ?',w,v,{say:'Quel mot est bien écrit ? Regarde bien les lettres.',noRead:true})});
+add('francais',[2,3],lv=>{const kind=lv===2?pick(['verbe','nom']):pick(['verbe','nom','adjectif']);const pools={verbe:VERBS,nom:NOUNS,adjectif:ADJS};
+  const g=pick(pools[kind]);const bads=Object.keys(pools).filter(k=>k!==kind).flatMap(k=>pools[k]);
+  const ex={verbe:`« ${g} » est un verbe : c'est une action.`,nom:`« ${g} » est un nom : il désigne une chose, un animal ou une personne.`,adjectif:`« ${g} » est un adjectif : il dit comment est quelque chose.`};
+  return mk('francais',`Lequel de ces mots est ${kind==='adjectif'?'un adjectif':kind==='nom'?'un nom':'un verbe'} ?`,g,bads,{explain:ex[kind]})});
+add('francais',[1],()=>{const [w,g]=pick(ARTW);return mk('francais',`Quel petit mot va devant « ${w} » ?`,g,['le','la',"l'",'les'],{explain:g==="l'"?"On met l' devant un mot qui commence par une voyelle.":g==='les'?'On met « les » quand il y en a plusieurs.':`On dit : ${g} ${w}.`,noRead:true})});
+add('francais',[1],()=>{const w=pick(K.WORDS.filter(x=>!/œ/.test(x[0])))[0];const n=[...w].length;return mk('francais',`Combien de lettres y a-t-il dans le mot « ${w} » ?`,n,near(n,[1,-1,2,-2,3],1))});
+add('francais',[2,3],lv=>{const v=lv===2?pick(CONJ.slice(0,2)):pick(CONJ);const k=R(0,5);const g=v.f[k];
+  const pr=(k===0&&/^[aeiouéè]/.test(g))?"J'":cap(PRON[k])+' ';
+  return mk('francais',`Complète avec le verbe ${v.inf} : « ${pr}___ ${v.tail} »`,g,v.f,{say:`Complète avec le verbe ${v.inf}.`,explain:`On dit : « ${pr}${g} ${v.tail} ».`})});
+
+/* ---------------- ANIMAUX ---------------- */
+// nom, article, emoji, type, pattes(-1 = on ne demande pas), petit, cri, habitat, taille
+const AN=[
+ ['vache','la ','🐄','M',4,'le veau','meugle','À la ferme',7],['cheval','le ','🐴','M',4,'le poulain','hennit','À la ferme',7],
+ ['mouton','le ','🐑','M',4,"l'agneau",'bêle','À la ferme',5],['cochon','le ','🐷','M',4,'le porcelet','grogne','À la ferme',5],
+ ['poule','la ','🐔','O',2,'le poussin','caquette','À la ferme',3],['canard','le ','🦆','O',2,'le caneton','cancane','',3],
+ ['chien','le ','🐶','M',4,'le chiot','aboie','',4],['chat','le ','🐱','M',4,'le chaton','miaule','',3],
+ ['lapin','le ','🐰','M',4,'le lapereau','','',2],['lion','le ','🦁','M',4,'le lionceau','rugit','Dans la savane',8],
+ ['éléphant',"l'",'🐘','M',4,"l'éléphanteau",'barrit','Dans la savane',10],['girafe','la ','🦒','M',4,'le girafon','','Dans la savane',9],
+ ['zèbre','le ','🦓','M',4,'','','Dans la savane',7],['ours',"l'",'🐻','M',4,"l'ourson",'grogne','Dans la forêt',8],
+ ['loup','le ','🐺','M',4,'le louveteau','hurle','Dans la forêt',6],['renard','le ','🦊','M',4,'le renardeau','glapit','Dans la forêt',4],
+ ['cerf','le ','🦌','M',4,'le faon','brame','Dans la forêt',7],['écureuil',"l'",'🐿️','M',4,'','','Dans la forêt',2],
+ ['hibou','le ','🦉','O',2,'','hulule','Dans la forêt',3],['grenouille','la ','🐸','A',4,'le têtard','coasse','Dans la mare',1],
+ ['serpent','le ','🐍','R',0,'','siffle','',4],['tortue','la ','🐢','R',4,'','','',3],
+ ['crocodile','le ','🐊','R',4,'','','Dans la rivière',8],['abeille',"l'",'🐝','I',6,'','bourdonne','Dans une ruche',1],
+ ['fourmi','la ','🐜','I',6,'','','Dans une fourmilière',1],['papillon','le ','🦋','I',6,'la chenille','','',1],
+ ['coccinelle','la ','🐞','I',6,'','','',1],['araignée',"l'",'🕷️','X',8,'','','',1],
+ ['pingouin','le ','🐧','O',2,'','','',3],['ours polaire',"l'",'🐻‍❄️','M',4,"l'ourson",'','Sur la banquise',8],
+ ['phoque','le ','🦭','M',-1,'','','Sur la banquise',6],['dauphin','le ','🐬','M',0,'','siffle','Dans la mer',6],
+ ['baleine','la ','🐋','M',0,'le baleineau','chante','Dans la mer',11],['requin','le ','🦈','P',0,'','','Dans la mer',8],
+ ['poisson rouge','le ','🐠','P',0,'','','',1],['singe','le ','🐒','M',-1,'','','Dans la jungle',5],
+ ['tigre','le ','🐯','M',4,'','rugit','Dans la jungle',8],['perroquet','le ','🦜','O',2,'','','Dans la jungle',2],
+ ['aigle',"l'",'🦅','O',2,"l'aiglon",'','',4],['kangourou','le ','🦘','M',-1,'','','',6],
+ ['chauve-souris','la ','🦇','M',-1,'','','',1],['pieuvre','la ','🐙','Mo',-1,'','','Dans la mer',3],['escargot',"l'",'🐌','Mo',0,'','','',1]
+].map(a=>({n:a[0],a:a[1],e:a[2],t:a[3],p:a[4],b:a[5],c:a[6],h:a[7],s:a[8]}));
+const lab=x=>`${x.e} ${cap(x.a)}${x.n}`;
+const deA=x=>x.a==='le '?'du '+x.n:'de '+x.a+x.n;
+const TY={O:'un oiseau',P:'un poisson',I:'un insecte',R:'un reptile',M:'un mammifère'};
+const TYX={O:'Les oiseaux ont des plumes et un bec.',P:'Les poissons respirent sous l\'eau avec des branchies.',I:'Les insectes ont 6 pattes.',R:'Les reptiles ont la peau couverte d\'écailles.',M:'Les mammifères nourrissent leurs bébés avec leur lait.'};
+
+add('animaux',[1,2],()=>{const x=pick(AN.filter(a=>a.b));return mk('animaux',`Comment s'appelle le petit ${deA(x)} ?`,cap(x.b),AN.filter(a=>a.b&&a.b!==x.b).map(a=>cap(a.b)),{big:x.e})});
+add('animaux',[1,2],()=>{const x=pick(AN.filter(a=>a.c));return mk('animaux',`Quel est le cri ${deA(x)} ? ${cap(x.a)}${x.n}…`,x.c,AN.filter(a=>a.c).map(a=>a.c),{big:x.e})});
+add('animaux',[1,2],()=>{const x=pick(AN.filter(a=>a.p>=0));const ex=x.t==='I'?'Tous les insectes ont 6 pattes.':x.t==='X'?"Les araignées ont 8 pattes : ce ne sont pas des insectes !":x.p===0&&x.t==='M'?`${cap(x.a)}${x.n} n'a pas de pattes : c'est un mammifère qui vit dans l'eau.`:'';
+  return mk('animaux',`Combien de pattes a ${x.a}${x.n} ?`,x.p,[0,2,4,6,8],ex?{big:x.e,explain:ex}:{big:x.e})});
+add('animaux',[1,2],()=>{const x=pick(AN.filter(a=>a.h));return mk('animaux',`Où vit ${x.a}${x.n} ?`,x.h,uniq(AN.map(a=>a.h).filter(Boolean)),{big:x.e})});
+add('animaux',[2,3],lv=>{const t=lv===2?pick(['O','P','I']):pick(['M','R','O','I','P']);const g=pick(AN.filter(a=>a.t===t));
+  return mk('animaux',`Lequel de ces animaux est ${TY[t]} ?`,lab(g),shuffle(AN.filter(a=>a.t!==t&&a.t!=='X'&&a.t!=='Mo')).slice(0,8).map(lab),{explain:TYX[t]})});
+add('animaux',[2,3],()=>{const g=pick(AN.filter(a=>'ORPIA'.includes(a.t)));return mk('animaux','Lequel de ces animaux pond des œufs ?',lab(g),shuffle(AN.filter(a=>a.t==='M')).slice(0,6).map(lab),{explain:"Les mammifères ne pondent pas d'œufs : leurs bébés naissent du ventre de leur maman."})});
+add('animaux',[1,2,3],lv=>{const ch=[];for(const a of shuffle(AN)){if(ch.every(c=>Math.abs(c.s-a.s)>=(lv===1?3:2)))ch.push(a);if(ch.length===4)break}
+  if(ch.length<4)return null;const big=Math.random()<.6;const g=ch.reduce((m,a)=>(big?a.s>m.s:a.s<m.s)?a:m);
+  return mk('animaux',`Lequel de ces animaux est le plus ${big?'grand':'petit'} ?`,lab(g),ch.filter(a=>a!==g).map(lab))});
+
+/* ---------------- LE MONDE ---------------- */
+// article, pays, capitale, continent, langue, niveau
+const CO=[
+ ['la ','France','Paris',"L'Europe",'le français',1],['l\'','Espagne','Madrid',"L'Europe","l'espagnol",1],['l\'','Italie','Rome',"L'Europe","l'italien",1],
+ ['le ','Royaume-Uni','Londres',"L'Europe","l'anglais",1],['l\'','Allemagne','Berlin',"L'Europe","l'allemand",2],['le ','Portugal','Lisbonne',"L'Europe",'le portugais',2],
+ ['la ','Grèce','Athènes',"L'Europe",'le grec',2],['la ','Belgique','Bruxelles',"L'Europe",'',2],['la ','Suisse','Berne',"L'Europe",'',3],
+ ['les ','Pays-Bas','Amsterdam',"L'Europe",'le néerlandais',3],['la ','Russie','Moscou','','le russe',2],['la ','Pologne','Varsovie',"L'Europe",'le polonais',3],
+ ['la ','Suède','Stockholm',"L'Europe",'le suédois',3],['la ','Norvège','Oslo',"L'Europe",'',3],['l\'','Irlande','Dublin',"L'Europe",'',3],['l\'','Autriche','Vienne',"L'Europe",'',3],
+ ['le ','Japon','Tokyo',"L'Asie",'le japonais',2],['la ','Chine','Pékin',"L'Asie",'le chinois',2],['l\'','Inde','New Delhi',"L'Asie",'',3],
+ ['la ','Corée du Sud','Séoul',"L'Asie",'le coréen',3],['la ','Thaïlande','Bangkok',"L'Asie",'le thaï',3],
+ ['les ','États-Unis','Washington',"L'Amérique","l'anglais",2],['le ','Canada','Ottawa',"L'Amérique",'',3],['le ','Mexique','Mexico',"L'Amérique","l'espagnol",2],
+ ['le ','Brésil','Brasilia',"L'Amérique",'le portugais',3],['l\'','Argentine','Buenos Aires',"L'Amérique",'',3],['le ','Pérou','Lima',"L'Amérique",'',3],
+ ['l\'','Égypte','Le Caire',"L'Afrique","l'arabe",2],['le ','Maroc','Rabat',"L'Afrique",'',3],['le ','Sénégal','Dakar',"L'Afrique",'',3],
+ ['la ','Tunisie','Tunis',"L'Afrique",'',3],['le ','Kenya','Nairobi',"L'Afrique",'',3],['l\'','Australie','Canberra',"L'Océanie","l'anglais",3],['la ','Nouvelle-Zélande','Wellington',"L'Océanie",'',3]
+].map(c=>({a:c[0],n:c[1],cap:c[2],co:c[3],l:c[4],lv:c[5]}));
+const deC=c=>c.a==='le '?'du '+c.n:c.a==='les '?'des '+c.n:'de '+c.a+c.n;
+const enC=c=>c.a==='le '?'au '+c.n:c.a==='les '?'aux '+c.n:'en '+c.n;
+const full=c=>cap(c.a)+c.n;
+const coLv=lv=>CO.filter(c=>c.lv<=lv&&c.lv>=lv-1);
+
+add('monde',[1,2,3],lv=>{const c=pick(coLv(lv));return mk('monde',`Quelle est la capitale ${deC(c)} ?`,c.cap,shuffle(CO.filter(x=>x!==c)).slice(0,8).map(x=>x.cap))});
+add('monde',[2,3],lv=>{const c=pick(coLv(lv));return mk('monde',`${c.cap} est la capitale de quel pays ?`,full(c),shuffle(CO.filter(x=>x!==c)).slice(0,8).map(full))});
+add('monde',[1,2,3],lv=>{const c=pick(coLv(lv).filter(x=>x.co));return mk('monde',`Sur quel continent se trouve ${c.a}${c.n} ?`,c.co,["L'Europe","L'Asie","L'Afrique","L'Amérique","L'Océanie"])});
+add('monde',[1,2,3],lv=>{const c=pick(CO.filter(x=>x.l&&x.lv<=lv));return mk('monde',`Quelle langue parle-t-on ${enC(c)} ?`,cap(c.l),uniq(CO.filter(x=>x.l&&x.l!==c.l).map(x=>cap(x.l))))});
+const MON=[['la tour Eiffel','Paris','la France',1],['le Colisée','Rome',"l'Italie",2],['Big Ben','Londres','le Royaume-Uni',2],['la statue de la Liberté','New York','les États-Unis',2],
+ ['la Sagrada Família','Barcelone',"l'Espagne",3],['les pyramides de Gizeh','',"l'Égypte",2],['la Grande Muraille','','la Chine',2],['le Taj Mahal','',"l'Inde",3],
+ ['le mont Fuji','','le Japon',3],["l'Opéra de Sydney",'Sydney',"l'Australie",3],['le mont Saint-Michel','','la France',1],['la tour de Pise','Pise',"l'Italie",2],
+ ['le château de Versailles','Versailles','la France',2],["l'Arc de Triomphe",'Paris','la France',2],['la porte de Brandebourg','Berlin',"l'Allemagne",3]];
+add('monde',[1,2,3],lv=>{const m=pick(MON.filter(x=>x[3]<=lv));
+  if(m[1]&&Math.random()<.5)return mk('monde',`Dans quelle ville se trouve ${m[0]} ?`,m[1],uniq([...MON.map(x=>x[1]).filter(Boolean),'Marseille','Lyon','Madrid','Tokyo']));
+  return mk('monde',`Dans quel pays se trouve ${m[0]} ?`,cap(m[2]),uniq([...MON.map(x=>cap(x[2])),'Le Brésil','Le Canada','Le Maroc']))});
+
+/* ---------------- LE TEMPS ---------------- */
+const DAYS=['lundi','mardi','mercredi','jeudi','vendredi','samedi','dimanche'];
+const MONTHS=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+add('temps',[1,2],lv=>{const i=R(0,6);const after=lv===1||Math.random()<.5;const g=DAYS[(i+(after?1:6))%7];
+  return mk('temps',`Quel jour vient juste ${after?'après':'avant'} ${DAYS[i]} ?`,cap(g),DAYS.filter(d=>d!==g&&d!==DAYS[i]).map(cap))});
+add('temps',[2,3],lv=>{const i=R(0,6);const [w,d]=pick(lv===2?[['demain',1],['hier',-1]]:[['après-demain',2],['dans 3 jours',3],['avant-hier',-2]]);const g=DAYS[(i+d+7)%7];
+  return mk('temps',`Aujourd'hui, c'est ${DAYS[i]}. Quel jour ${d>0?'serons-nous':'étions-nous'} ${w} ?`,cap(g),DAYS.filter(x=>x!==g).map(cap))});
+add('temps',[2,3],lv=>{const i=R(0,11);
+  if(lv===3&&Math.random()<.5){const g=MONTHS[i];return mk('temps',`Quel est le ${i===0?'1er':(i+1)+'e'} mois de l'année ?`,cap(g),MONTHS.filter(m=>m!==g).map(cap))}
+  const after=Math.random()<.5;const g=MONTHS[(i+(after?1:11))%12];return mk('temps',`Quel mois vient juste ${after?'après':'avant'} ${MONTHS[i]} ?`,cap(g),MONTHS.filter(m=>m!==g&&m!==MONTHS[i]).map(cap))});
+add('temps',[1,2,3],lv=>{const h=R(1,12);const half=lv>1&&Math.random()<.5;const lb=(hh,hf)=>`${hh} h${hf?' 30':''}`;
+  if(lv<3||Math.random()<.5){const emo=String.fromCodePoint((half?0x1F55C:0x1F550)+h-1);
+    return mk('temps','Quelle heure indique cette horloge ?',lb(h,half),[lb(h%12+1,half),lb(h,!half),lb((h+5)%12+1,half),lb((h+10)%12+1,!half),lb((h+3)%12+1,half)],{big:emo,explain:half?'La grande aiguille sur le 6, cela veut dire « et demie ».':'La grande aiguille sur le 12, cela veut dire « pile ».'})}
+  const d=R(1,4);const h2=(h+d-1)%12+1;return mk('temps',`Il est ${lb(h,false)}. Quelle heure sera-t-il dans ${d} heure${d>1?'s':''} ?`,lb(h2,false),[lb(h2%12+1,false),lb((h2+10)%12+1,false),lb(d,false),lb((h+d+1)%12+1,false),lb(h,false)])});
+
+/* ---------------- SCIENCES ---------------- */
+const MIX=[['rouge','jaune','orange'],['bleu','jaune','vert'],['rouge','bleu','violet'],['rouge','blanc','rose'],['noir','blanc','gris']];
+add('sciences',[1,2],()=>{const [a,b,g]=pick(MIX);const [x,y]=Math.random()<.5?[a,b]:[b,a];return mk('sciences',`Quelle couleur obtient-on en mélangeant du ${x} et du ${y} ?`,cap(g),['orange','vert','violet','rose','gris','marron'].filter(c=>c!==g).map(cap))});
+add('sciences',[3],()=>{const PL=['Mercure','Vénus','la Terre','Mars','Jupiter','Saturne','Uranus','Neptune'];const i=R(0,6);const g=PL[i+1];
+  return mk('sciences',`En partant du Soleil, quelle planète vient juste après ${PL[i]} ?`,cap(g),PL.filter(p=>p!==g&&p!==PL[i]).map(cap),{explain:"Dans l'ordre : Mercure, Vénus, la Terre, Mars, Jupiter, Saturne, Uranus, Neptune."})});
+
+/* ---------------- CULTURE ---------------- */
+const INSTR={cordes:['guitare','violon','harpe','violoncelle','contrebasse','ukulélé'],vent:['flûte','trompette','clarinette','saxophone','trombone','harmonica'],perc:['tambour','triangle','batterie','xylophone','cymbales','maracas']};
+add('culture',[2,3],()=>{const k=pick(Object.keys(INSTR));const q={cordes:'Lequel de ces instruments a des cordes ?',vent:'Dans lequel de ces instruments souffle-t-on ?',perc:'Sur lequel de ces instruments tape-t-on pour faire de la musique ?'}[k];
+  return mk('culture',q,cap(pick(INSTR[k])),Object.keys(INSTR).filter(x=>x!==k).flatMap(x=>INSTR[x]).map(cap))});
+
+/* ---------------- LOGIQUE ---------------- */
+const CATG={fruit:[['pomme','banane','fraise','cerise','poire','raisin','kiwi','ananas','pêche','abricot','melon','framboise'],'fruits','un fruit'],
+ légume:[['carotte','poireau','salade','courgette','haricot vert','radis','navet','chou','brocoli','épinard','petit pois','potiron'],'légumes','un légume'],
+ véhicule:[['voiture','bus','train','avion','vélo','bateau','moto','camion','tracteur','fusée','trottinette','hélicoptère'],'véhicules','un véhicule'],
+ couleur:[['rouge','bleu','vert','jaune','violet','rose','noir','blanc','gris','marron'],'couleurs','une couleur'],
+ vêtement:[['pantalon','chemise','robe','jupe','manteau','écharpe','chaussette','bonnet','pull','short','gant'],'vêtements','un vêtement'],
+ instrument:[['piano','guitare','violon','flûte','tambour','trompette','harpe','batterie'],'instruments de musique','un instrument de musique'],
+ meuble:[['table','chaise','lit','armoire','canapé','bureau','étagère','commode'],'meubles','un meuble'],
+ animal:[['chat','chien','lion','vache','lapin','tigre','cheval','renard','souris','girafe'],'animaux','un animal']};
+add('logique',[1,2],()=>{const ks=Object.keys(CATG);const k1=pick(ks);let k2;do{k2=pick(ks)}while(k2===k1);
+  return mk('logique',"Trouve l'intrus : quel mot n'est pas comme les autres ?",cap(pick(CATG[k2][0])),shuffle(CATG[k1][0]).slice(0,3).map(cap),{explain:`Les autres sont des ${CATG[k1][1]}.`})});
+add('logique',[2,3],()=>{const ks=Object.keys(CATG);const k=pick(ks);return mk('logique',`Lequel de ces mots est ${CATG[k][2]} ?`,cap(pick(CATG[k][0])),ks.filter(x=>x!==k).flatMap(x=>CATG[x][0]).map(cap))});
+const SYM=['🔴','🔵','🟡','🟢','🟣','⭐','❤️','🔺','🟧','🌙'];
+add('logique',[1,2,3],lv=>{const pat=pick(lv===1?['AB']:lv===2?['AAB','ABB','AB']:['ABC','AABB','ABCC','ABAC']);const L=uniq(pat.split(''));const sy=shuffle(SYM).slice(0,L.length+2);
+  const map={};L.forEach((l,k)=>map[l]=sy[k]);const len=pat.length*2+R(0,pat.length-1);const seq=Array.from({length:len},(_,k)=>map[pat[k%pat.length]]);
+  return mk('logique',"Qu'est-ce qui vient ensuite dans cette suite ?",map[pat[len%pat.length]],sy,{big:seq.join(' ')+' ❓',say:"Regarde bien la suite. Qu'est-ce qui vient ensuite ?",noRead:true})});
+add('logique',[2,3],lv=>{const ns=shuffle(NAMES).slice(0,4).map(n=>n[0]);const [a,b,c,d]=ns;
+  const T=pick([[x=>`plus de ${x} que`,x=>`Qui a le plus de ${x} ?`,x=>`Qui a le moins de ${x} ?`,'a'],[()=>'arrive avant',()=>'Qui arrive en premier ?',()=>'Qui arrive en dernier ?','race']]);
+  const th=pick(THINGS);const rel=(x,y)=>T[3]==='a'?`${x} a ${T[0](th)} ${y}.`:`${x} ${T[0]()} ${y}.`;const top=Math.random()<.5;
+  if(lv===2)return mk('logique',`${rel(a,b)} ${top?T[1](th):T[2](th)}`,top?a:b,[top?b:a,d,'On ne peut pas savoir']);
+  return mk('logique',`${rel(a,b)} ${rel(b,c)} ${top?T[1](th):T[2](th)}`,top?a:c,[b,top?c:a,'On ne peut pas savoir'],{explain:`Dans l'ordre : ${a}, puis ${b}, puis ${c}.`})});
+
+/* ---------------- BANQUE ÉCRITE À LA MAIN ---------------- */
+// [catégorie, niveau, question, bonne réponse, [mauvaises], explication]
+const FIX=[
+ ['maths',1,"Combien de côtés a un triangle ?","3",["4","5","6"]],['maths',1,"Combien de côtés a un carré ?","4",["3","5","6"]],
+ ['maths',2,"Combien de côtés a un hexagone ?","6",["4","5","8"]],['maths',2,"Combien de faces a un cube ?","6",["4","8","12"]],
+ ['maths',1,"Combien de roues a un tricycle ?","3",["2","4","1"]],['maths',2,"Combien de pattes ont 2 chats ensemble ?","8",["4","6","10"],"Un chat a 4 pattes : 4 + 4 = 8."],
+ ['maths',2,"Combien de centimes y a-t-il dans 1 euro ?","100",["10","50","1000"]],['maths',3,"Combien de centimètres y a-t-il dans 1 mètre ?","100",["10","1000","60"]],
+ ['maths',3,"Quelle forme n'a aucun coin ?","Le cercle",["Le carré","Le triangle","Le rectangle"]],['maths',2,"Combien font 10 + 10 + 10 ?","30",["20","40","100"]],
+ ['maths',3,"Combien font 100 − 1 ?","99",["90","101","10"]],['maths',3,"Combien y a-t-il d'œufs dans une douzaine ?","12",["10","6","20"]],
+ ['sciences',1,"De quelle couleur sont les feuilles des arbres en été ?","Vertes",["Bleues","Violettes","Noires"]],
+ ['sciences',1,"Que devient l'eau quand il fait très froid ?","De la glace",["Du sable","Du lait","De la fumée"]],
+ ['sciences',2,"Que devient l'eau quand elle bout ?","De la vapeur",["De la glace","Du sel","De la neige"]],
+ ['sciences',1,"Combien avons-nous de doigts aux deux mains ?","10",["8","5","12"]],
+ ['sciences',1,"Quel astre nous éclaire pendant la journée ?","Le Soleil",["La Lune","Mars","Une étoile filante"]],
+ ['sciences',1,"Comment s'appelle notre planète ?","La Terre",["Mars","Vénus","Jupiter"]],
+ ['sciences',2,"Quelle est la plus grande planète du système solaire ?","Jupiter",["La Terre","Mars","Mercure"]],
+ ['sciences',3,"Quelle planète est entourée de grands anneaux ?","Saturne",["Mars","Vénus","Mercure"]],
+ ['sciences',3,"Combien y a-t-il de planètes dans le système solaire ?","8",["5","10","12"]],
+ ['sciences',3,"Quelle est la planète la plus proche du Soleil ?","Mercure",["La Terre","Neptune","Jupiter"]],
+ ['sciences',2,"Combien de dents de lait a un enfant ?","20",["10","32","50"]],
+ ['sciences',2,"Quel organe fait circuler le sang dans notre corps ?","Le cœur",["L'estomac","Les poumons","Le nez"]],
+ ['sciences',2,"Avec quoi respire-t-on ?","Les poumons",["Le cœur","L'estomac","Les genoux"]],
+ ['sciences',1,"Avec quoi voit-on ?","Les yeux",["Les oreilles","Le nez","La langue"]],['sciences',1,"Avec quoi entend-on ?","Les oreilles",["Les yeux","Le nez","Les mains"]],
+ ['sciences',1,"Avec quoi sent-on les odeurs ?","Le nez",["Les yeux","Les oreilles","Les pieds"]],['sciences',1,"Avec quoi goûte-t-on ?","La langue",["Le nez","Les oreilles","Les cheveux"]],
+ ['sciences',2,"Combien avons-nous de sens ?","5",["3","4","10"],"La vue, l'ouïe, l'odorat, le goût et le toucher."],
+ ['sciences',1,"De quoi une plante a-t-elle besoin pour pousser ?","D'eau et de lumière",["De chocolat","De bruit","De sable seulement"]],
+ ['sciences',2,"Quelle partie de la plante est sous la terre ?","Les racines",["Les fleurs","Les feuilles","Les fruits"]],
+ ['sciences',3,"Quel gaz respirons-nous pour vivre ?","L'oxygène",["Le sel","La vapeur","Le sucre"]],
+ ['sciences',2,"Combien de couleurs compte-t-on dans un arc-en-ciel ?","7",["3","5","10"]],
+ ['sciences',3,"Pourquoi voit-on l'éclair avant d'entendre le tonnerre ?","La lumière va plus vite que le son",["Le son va plus vite","L'éclair est plus près","Le tonnerre est timide"]],
+ ['sciences',2,"Un aimant attire…","Le fer",["Le bois","Le papier","Le plastique"]],
+ ['sciences',3,"Autour de quoi la Terre tourne-t-elle ?","Le Soleil",["La Lune","Mars","Un nuage"]],
+ ['sciences',3,"Combien de temps met la Terre pour faire le tour du Soleil ?","Un an",["Un jour","Une semaine","Un mois"]],
+ ['sciences',3,"Quel est l'os le plus long du corps ?","Le fémur, dans la cuisse",["L'os du nez","L'os du petit doigt","L'os de l'oreille"]],
+ ['sciences',1,"Que faut-il faire avant de manger ?","Se laver les mains",["Se coiffer","Mettre ses chaussures","Faire du vélo"]],
+ ['sciences',2,"Lequel de ces aliments est un légume ?","La carotte",["La fraise","Le fromage","Le pain"]],
+ ['sciences',2,"Quel aliment fabrique-t-on avec du lait ?","Le fromage",["Le pain","La confiture","Les pâtes"]],
+ ['sciences',3,"Avec quoi fabrique-t-on le pain ?","De la farine",["Du chocolat","Du sable","Du sucre glace"]],
+ ['sciences',2,"Où se jettent les fleuves ?","Dans la mer",["Dans les nuages","Dans les arbres","Dans les montagnes"]],
+ ['sciences',3,"Comment s'appelle la boule de feu qui sort d'un volcan ?","La lave",["La neige","La rosée","Le sable"]],
+ ['animaux',1,"Quel animal fabrique du miel ?","L'abeille",["La fourmi","Le papillon","La mouche"]],
+ ['animaux',1,"Que devient la chenille ?","Un papillon",["Une abeille","Une coccinelle","Un oiseau"]],
+ ['animaux',2,"Que devient le têtard ?","Une grenouille",["Un poisson","Un serpent","Une tortue"]],
+ ['animaux',2,"Quel animal porte son bébé dans une poche ?","Le kangourou",["La girafe","Le lion","Le zèbre"]],
+ ['animaux',1,"Quel animal a une trompe ?","L'éléphant",["La girafe","Le rhinocéros","L'hippopotame"]],
+ ['animaux',2,"Quel est le plus grand animal du monde ?","La baleine bleue",["L'éléphant","La girafe","Le requin"]],
+ ['animaux',2,"Quel animal a le plus long cou ?","La girafe",["Le cheval","Le chameau","L'autruche"]],
+ ['animaux',2,"De quoi se nourrit surtout le panda ?","De bambou",["De poisson","De viande","De bananes"]],
+ ['animaux',3,"Quel animal peut changer de couleur ?","Le caméléon",["Le lapin","Le cheval","Le hibou"]],
+ ['animaux',3,"Combien de bosses a un dromadaire ?","1",["2","3","0"],"Le dromadaire a une bosse, le chameau en a deux."],
+ ['animaux',2,"Quel oiseau ne sait pas voler ?","L'autruche",["Le pigeon","L'aigle","Le moineau"]],
+ ['animaux',3,"Comment dorment les chauves-souris ?","La tête en bas",["Debout","Dans l'eau","Sur le dos"]],
+ ['animaux',2,"Où l'abeille vit-elle ?","Dans une ruche",["Dans un terrier","Dans une niche","Dans une écurie"]],
+ ['animaux',2,"Comment s'appelle la maison du chien ?","La niche",["Le terrier","La ruche","Le nid"]],
+ ['animaux',2,"Comment s'appelle la maison du lapin sauvage ?","Le terrier",["La niche","La ruche","L'étable"]],
+ ['animaux',3,"Où dorment les chevaux ?","Dans une écurie",["Dans un poulailler","Dans une ruche","Dans un terrier"]],
+ ['animaux',3,"Comment respirent les poissons ?","Avec des branchies",["Avec un nez","Avec des poumons","Ils ne respirent pas"]],
+ ['animaux',3,"Lequel de ces animaux est un mammifère qui vole ?","La chauve-souris",["Le pigeon","Le papillon","L'aigle"]],
+ ['animaux',1,"Quel animal dit « cocorico » ?","Le coq",["Le canard","Le chat","La vache"]],
+ ['monde',1,"Quelles sont les couleurs du drapeau français ?","Bleu, blanc, rouge",["Vert, blanc, rouge","Noir, jaune, rouge","Bleu, jaune, vert"]],
+ ['monde',2,"Quelle est la plus haute montagne de France ?","Le mont Blanc",["Le mont Saint-Michel","Le Vésuve","La dune du Pilat"]],
+ ['monde',3,"Quel est le plus long fleuve de France ?","La Loire",["La Seine","Le Rhône","La Garonne"]],
+ ['monde',2,"Quel fleuve traverse Paris ?","La Seine",["La Loire","Le Nil","Le Rhin"]],
+ ['monde',2,"Quel est le plus grand océan du monde ?","L'océan Pacifique",["L'océan Atlantique","L'océan Indien","La mer Méditerranée"]],
+ ['monde',3,"Quel est le plus grand désert chaud du monde ?","Le Sahara",["Le désert de Gobi","Le Kalahari","L'Atacama"]],
+ ['monde',2,"Quel pays a la forme d'une botte ?","L'Italie",["L'Espagne","La France","La Grèce"]],
+ ['monde',2,"Quel animal est un symbole de la France ?","Le coq",["Le lion","L'aigle","L'ours"]],
+ ['monde',2,"Quelle monnaie utilise-t-on en France ?","L'euro",["Le dollar","Le yen","La livre"]],
+ ['monde',1,"Qu'y a-t-il au pôle Nord ?","De la glace",["Une forêt tropicale","Un désert de sable","Un volcan"]],
+ ['monde',3,"Quel est le plus long fleuve d'Afrique ?","Le Nil",["La Seine","L'Amazone","Le Danube"]],
+ ['monde',3,"Quelle mer borde le sud de la France ?","La mer Méditerranée",["La mer du Nord","La mer Rouge","La mer Noire"]],
+ ['temps',1,"Combien de jours y a-t-il dans une semaine ?","7",["5","10","12"]],['temps',1,"Combien de mois y a-t-il dans une année ?","12",["10","7","24"]],
+ ['temps',2,"Combien de minutes y a-t-il dans une heure ?","60",["100","30","24"]],['temps',2,"Combien d'heures y a-t-il dans une journée ?","24",["12","60","10"]],
+ ['temps',3,"Combien de jours y a-t-il dans une année ?","365",["100","300","1000"]],['temps',3,"Combien de secondes y a-t-il dans une minute ?","60",["100","10","30"]],
+ ['temps',2,"En quelle saison tombent les feuilles des arbres ?","L'automne",["Le printemps","L'été","L'hiver"]],
+ ['temps',1,"En quelle saison peut-on faire un bonhomme de neige ?","L'hiver",["L'été","Le printemps","L'automne"]],
+ ['temps',2,"En quelle saison les fleurs commencent-elles à pousser ?","Le printemps",["L'automne","L'hiver","L'été"]],
+ ['temps',1,"En quelle saison fait-il le plus chaud ?","L'été",["L'hiver","L'automne","Le printemps"]],
+ ['temps',3,"Quel mois a le moins de jours ?","Février",["Janvier","Août","Décembre"]],['temps',2,"Combien y a-t-il de saisons ?","4",["2","3","12"]],
+ ['temps',2,"Quel est le dernier jour de la semaine ?","Dimanche",["Lundi","Samedi","Vendredi"]],['temps',2,"Quel est le premier mois de l'année ?","Janvier",["Décembre","Mars","Septembre"]],
+ ['culture',1,"Dans quel conte une citrouille se transforme-t-elle en carrosse ?","Cendrillon",["Blanche-Neige","Le Petit Chaperon rouge","Pinocchio"]],
+ ['culture',1,"Qui le Petit Chaperon rouge rencontre-t-il dans la forêt ?","Le loup",["Un dragon","Un ours","Un lion"]],
+ ['culture',1,"Combien de nains vivent avec Blanche-Neige ?","7",["3","5","12"]],
+ ['culture',1,"Que se passe-t-il quand Pinocchio ment ?","Son nez s'allonge",["Il devient bleu","Il s'envole","Il éternue"]],
+ ['culture',1,"Combien y a-t-il de petits cochons dans le conte ?","3",["2","4","7"]],
+ ['culture',2,"Dans Les Trois Petits Cochons, quelle maison résiste au loup ?","La maison en briques",["La maison en paille","La maison en bois","La maison en papier"]],
+ ['culture',2,"Chez qui Boucle d'or entre-t-elle ?","Chez les trois ours",["Chez les sept nains","Chez le loup","Chez la sorcière"]],
+ ['culture',2,"De quoi est faite la maison de la sorcière dans Hansel et Gretel ?","De bonbons et de gâteaux",["De glace","De briques","De paille"]],
+ ['culture',2,"Quel fruit endort Blanche-Neige ?","Une pomme",["Une poire","Une fraise","Une banane"]],
+ ['culture',2,"Qui perd sa pantoufle de verre ?","Cendrillon",["Raiponce","La Belle au bois dormant","Boucle d'or"]],
+ ['culture',2,"Quelle princesse a de très longs cheveux et vit dans une tour ?","Raiponce",["Cendrillon","Blanche-Neige","Peau d'Âne"]],
+ ['culture',2,"Que sème le Petit Poucet pour retrouver son chemin ?","Des petits cailloux",["Des fleurs","Des bonbons","Des plumes"]],
+ ['culture',3,"Quel animal porte des bottes dans un conte célèbre ?","Le chat",["Le chien","Le cheval","Le canard"]],
+ ['culture',3,"Dans quel conte un haricot magique pousse-t-il jusqu'aux nuages ?","Jack et le haricot magique",["Le Petit Poucet","Peau d'Âne","Cendrillon"]],
+ ['culture',2,"Combien de temps dort la Belle au bois dormant ?","100 ans",["1 nuit","10 jours","3 semaines"]],
+ ['culture',2,"Où vit la Petite Sirène ?","Sous la mer",["Dans une forêt","Sur la Lune","Dans le désert"]],
+ ['culture',3,"Qui a écrit la fable « Le Corbeau et le Renard » ?","Jean de La Fontaine",["Victor Hugo","Charles Perrault","Molière"]],
+ ['culture',3,"Dans la fable, que tient le corbeau dans son bec ?","Un fromage",["Un ver de terre","Une pomme","Une clé"]],
+ ['culture',3,"Dans « Le Lièvre et la Tortue », qui gagne la course ?","La tortue",["Le lièvre","Personne","Le renard"]],
+ ['culture',2,"Dans « La Cigale et la Fourmi », que fait la cigale tout l'été ?","Elle chante",["Elle travaille","Elle dort","Elle nage"]],
+ ['culture',2,"Combien de joueurs une équipe de football a-t-elle sur le terrain ?","11",["5","7","15"]],
+ ['culture',1,"Avec quoi joue-t-on au tennis ?","Une raquette",["Une crosse","Un bâton","Une pelle"]],
+ ['culture',1,"Quel sport pratique-t-on dans une piscine ?","La natation",["Le ski","Le judo","Le vélo"]],
+ ['culture',3,"Tous les combien d'années ont lieu les Jeux olympiques d'été ?","Tous les 4 ans",["Tous les ans","Tous les 2 ans","Tous les 10 ans"]],
+ ['culture',1,"Quel jour fête-t-on Noël ?","Le 25 décembre",["Le 1er janvier","Le 14 juillet","Le 31 octobre"]],
+ ['culture',2,"Que fête-t-on le 14 juillet en France ?","La fête nationale",["Noël","Pâques","Halloween"]],
+ ['culture',1,"Que cherche-t-on dans le jardin à Pâques ?","Des œufs en chocolat",["Des sapins","Des citrouilles","Des marrons"]],
+ ['culture',2,"Combien de cordes a une guitare classique ?","6",["2","4","10"]],
+ ['culture',3,"Qui a peint la Joconde ?","Léonard de Vinci",["Pablo Picasso","Vincent van Gogh","Claude Monet"]],
+ ['culture',3,"Dans quel musée de Paris se trouve la Joconde ?","Le Louvre",["Le musée d'Orsay","Le Grand Palais","La tour Eiffel"]],
+ ['culture',2,"Combien de notes y a-t-il dans la gamme do, ré, mi… ?","7",["5","8","12"],"Do, ré, mi, fa, sol, la, si."],
+ ['logique',2,"Qu'est-ce qui a des aiguilles mais ne pique pas ?","Une horloge",["Un hérisson","Un cactus","Un sapin"]],
+ ['logique',2,"Qu'est-ce qui a des dents mais ne mange jamais ?","Un peigne",["Un crocodile","Un bébé","Une souris"]],
+ ['logique',2,"Qu'est-ce qui monte et descend sans jamais bouger ?","Un escalier",["Un ascenseur","Un oiseau","Un ballon"]],
+ ['logique',3,"Qu'est-ce qui est plein de trous mais garde l'eau ?","Une éponge",["Un seau","Une passoire","Un verre"]],
+ ['logique',3,"Qu'est-ce qui est le plus lourd : 1 kilo de plumes ou 1 kilo de pierres ?","Ils pèsent pareil",["Les pierres","Les plumes","On ne peut pas savoir"]],
+ ['logique',2,"La maman de Léa a 3 enfants : Lili, Lulu et… ?","Léa",["Lolo","Lala","Tom"]],
+ ['logique',3,"Un fermier a 5 moutons. Tous sauf 2 s'enfuient. Combien en reste-t-il ?","2",["3","5","0"]],
+ ['logique',2,"Qu'est-ce qui a une tête et une queue mais pas de corps ?","Une pièce de monnaie",["Un serpent","Un chat","Une comète"]],
+ ['logique',1,"Qu'est-ce qui se mouille en séchant ?","Une serviette",["Un parapluie","Un poisson","Une chaussure"]],
+ ['logique',3,"Dans une course, tu dépasses le 2e. Quelle est ta place ?","2e",["1re","3e","Dernière"]],
+ ['logique',1,"Qu'est-ce qui a des pages mais n'est pas un arbre ?","Un livre",["Un sapin","Une fleur","Un chêne"]],
+ ['logique',2,"Je suis jaune, on m'épluche et les singes m'adorent. Qui suis-je ?","Une banane",["Un citron","Une pomme","Un ananas"]],
+ ['logique',1,"Je brille la nuit dans le ciel et je change de forme. Qui suis-je ?","La Lune",["Le Soleil","Un nuage","La pluie"]],
+ ['logique',2,"Plus je sèche, plus je suis mouillée. Qui suis-je ?","Une serviette",["Une éponge","Une flaque","Une chaussette"]],
+ ['francais',1,"Combien y a-t-il de lettres dans l'alphabet ?","26",["20","24","30"]],
+ ['francais',2,"Combien y a-t-il de voyelles dans l'alphabet ?","6",["4","5","10"],"A, E, I, O, U et Y."],
+ ['francais',2,"Quel signe met-on à la fin d'une question ?","Un point d'interrogation",["Un point","Une virgule","Un point d'exclamation"]],
+ ['francais',2,"Par quoi commence toujours une phrase ?","Une majuscule",["Un point","Une virgule","Un chiffre"]]
+];
+Object.keys(CAT).forEach(cat=>add(cat,[1,2,3],lv=>{const it=FIX.filter(x=>x[0]===cat&&x[1]===lv);if(!it.length)return null;const x=pick(it);return mk(cat,x[2],x[3],x[4],x[5]?{explain:x[5]}:null)}));
+
+/* ---------------- tirage ---------------- */
+const MKEY='mia-quiz-v1';
+let M={};try{M=JSON.parse(localStorage.getItem(MKEY))||{}}catch(e){M={}}
+M=Object.assign({best:0,total:0,games:0,read:true,seen:[]},M);
+const seen=new Set(M.seen);
+function msave(){try{M.seen=[...seen].slice(-6000);localStorage.setItem(MKEY,JSON.stringify(M))}catch(e){}}
+let recent=[];
+function sample(lv){
+  const cats=Object.keys(GEN).filter(c=>GEN[c].some(g=>g.lv.includes(lv)));
+  const pool=cats.filter(c=>!recent.includes(c));const cat=pick(pool.length?pool:cats);
+  const q=pick(GEN[cat].filter(g=>g.lv.includes(lv))).f(lv);
+  if(!q||q.answers.length!==4||new Set(q.answers).size!==4||q.correct<0)return null;
+  return q;
+}
+const keyOf=q=>q.q+'|'+(q.big||'')+'|'+q.answers[q.correct];
+function nextQ(lv){
+  let best=null;
+  for(let t=0;t<120;t++){const q=sample(lv);if(!q)continue;if(!best)best=q;if(!seen.has(keyOf(q))){best=q;break}}
+  seen.add(keyOf(best));recent=[best.cat,...recent].slice(0,3);msave();return best;
+}
+window.__quiz={sample,keyOf};
+
+/* ---------------- jeu ---------------- */
+const LADDER=[100,200,300,500,1000,2000,4000,8000,16000,32000,64000,125000,250000,500000,1000000];
+const SAFE=[4,9];
+const fmt=n=>n.toLocaleString('fr-FR');
+const clean=s=>String(s).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}❓…«»]/gu,' ').replace(/___/g,' ... ').replace(/\s+/g,' ').trim();
+const lvl=i=>i<5?1:i<10?2:3;
+const safeWin=i=>i>=10?LADDER[9]:i>=5?LADDER[4]:0;
+let G=null,tok=0;
+
+function open(){root.hidden=false;say('Bonjour Mia ! Prête pour le grand quiz ?');menu()}
+function menu(){
+  tok++;hush();G=null;root.scrollTop=0;
+  root.innerHTML=`<div class="mm">
+    <div class="mm-coin" aria-hidden="true">★</div>
+    <h1>Le Grand Quiz<span>de Mia</span></h1>
+    <p class="mm-sub">15 questions, 3 jokers, et un million de pièces d'or à gagner !</p>
+    <button class="m-btn gold big" id="mplay">Jouer</button>
+    <div class="mm-stats">
+      <div class="stat"><b>${fmt(M.best)}</b><span>Record</span></div>
+      <div class="stat"><b>${fmt(M.total)}</b><span>Trésor total</span></div>
+      <div class="stat"><b>${M.games}</b><span>Parties</span></div>
+    </div>
+    <button class="m-toggle" id="mreadset" aria-pressed="${M.read}"><span class="sw" aria-hidden="true"></span>Lire les questions à voix haute</button>
+    <div class="mm-rules">
+      <p><b>Comment jouer :</b> choisis une réponse, puis appuie sur « Valider ». Chaque bonne réponse te fait monter d'une marche.</p>
+      <p><b>Paliers :</b> à la question 5 et à la question 10, ton trésor est gardé pour de bon.</p>
+      <p><b>Jokers :</b> 50:50 enlève deux mauvaises réponses, 🦉 le hibou te donne son avis, 🙋 la classe vote.</p>
+    </div>
+    <button class="m-link" id="mswap">Changer de joueuse</button>
+  </div>`;
+  $('#mplay').onclick=()=>{sfx.win();start()};
+  $('#mreadset').onclick=e=>{M.read=!M.read;msave();e.currentTarget.setAttribute('aria-pressed',String(M.read));sfx.pop()};
+  $('#mswap').onclick=()=>{sfx.pop();hush();root.hidden=true;K.showPicker()};
+}
+function start(){G={i:0,used:{},gone:[],tok:++tok};M.games++;msave();ask()}
+function ask(){G.q=nextQ(lvl(G.i));G.sel=-1;G.lock=false;G.gone=[];G.help='';render();if(M.read)readQ()}
+function readQ(){const q=G.q;let t=clean(q.say||q.q);if(!q.noRead)t+=' ... '+q.answers.map((a,k)=>`${'ABCD'[k]} : ${clean(a)}`).join('. ');say(t+'.')}
+
+function render(){
+  const q=G.q,i=G.i,c=CAT[q.cat];root.scrollTop=0;
+  root.innerHTML=`<div class="mg">
+    <div class="mg-top">
+      <button class="m-round" id="mx" aria-label="Arrêter la partie">✕</button>
+      <div class="mg-prog">Question <b>${i+1}</b> sur 15 · pour <b>${fmt(LADDER[i])}</b> pièces</div>
+      <button class="m-round" id="msay" aria-label="Lire la question">🔊</button>
+    </div>
+    <div class="pips" aria-hidden="true">${LADDER.map((_,k)=>`<i class="${k<i?'done':k===i?'cur':''}${SAFE.includes(k)?' safe':''}"></i>`).join('')}</div>
+    <div class="mg-main">
+      <section class="mg-play">
+        <div class="mg-cat">${c.e} ${c.n}</div>
+        <div class="mg-q">${q.big?`<div class="mg-big">${q.big}</div>`:''}<p>${q.q}</p></div>
+        <div class="mg-ans">${q.answers.map((a,k)=>`<button class="ans" data-k="${k}"><span class="L">${'ABCD'[k]}</span><span class="t">${a}</span></button>`).join('')}</div>
+        <div id="mzone"></div>
+      </section>
+      <aside class="ladder" aria-label="Échelle des gains">${LADDER.map((v,k)=>({v,k})).reverse().map(({v,k})=>`<div class="rung${k<i?' done':''}${k===i?' cur':''}${SAFE.includes(k)?' safe':''}"><span class="n">${k+1}</span><span>${fmt(v)}</span></div>`).join('')}</aside>
+    </div>
+  </div>`;
+  $('#msay').onclick=()=>{sfx.pop();readQ()};
+  $('#mx').onclick=()=>{sfx.pop();askStop(true)};
+  $$('.ans',root).forEach(b=>b.onclick=()=>{
+    if(G.lock||b.classList.contains('gone'))return;
+    G.sel=+b.dataset.k;$$('.ans',root).forEach(x=>x.classList.toggle('sel',x===b));
+    tone(660,.08,'triangle',.1);const ok=$('#mok');if(ok)ok.disabled=false;
+    if(M.read)say(clean(G.q.answers[G.sel]));
+  });
+  controls();
+}
+function controls(){
+  const z=$('#mzone',root),cur=G.i?LADDER[G.i-1]:0;
+  z.innerHTML=`${G.help}
+    <div class="mg-row">
+      <div class="jokers">
+        <button class="joker" id="j50" aria-label="Joker 50:50" ${G.used.f?'disabled':''}>50:50</button>
+        <button class="joker" id="jowl" aria-label="Joker du hibou" ${G.used.o?'disabled':''}><span class="e">🦉</span></button>
+        <button class="joker" id="jvote" aria-label="Joker vote de la classe" ${G.used.v?'disabled':''}><span class="e">🙋</span></button>
+      </div>
+      <button class="m-btn gold" id="mok" ${G.sel<0?'disabled':''}>Valider</button>
+    </div>
+    <div class="mstop" id="mstop">${cur?`<button class="m-link" id="mkeep">💰 Garder mon trésor : ${fmt(cur)} pièces</button>`:''}</div>`;
+  $('#mok').onclick=validate;
+  const k=$('#mkeep');if(k)k.onclick=()=>{sfx.pop();askStop(false)};
+  $('#j50').onclick=()=>joker('f');$('#jowl').onclick=()=>joker('o');$('#jvote').onclick=()=>joker('v');
+}
+function askStop(quit){
+  if(G.lock)return;const cur=G.i?LADDER[G.i-1]:0;const s=$('#mstop',root);
+  s.innerHTML=`<div class="mconfirm"><span>${cur?`Tu t'arrêtes et tu gardes ${fmt(cur)} pièces ?`:'Tu veux arrêter la partie ?'}</span>
+    <button class="m-btn gold" id="mstopY">${cur?'Oui, je garde':'Oui, arrêter'}</button><button class="m-btn" id="mstopN">Non, je continue</button></div>`;
+  s.scrollIntoView({block:'nearest',behavior:'smooth'});
+  if(quit||cur)say(cur?`Tu veux t'arrêter et garder ${cur} pièces d'or ?`:'Tu veux arrêter la partie ?');
+  $('#mstopY').onclick=()=>finish(cur,'stop');
+  $('#mstopN').onclick=()=>{sfx.pop();controls()};
+}
+function joker(k){
+  if(G.lock||G.used[k])return;G.used[k]=1;sfx.pop();
+  const q=G.q,c=q.correct,lv=lvl(G.i),alive=[0,1,2,3].filter(x=>!G.gone.includes(x));
+  if(k==='f'){
+    G.gone=shuffle(alive.filter(x=>x!==c)).slice(0,2);
+    G.gone.forEach(x=>{const b=$(`.ans[data-k="${x}"]`,root);b.classList.add('gone');b.classList.remove('sel');b.disabled=true});
+    if(G.gone.includes(G.sel))G.sel=-1;
+    say('Pouf ! Deux mauvaises réponses ont disparu.');
+  }else if(k==='o'){
+    const sure=Math.random()<(lv===1?.95:lv===2?.85:.7);
+    const ans=sure?c:pick(alive.filter(x=>x!==c));
+    const txt=lv===1?`Facile ! Je suis sûr que c'est la réponse ${'ABCD'[ans]}.`:lv===2?`Je pense que c'est la réponse ${'ABCD'[ans]}.`:`Hmm… je crois que c'est la ${'ABCD'[ans]}, mais je ne suis pas complètement sûr.`;
+    G.help=`<div class="owlsay"><span class="e" aria-hidden="true">🦉</span><span>${txt}</span></div>`;say(txt);
+  }else{
+    let base=lv===1?R(55,80):lv===2?R(40,65):R(30,55);if(alive.length===2)base=Math.min(90,base+15);
+    const pct=[0,0,0,0];pct[c]=base;let rest=100-base;const others=alive.filter(x=>x!==c);
+    others.forEach((x,j)=>{const v=j===others.length-1?rest:R(0,rest);pct[x]=v;rest-=v});
+    G.help=`<div class="vote" role="img" aria-label="Vote de la classe">${pct.map((p,x)=>`<div class="vbar"><span>${p}%</span><i style="--h:${Math.max(p,2)}%"></i><b>${'ABCD'[x]}</b></div>`).join('')}</div>`;
+    say('Voici ce que pense la classe !');
+  }
+  controls();
+}
+function validate(){
+  if(G.lock||G.sel<0)return;G.lock=true;hush();
+  const t=G.tok,b=$(`.ans[data-k="${G.sel}"]`,root);b.classList.add('wait');
+  $$('.ans,.joker,#mok,#mkeep',root).forEach(x=>x.disabled=true);
+  [0,1,2].forEach(k=>tone(392+k*60,.18,'sine',.08,k*.45));
+  setTimeout(()=>{if(t!==G?.tok)return;reveal(b)},1500);
+}
+function reveal(b){
+  const q=G.q,c=q.correct,good=$(`.ans[data-k="${c}"]`,root);b.classList.remove('wait');
+  const z=$('#mzone',root);const ex=q.explain?`<p>${q.explain}</p>`:'';
+  if(G.sel===c){
+    b.classList.add('good');sfx.win();const r=b.getBoundingClientRect();confetti(r.left+r.width/2,r.top+r.height/2,70);
+    G.i++;
+    if(G.i===15){setTimeout(()=>finish(LADDER[14],'win'),1400);return}
+    const won=LADDER[G.i-1],palier=SAFE.includes(G.i-1);const praise=pick(['Bravo !','Bonne réponse !','Super !','Exact !','Génial !']);
+    z.innerHTML=`<div class="fb"><h3>${praise}</h3>${ex}<p>Tu as <b>${fmt(won)}</b> pièces d'or.${palier?' C\'est un palier : elles sont à toi pour de bon !':''}</p><button class="m-btn gold" id="mnext">Question suivante ➜</button></div>`;
+    say(praise+(q.explain?' '+clean(q.explain):'')+(palier?' Tu as atteint un palier !':''));
+    $('#mnext').onclick=()=>{sfx.pop();ask()};
+    z.scrollIntoView({block:'nearest',behavior:'smooth'});
+  }else{
+    b.classList.add('bad');good.classList.add('good');sfx.oops();
+    const won=safeWin(G.i);
+    z.innerHTML=`<div class="fb no"><h3>Oh non !</h3><p>La bonne réponse était <b>${'ABCD'[c]} : ${q.answers[c]}</b>.</p>${ex}<button class="m-btn gold" id="mend">Voir mon trésor</button></div>`;
+    say('Oh non ! La bonne réponse était : '+clean(q.answers[c])+'. '+(q.explain?clean(q.explain):''));
+    $('#mend').onclick=()=>{sfx.pop();finish(won,'lost')};
+    z.scrollIntoView({block:'nearest',behavior:'smooth'});
+  }
+}
+function finish(amount,how){
+  tok++;G=null;hush();M.total+=amount;M.best=Math.max(M.best,amount);msave();root.scrollTop=0;
+  const title=how==='win'?'Tu as gagné le million !':how==='stop'?(amount?'Tu as gardé ton trésor !':'À bientôt, Mia !'):amount?'Bien joué, Mia !':"Ce n'est pas grave !";
+  root.innerHTML=`<div class="mr">
+    <div class="mm-coin${how==='win'?' big':''}" aria-hidden="true">★</div>
+    <h2>${title}</h2>
+    ${amount?`<p>Tu repars avec</p><div class="amount">${fmt(amount)}</div><p>pièces d'or</p>`:(how==='stop'?`<p>Reviens vite pour une nouvelle partie !</p>`:`<p>Tu feras mieux la prochaine fois. À chaque partie, tu apprends plein de choses !</p>`)}
+    <p class="mr-total">Trésor total : <b>${fmt(M.total)}</b> pièces</p>
+    <div class="mconfirm"><button class="m-btn gold big" id="magain">Rejouer</button><button class="m-btn" id="mmenu">Menu</button></div>
+  </div>`;
+  if(amount){sfx.fanfare();confetti(innerWidth/2,innerHeight/3,how==='win'?200:110);if(how==='win')setTimeout(()=>confetti(innerWidth/4,innerHeight/2,120),600)}
+  say(`${title} ${amount?`Tu repars avec ${amount} pièces d'or !`:''}`);
+  $('#magain').onclick=()=>{sfx.win();start()};
+  $('#mmenu').onclick=()=>{sfx.pop();menu()};
+}
+window.MIA={open};
 })();
 </script>
 
