@@ -398,6 +398,97 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
 @keyframes coin{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.82)}}
 @keyframes grow{from{height:0}}
 
+/* ---------- Pico, la mascotte ---------- */
+.pico{display:block;width:100%;height:100%;overflow:visible}
+.pico .p-all{transform-box:view-box;transform-origin:60px 116px;animation:picoIdle 3.2s ease-in-out infinite}
+.pico .lid{transform-box:fill-box;transform-origin:center top;transform:scaleY(0);animation:blink 4.6s infinite}
+.pico .lid.r{animation-delay:.04s}
+.pico .jaw{transform-box:fill-box;transform-origin:center top}
+.talking .pico .jaw{animation:jaw .2s ease-in-out infinite alternate}
+.pico .wing{transform-box:fill-box}
+.pico .wing.l{transform-origin:right top}
+.pico .wing.r{transform-origin:left top}
+.pico.happy .p-all{animation:picoJump .65s ease-out 2}
+.pico.happy .wing.l{animation:flapL .16s ease-in-out 8 alternate}
+.pico.happy .wing.r{animation:flapR .16s ease-in-out 8 alternate}
+.pico.sad .p-all{animation:picoSad 1.2s ease-in-out}
+.pico.sad .pupils{transform:translateY(3px)}
+.pico.wave .wing.r{animation:waveR .32s ease-in-out 6 alternate}
+.pico .pupils{transition:transform .35s}
+.pico.look-l .pupils{transform:translateX(-3.5px)}
+.pico.look-r .pupils{transform:translateX(3.5px)}
+.pico .acc-mia{display:none}
+.pico.mia-look .acc-mia{display:inline}
+.pico.mia-look .acc-alba{display:none}
+.owl{font-size:0;width:clamp(56px,9vw,78px);height:clamp(58px,9.3vw,81px);animation:none}
+@media (max-width:420px){.owl{display:block;width:46px;height:48px}}
+.who .av.pico-slot{width:clamp(100px,20vmin,150px);height:clamp(104px,21vmin,156px)}
+.bubble.pop-b{animation:pop .35s}
+@keyframes picoIdle{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-4px) rotate(2deg)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(0)}95%{transform:scaleY(1)}}
+@keyframes jaw{from{transform:scaleY(.3)}to{transform:scaleY(1.7)}}
+@keyframes picoJump{0%{transform:translateY(0)}35%{transform:translateY(-20px) rotate(-6deg) scale(1.05)}65%{transform:translateY(0) scale(1.08,.92)}100%{transform:translateY(0)}}
+@keyframes picoSad{0%,100%{transform:rotate(0)}30%{transform:rotate(-9deg) translateY(4px)}70%{transform:rotate(7deg) translateY(4px)}}
+@keyframes flapL{from{transform:rotate(0)}to{transform:rotate(32deg)}}
+@keyframes flapR{from{transform:rotate(0)}to{transform:rotate(-32deg)}}
+@keyframes waveR{from{transform:rotate(0)}to{transform:rotate(-60deg)}}
+
+/* ---------- décor qui flotte (Alba) ---------- */
+.decor{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.decor span{position:absolute;bottom:-90px;left:var(--x);font-family:var(--f-letter);font-weight:700;font-size:var(--s);line-height:1;color:var(--c);opacity:.2;animation:floatUp var(--d) linear infinite;animation-delay:var(--dl)}
+#app{position:relative;z-index:1}
+@keyframes floatUp{from{transform:translateY(0) rotate(0)}to{transform:translateY(calc(-100vh - 180px)) rotate(var(--r))}}
+.tile .tile-art{animation:artBob 3.2s ease-in-out infinite}
+.tile:nth-child(2n) .tile-art{animation-delay:-1.1s}
+.tile:nth-child(3n) .tile-art{animation-delay:-2.1s}
+@keyframes artBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-6px) rotate(3deg)}}
+.foot-l{display:flex;flex-wrap:wrap;gap:2px}
+.psel{font:inherit;font-size:1rem;padding:6px 10px;border:3px solid var(--ink);border-radius:12px;background:var(--paper);color:var(--ink);max-width:100%}
+
+/* ---------- premier son / rimes ---------- */
+.target{display:flex;flex-direction:column;align-items:center;gap:10px}
+.target .w{font-family:var(--f-letter);font-weight:700;font-size:clamp(1.6rem,5vmin,2.4rem);line-height:1.1;background:var(--paper);border:3px solid var(--ink);border-radius:999px;padding:4px 20px}
+.rimes{min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,4vh,36px)}
+.rcards{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(14px,3vw,26px)}
+.rcard{--c:var(--tomato);width:clamp(118px,26vmin,190px);aspect-ratio:4/5;background:var(--paper);border:4px solid var(--ink);border-radius:26px;box-shadow:inset 0 -12px 0 var(--c),0 8px 0 var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;padding:8px 8px 20px;transition:transform .08s,box-shadow .08s,opacity .2s,filter .2s}
+.rcard:active{transform:translateY(6px);box-shadow:inset 0 -12px 0 var(--c),0 2px 0 var(--ink)}
+.rcard .e{font-size:clamp(3rem,11vmin,5rem);line-height:1}
+.rcard .w{font-family:var(--f-letter);font-weight:700;font-size:clamp(1.1rem,3.4vmin,1.6rem);line-height:1;color:var(--ink)}
+.rcard.right{background:var(--leaf);--c:var(--shade)}
+.rcard.right .w{color:var(--paper)}
+
+/* ---------- additions ---------- */
+.sum{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:clamp(8px,2vw,18px);width:100%}
+.grp{background:var(--paper);border:4px solid var(--ink);border-radius:26px;box-shadow:0 8px 0 var(--ink);padding:12px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:min(40vw,340px);min-width:84px}
+.grp .o{position:relative;font-size:clamp(2.1rem,7vmin,3.5rem);line-height:1;padding:4px;border-radius:14px}
+.grp .o.counted{background:var(--mat);animation:pop .3s}
+.qmark{font-family:var(--f-display);font-weight:800;font-size:clamp(3rem,10vmin,5rem);line-height:1;color:var(--grape);animation:pulse 1.4s ease-in-out infinite}
+
+/* ---------- plus ou moins ---------- */
+.versus{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,3vw,28px);width:100%;max-width:900px}
+.ptray{--c:var(--lagoon);background:var(--paper);border:4px solid var(--ink);border-radius:30px;box-shadow:inset 0 -12px 0 var(--c),0 8px 0 var(--ink);padding:16px 12px 28px;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:6px;min-height:clamp(170px,40vh,340px);cursor:pointer;font-size:clamp(1.9rem,6.5vmin,3.4rem);line-height:1.1;transition:transform .08s,box-shadow .08s,opacity .2s,filter .2s}
+.ptray:active{transform:translateY(6px);box-shadow:inset 0 -12px 0 var(--c),0 2px 0 var(--ink)}
+.ptray.right{background:var(--leaf);--c:var(--shade)}
+.num-grid{overflow-y:auto;min-height:0}
+.num-grid .block{font-size:clamp(1.8rem,5.6vmin,3.4rem)}
+.slot{width:auto;min-width:clamp(80px,16vmin,132px);padding:0 .14em}
+
+/* ---------- Mia : animations ---------- */
+.mia-root>*{position:relative;z-index:1}
+.mia-root::before,.mia-root::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0}
+.mia-root::before{background:radial-gradient(circle at 12% 18%,var(--m-cream) 0 1.5px,transparent 2.5px),radial-gradient(circle at 78% 12%,var(--m-cream) 0 1.8px,transparent 2.8px),radial-gradient(circle at 34% 72%,var(--m-cream) 0 1.4px,transparent 2.4px),radial-gradient(circle at 88% 64%,var(--m-gold) 0 2px,transparent 3px),radial-gradient(circle at 56% 34%,var(--m-cream) 0 1.2px,transparent 2.2px),radial-gradient(circle at 6% 86%,var(--m-gold) 0 1.8px,transparent 2.8px);animation:twinkle 2.4s ease-in-out infinite alternate}
+.mia-root::after{background:radial-gradient(circle at 24% 40%,var(--m-gold) 0 1.6px,transparent 2.6px),radial-gradient(circle at 66% 82%,var(--m-cream) 0 1.6px,transparent 2.6px),radial-gradient(circle at 92% 30%,var(--m-cream) 0 1.3px,transparent 2.3px),radial-gradient(circle at 44% 8%,var(--m-gold) 0 1.6px,transparent 2.6px),radial-gradient(circle at 16% 60%,var(--m-cream) 0 1.2px,transparent 2.2px);animation:twinkle 3.1s ease-in-out -1.5s infinite alternate}
+@keyframes twinkle{from{opacity:.12}to{opacity:.9}}
+.mm-pico{width:clamp(120px,28vmin,180px);height:clamp(124px,29vmin,186px)}
+.mr-hero{display:flex;align-items:flex-end;justify-content:center;gap:12px}
+.mg-host{display:flex;align-items:center;justify-content:center;gap:10px}
+.mg-pico{width:60px;height:62px;flex:none}
+.owlsay .e.mg-pico{font-size:0}
+.coin-drop{position:fixed;top:0;z-index:55;pointer-events:none;line-height:1}
+.rung.cur{animation:rungPulse 1.3s ease-in-out infinite}
+@keyframes rungPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+.m-btn.gold.big{animation:pulse 1.8s ease-in-out infinite}
+
 /* ---------- animations ---------- */
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-6px) rotate(3deg)}}
 @keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
@@ -420,7 +511,7 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
   <header class="bar">
     <button class="round invisible" id="homeBtn" aria-label="Retour à l'accueil">🏠</button>
     <button class="talk" id="talk" aria-label="Écouter encore">
-      <span class="owl" aria-hidden="true">🦉</span>
+      <span class="owl" aria-hidden="true" id="picoHead"></span>
       <span class="bubble" id="bubble">Bonjour !</span>
     </button>
     <div class="stars" id="stars" aria-label="Étoiles gagnées"><span class="s" aria-hidden="true">⭐</span><span id="starNum">0</span></div>
@@ -433,14 +524,14 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
     <h1 class="who-title">Qui joue ?</h1>
     <div class="who-grid">
       <button class="who alba" id="whoAlba" aria-label="Alba : les Cubes Magiques">
-        <span class="av" aria-hidden="true">🦉</span>
+        <span class="av pico-slot" aria-hidden="true" data-pico="alba"></span>
         <span class="nm" aria-hidden="true"><span class="block" style="--c:var(--tomato)">A</span><span class="block" style="--c:var(--tangerine)">L</span><span class="block" style="--c:var(--leaf)">B</span><span class="block" style="--c:var(--lagoon)">A</span></span>
-        <span class="tg">Les Cubes Magiques</span>
+        <span class="tg">Les Cubes Magiques · 5 ans</span>
       </button>
       <button class="who mia" id="whoMia" aria-label="Mia : le Grand Quiz">
-        <span class="av" aria-hidden="true">🏆</span>
+        <span class="av pico-slot" aria-hidden="true" data-pico="mia"></span>
         <span class="nm" aria-hidden="true">MIA</span>
-        <span class="tg">Le Grand Quiz</span>
+        <span class="tg">Le Grand Quiz · 7-8 ans</span>
       </button>
     </div>
   </div>
@@ -485,7 +576,7 @@ const ALPHA=[
  ['Y','i grec',[['Yoyo','🪀'],['Yeux','👀'],['Yack','🐃']]],
  ['Z','zèd',[['Zèbre','🦓'],['Zéro','0️⃣']]]
 ];
-const NUM=['zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix'];
+const NUM=['zéro','un','deux','trois','quatre','cinq','six','sept','huit','neuf','dix','onze','douze','treize','quatorze','quinze','seize','dix-sept','dix-huit','dix-neuf','vingt'];
 // [image, singulier, pluriel, genre]
 const OBJ=[
  ['🍎','pomme','pommes','f'],['⭐','étoile','étoiles','f'],['🐟','poisson','poissons','m'],['🎈','ballon','ballons','m'],
@@ -499,19 +590,23 @@ const WORDS=[
  ['tortue','🐢'],['sapin','🎄'],['nuage','☁️'],['chien','🐶'],['pied','🦶'],['main','✋'],['clé','🔑'],['livre','📕'],
  ['papa','👨'],['maman','👩'],['lait','🥛'],['pizza','🍕'],['train','🚂'],['œuf','🥚']
 ];
-const CONS=['M','L','P','R','S','T','N','B','V','F','D'];
-const VOW=['A','I','O','U','É'];
+const CONS=['M','L','P','R','S','T','N','B','V','F','D','J','CH'];
+const VOW=['A','I','O','U','É','OU','ON'];
 const STICKERS=['🦄','🐶','🐱','🐼','🦊','🐸','🐵','🐧','🦋','🐙','🐳','🦖','🐢','🐰','🦁','🐯','🐨','🐷','🐮','🦒','🐝','🐞','🦜','🐬','🦩','🍦','🍩','🎈','🌈','🚀','👑','🎠','🧸','🍭','🌻','🏰'];
 const PRAISE=['Bravo !','Super !','Génial !','Très bien !','Youpi !','Magnifique !','Bien joué !'];
 const COLS=['--tomato','--tangerine','--leaf','--lagoon','--grape','--bubble'];
 const GAMES=[
  {id:'abc',name:"L'alphabet",art:'<span class="tile-art">ABC</span>',c:'--tomato'},
  {id:'find',name:'Trouve la lettre',art:'<span class="tile-art emo">🔍</span>',c:'--lagoon'},
+ {id:'first',name:'Le premier son',art:'<span class="tile-art emo">👂</span>',c:'--grape'},
  {id:'syll',name:'Les syllabes',art:'<span class="tile-art">MA</span>',c:'--tangerine'},
  {id:'read',name:'Lire des mots',art:'<span class="tile-art emo">📖</span>',c:'--bubble'},
- {id:'numbers',name:'Les chiffres',art:'<span class="tile-art">123</span>',c:'--leaf'},
+ {id:'rhyme',name:'Les rimes',art:'<span class="tile-art emo trio">🐱🐀</span>',c:'--leaf'},
+ {id:'numbers',name:'Les nombres',art:'<span class="tile-art">1·20</span>',c:'--tangerine'},
  {id:'count',name:'Compter',art:'<span class="tile-art emo trio">🍎🍎🍎</span>',c:'--grape'},
- {id:'memory',name:'Memory',art:'<span class="tile-art emo">🃏</span>',c:'--tomato'},
+ {id:'add',name:'Additions',art:'<span class="tile-art">2+3</span>',c:'--tomato'},
+ {id:'more',name:'Plus ou moins',art:'<span class="tile-art emo">⚖️</span>',c:'--lagoon'},
+ {id:'memory',name:'Memory',art:'<span class="tile-art emo">🃏</span>',c:'--leaf'},
  {id:'stickers',name:'Mes autocollants',art:'<span class="tile-art emo">🎁</span>',c:'--sun'}
 ];
 
@@ -521,11 +616,12 @@ function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){re
 const saved=load();
 const state={
   stars:+saved.stars||0,
-  settings:Object.assign({case:'upper',rate:0.9,sfx:true},saved.settings||{}),
-  screen:'splash',token:0,lastPrompt:''
+  settings:Object.assign({case:'both',rate:0.9,sfx:true,kidVoice:true,voiceName:''},saved.settings||{}),
+  screen:'splash',token:0,lastPrompt:'',attract:0
 };
+if(!state.settings.v5){state.settings.case='both';state.settings.kidVoice=true;state.settings.v5=1}
 function save(){try{localStorage.setItem(KEY,JSON.stringify({stars:state.stars,settings:state.settings}))}catch(e){}}
-const LV={find:0,count:0,read:0,mem:0};
+const LV={find:0,count:0,read:0,mem:0,first:0,rhyme:0,add:0,more:0};
 let pendingSticker=false,lastPick={};
 const bags={};
 function fromBag(key,list){
@@ -547,28 +643,33 @@ function restart(el,cls){el.classList.remove(cls);void el.offsetWidth;el.classLi
 /* ================= voix ================= */
 const synth=('speechSynthesis' in window)?window.speechSynthesis:null;
 let voice=null,speakId=0;
+let profile='alba';
+function frVoices(){return synth?synth.getVoices().filter(v=>/^fr/i.test(v.lang)):[]}
 function pickVoice(){
-  if(!synth)return;
-  const vs=synth.getVoices().filter(v=>/^fr/i.test(v.lang));
-  if(!vs.length)return;
-  const pref=['Amélie','Amelie','Audrey','Aurélie','Marie','Google français','Denise','Hortense','Julie','Thomas'];
-  const frFR=vs.filter(v=>/fr[-_]FR/i.test(v.lang));
-  voice=frFR.find(v=>pref.some(p=>v.name.includes(p)))||frFR.find(v=>v.localService)||frFR[0]||vs[0];
+  if(!synth)return;const vs=frVoices();if(!vs.length)return;
+  const want=state.settings.voiceName,w=want&&vs.find(v=>v.name===want);if(w){voice=w;return}
+  const pref=['Eloise','Denise','Vivienne','Amélie','Amelie','Audrey','Aurélie','Marie','Google français','Hortense','Julie','Céline','Léa','Thomas'];
+  const frFR=vs.filter(v=>/fr[-_]FR/i.test(v.lang)),pool=frFR.length?frFR:vs;
+  for(const p of pref){const f=pool.find(v=>v.name.includes(p));if(f){voice=f;return}}
+  voice=pool.find(v=>v.localService)||pool[0];
 }
 if(synth){pickVoice();try{synth.addEventListener('voiceschanged',pickVoice)}catch(e){synth.onvoiceschanged=pickVoice}}
+function voiceParams(){
+  const st=state.settings,kid=st.kidVoice!==false,natural=voice&&/Eloise/i.test(voice.name);
+  return{pitch:kid?(natural?1.08:(profile==='mia'?1.25:1.42)):1.02,rate:profile==='mia'?0.96:(+st.rate||0.9)};
+}
 function say(text,onend){
-  const id=++speakId;let done=false;
-  const fin=()=>{if(done)return;done=true;if(id===speakId&&onend)onend()};
-  const rate=+state.settings.rate||0.9;
-  setTimeout(fin,1400+text.length*95/rate);
+  const id=++speakId;let done=false;const vp=voiceParams();
+  const fin=()=>{if(done)return;done=true;if(id===speakId){setTalk(false);if(onend)onend()}};
+  setTimeout(fin,1400+text.length*95/vp.rate);
   if(!synth||!text)return;
   const u=new SpeechSynthesisUtterance(text);
-  u.lang='fr-FR';if(voice)u.voice=voice;u.rate=rate;u.pitch=1.12;
-  u.onend=fin;u.onerror=fin;
+  u.lang='fr-FR';if(voice)u.voice=voice;u.rate=vp.rate;u.pitch=vp.pitch;
+  u.onstart=()=>{if(id===speakId)setTalk(true)};u.onend=fin;u.onerror=fin;
   if(synth.speaking||synth.pending){synth.cancel();setTimeout(()=>{if(id===speakId)synth.speak(u)},70)}
   else synth.speak(u);
 }
-function hush(){speakId++;if(synth)synth.cancel()}
+function hush(){speakId++;if(synth)synth.cancel();setTalk(false)}
 function sayList(items,onStep,onDone){
   const tk=state.token;let i=0;
   const next=()=>{
@@ -607,6 +708,101 @@ const sfx={
   fanfare(){[392,523,659,784,659,784,1047].forEach((f,i)=>tone(f,.3,'square',.05,i*.11))},
   boing(){tone(220,.2,'sine',.12);tone(440,.18,'triangle',.08,.08)}
 };
+
+/* ================= musique de fond (générée, sans fichier) ================= */
+const Music=(()=>{
+  const KEYM='jeux-musique';let on=true;try{on=localStorage.getItem(KEYM)!=='0'}catch(e){}
+  let master=null,timer=null,theme=null,step=0,nextT=0,ducked=false;
+  const mf=m=>440*Math.pow(2,(m-69)/12);
+  const TH={
+    alba:{bpm:112,vol:.5,chords:[[48,60,64,67],[45,57,60,64],[41,57,60,65],[43,55,59,62]],
+      mel:[72,0,76,79,76,0,74,72, 69,0,72,76,74,0,72,0, 77,0,76,74,72,0,69,72, 71,0,74,0,79,77,76,74]},
+    mia:{bpm:92,vol:.42,chords:[[45,57,60,64],[41,57,60,65],[48,55,60,64],[43,55,59,62]],arp:[1,2,3,2,1,3,2,3]}
+  };
+  function pl(f,t,d,type,v){const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(master);o.start(t);o.stop(t+d+.05)}
+  function play(s,t){
+    const th=TH[theme],bar=Math.floor(s/8)%4,i=s%8,ch=th.chords[bar],e=60/th.bpm/2;
+    if(i===0||i===4)pl(mf(ch[0]+(i===4?7:0)),t,e*3.5,'sine',.32);
+    if(i===0)ch.slice(1).forEach(n=>pl(mf(n),t,e*7.5,'sine',.05));
+    if(theme==='alba'){const m=th.mel[s%32];if(m)pl(mf(m),t,e*1.6,'triangle',.15);if(i%2===1)pl(mf(96),t,.03,'square',.01)}
+    else{pl(mf(ch[th.arp[i]]+12),t,e*1.8,'sine',.08);if(i===0&&bar%2===0)pl(mf(ch[3]+24),t,e*6,'sine',.035)}
+  }
+  function level(){return (ducked?.3:1)*TH[theme].vol*.3}
+  function tick(){
+    if(!ac||!master)return;const e=60/TH[theme].bpm/2;
+    if(nextT<ac.currentTime-.05)nextT=ac.currentTime+.05;
+    while(nextT<ac.currentTime+.3){try{play(step,nextT)}catch(x){}nextT+=e;step++}
+  }
+  function stopNow(){
+    clearInterval(timer);timer=null;
+    if(master){const m=master;try{m.gain.setTargetAtTime(.0001,ac.currentTime,.25)}catch(e){}setTimeout(()=>{try{m.disconnect()}catch(e){}},1500)}
+    master=null;
+  }
+  function start(n){
+    theme=n;if(!on)return;const a=audio();if(!a)return;
+    if(timer)stopNow();
+    master=a.createGain();master.gain.setValueAtTime(.0001,a.currentTime);master.gain.exponentialRampToValueAtTime(level(),a.currentTime+1.5);master.connect(a.destination);
+    step=0;nextT=a.currentTime+.15;timer=setInterval(tick,80);tick();
+  }
+  return{
+    start,stop:stopNow,isOn:()=>on,
+    duck(b){ducked=b;if(master&&ac&&theme)try{master.gain.setTargetAtTime(level(),ac.currentTime,.12)}catch(e){}},
+    setOn(b){on=b;try{localStorage.setItem(KEYM,b?'1':'0')}catch(e){}if(b&&theme)start(theme);else stopNow()}
+  };
+})();
+
+/* ================= Pico, la mascotte ================= */
+function pico(kind){
+  const I='#2B2459',B='#8C5BEF',W='#6A3FD0';
+  return `<svg class="pico${kind==='mia'?' mia-look':''}" viewBox="0 0 120 124" aria-hidden="true"><g class="p-all">
+  <ellipse cx="60" cy="119" rx="28" ry="4.5" fill="${I}" opacity=".18"/>
+  <path d="M28 36 L33 8 L50 27 Z" fill="${B}" stroke="${I}" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M92 36 L87 8 L70 27 Z" fill="${B}" stroke="${I}" stroke-width="4" stroke-linejoin="round"/>
+  <path class="wing l" d="M26 58 C8 68 8 92 22 104 C30 92 32 76 28 58Z" fill="${W}" stroke="${I}" stroke-width="4" stroke-linejoin="round"/>
+  <path class="wing r" d="M94 58 C112 68 112 92 98 104 C90 92 88 76 92 58Z" fill="${W}" stroke="${I}" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M46 108 l-5 7 M51 109 v8 M56 108 l4 7 M64 108 l-4 7 M69 109 v8 M74 108 l5 7" stroke="#FF961C" stroke-width="4" stroke-linecap="round"/>
+  <ellipse cx="60" cy="66" rx="38" ry="44" fill="${B}" stroke="${I}" stroke-width="4"/>
+  <ellipse cx="60" cy="83" rx="24" ry="24" fill="#FFE9A8"/>
+  <path d="M49 80 q5.5 5 11 0 q5.5 5 11 0 M52 92 q4 4 8 0 q4 4 8 0" fill="none" stroke="#EBC56A" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="44" cy="50" r="15" fill="#fff" stroke="${I}" stroke-width="4"/><circle cx="76" cy="50" r="15" fill="#fff" stroke="${I}" stroke-width="4"/>
+  <g class="pupils"><circle cx="46" cy="52" r="7" fill="${I}"/><circle cx="78" cy="52" r="7" fill="${I}"/><circle cx="48.5" cy="49" r="2.5" fill="#fff"/><circle cx="80.5" cy="49" r="2.5" fill="#fff"/></g>
+  <ellipse class="lid" cx="44" cy="50" rx="17" ry="17" fill="${B}"/><ellipse class="lid r" cx="76" cy="50" rx="17" ry="17" fill="${B}"/>
+  <circle cx="33" cy="69" r="5.5" fill="#FF6AAE" opacity=".55"/><circle cx="87" cy="69" r="5.5" fill="#FF6AAE" opacity=".55"/>
+  <path class="jaw" d="M55 68 L65 68 L60 75 Z" fill="#D9700E" stroke="${I}" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M52 61 L68 61 L60 70 Z" fill="#FF961C" stroke="${I}" stroke-width="3" stroke-linejoin="round"/>
+  <g class="acc-alba"><circle cx="82" cy="20" r="7.5" fill="#FF6AAE" stroke="${I}" stroke-width="3"/><circle cx="82" cy="20" r="2.8" fill="#FFC93C"/></g>
+  <g class="acc-mia"><rect x="40" y="18" width="40" height="6" rx="3" fill="${I}"/><rect x="46" y="0" width="28" height="20" rx="3" fill="${I}"/><rect x="46" y="12" width="28" height="5" fill="#FFC94A"/>
+    <path d="M49 76 L60 81 L49 86Z M71 76 L60 81 L71 86Z" fill="#FFC94A" stroke="${I}" stroke-width="2.5" stroke-linejoin="round"/><circle cx="60" cy="81" r="3" fill="#D9921A" stroke="${I}" stroke-width="2"/></g>
+  </g></svg>`;
+}
+function picoMood(m){
+  $$('.pico').forEach(p=>{p.classList.remove('happy','sad','wave');p.getBoundingClientRect();p.classList.add(m);clearTimeout(p._t);p._t=setTimeout(()=>p.classList.remove(m),m==='wave'?2200:1500)});
+}
+function setTalk(b){document.body.classList.toggle('talking',b);try{Music.duck(b)}catch(e){}}
+
+/* ================= animations d'entrée ================= */
+const REDUCE=matchMedia('(prefers-reduced-motion: reduce)');
+function staggerIn(els,mode){
+  if(REDUCE.matches||!els)return;const many=els.length>14;
+  els.forEach((el,i)=>{try{
+    el.animate(mode==='side'
+      ?[{opacity:0,transform:`translateX(${i%2?46:-46}px)`},{opacity:1,transform:'none'}]
+      :[{opacity:0,transform:'scale(.45) translateY(26px)'},{opacity:1,transform:'scale(1.07)',offset:.7},{opacity:1,transform:'none'}],
+      {duration:mode==='side'?420:520,delay:i*(many?20:65),easing:'cubic-bezier(.2,.8,.3,1)',fill:'backwards'});
+  }catch(e){}});
+}
+function animateScreen(){
+  const first=stage.firstElementChild;
+  if(first&&!REDUCE.matches)try{first.animate([{opacity:0,transform:'translateY(18px)'},{opacity:1,transform:'none'}],{duration:320,easing:'ease-out'})}catch(e){}
+  staggerIn($$('.tile,.letter-grid .block,.num-grid .block,.choice,.wcard,.card,.rcard,.ptray,.grp,.row .block,.stk.got,.obj,.picture,.showcase,.mix',stage));
+}
+function buildDecor(){
+  const d=document.createElement('div');d.className='decor';d.setAttribute('aria-hidden','true');
+  const G='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789★♥';let h='';
+  for(let i=0;i<16;i++)h+=`<span style="--x:${rnd(0,94)}%;--s:${(1.6+Math.random()*2.4).toFixed(1)}rem;--c:${col(i)};--d:${rnd(16,30)}s;--dl:-${rnd(0,30)}s;--r:${rnd(-200,200)}deg">${pick([...G])}</span>`;
+  d.innerHTML=h;document.body.insertBefore(d,$('#app'));
+}
+
 
 /* ================= confettis ================= */
 const cv=$('#confetti'),cx=cv.getContext('2d');let parts=[],raf=0;
@@ -665,26 +861,26 @@ function win(el,text,next){
   sfx.win();
   const r=el.getBoundingClientRect();confetti(r.left+r.width/2,r.top+r.height/2);
   el.classList.remove('hint','shake');el.classList.add('right');
-  $$('.choice,.wcard',stage).forEach(b=>{if(b!==el)b.classList.add('dim')});
-  addStar(el);
+  $$('.choice,.wcard,.rcard,.ptray',stage).forEach(b=>{if(b!==el)b.classList.add('dim')});
+  addStar(el);picoMood('happy');
   say(pick(PRAISE)+' '+text,()=>setTimeout(()=>{
     if(tk!==state.token)return;
     if(pendingSticker)showSticker(()=>{if(tk===state.token)next()});
     else next();
   },550));
 }
-function lose(el,text,after){sfx.oops();restart(el,'shake');say(text,after)}
+function lose(el,text,after){sfx.oops();restart(el,'shake');picoMood('sad');say(text,after)}
 
 /* ================= navigation ================= */
 const SCREENS={};
 function go(s){
-  state.token++;state.screen=s;hush();closeModal();
+  state.token++;state.screen=s;hush();closeModal();clearInterval(state.attract);
   homeBtn.classList.toggle('invisible',s==='home');
   stage.scrollTop=0;
   SCREENS[s](true);
 }
 homeBtn.onclick=()=>{sfx.pop();go('home')};
-$('#talk').onclick=()=>{sfx.boing();if(state.lastPrompt)say(state.lastPrompt)};
+$('#talk').onclick=()=>{sfx.boing();picoMood('wave');if(state.lastPrompt)say(state.lastPrompt)};
 
 /* ---------- accueil ---------- */
 let greeted=false;
@@ -693,7 +889,7 @@ SCREENS.home=function(){
     <div class="logo">${'CUBES'.split('').map((l,i)=>`<button class="block" style="--c:${col(i)}" data-l="${i}" aria-label="Lettre ${l}">${l}</button>`).join('')}<span class="logo-sub">magiques</span></div>
     <div class="games">${GAMES.map(g=>`<button class="block tile" style="--c:var(${g.c})" data-go="${g.id}">${g.art}<span class="tile-name">${g.name}</span></button>`).join('')}</div>
     <div class="home-foot">
-      <button class="swap" id="swap">👋 Qui joue ?</button>
+      <span class="foot-l"><button class="swap" id="swap">👋 Qui joue ?</button><button class="swap" id="mus" aria-pressed="${Music.isOn()}">${Music.isOn()?'🎵':'🔇'} Musique</button></span>
       <button class="gear" id="gear" aria-label="Espace parents : maintenir appuyé 2 secondes"><span class="g" aria-hidden="true">⚙️</span><span>Parents : maintenir</span></button>
     </div>
   </div>`;
@@ -708,6 +904,8 @@ SCREENS.home=function(){
   $('#swap').onclick=()=>{sfx.pop();showPicker()};
   setPrompt('Choisis un jeu !',greeted?'Choisis un jeu !':'Bonjour Alba ! Choisis un jeu !');
   greeted=true;
+  $('#mus').onclick=e=>{const b=!Music.isOn();Music.setOn(b);if(b)Music.start('alba');e.currentTarget.textContent=(b?'🎵':'🔇')+' Musique';e.currentTarget.setAttribute('aria-pressed',String(b));sfx.pop()};
+  state.attract=setInterval(()=>{if(state.screen!=='home'||REDUCE.matches)return;const t=pick($$('.tile',stage));if(t)try{t.animate([{transform:'rotate(0)'},{transform:'rotate(-5deg) scale(1.05)'},{transform:'rotate(5deg) scale(1.05)'},{transform:'rotate(0)'}],{duration:650,easing:'ease-in-out'})}catch(e){}},2400);
 };
 
 /* ---------- l'alphabet ---------- */
@@ -738,7 +936,7 @@ SCREENS.abc=function(){
 
 /* ---------- trouve la lettre ---------- */
 SCREENS.find=function(first){
-  const n=LV.find>=6?4:3;
+  const n=LV.find>=6?5:4;
   const target=pickFresh(ALPHA,'find');
   const opts=shuffle([target,...shuffle(ALPHA.filter(a=>a!==target)).slice(0,n-1)]);
   const m=roundCase(),cs=shuffle(COLS.map((_,i)=>i));
@@ -764,7 +962,7 @@ SCREENS.find=function(first){
 SCREENS.numbers=function(){
   stage.innerHTML=`<div class="split">
     <button class="showcase" id="show" aria-label="Compter encore"></button>
-    <div class="num-grid">${[1,2,3,4,5,6,7,8,9,10].map(n=>`<button class="block" style="--c:${col(n-1)}" data-n="${n}">${n}</button>`).join('')}</div>
+    <div class="num-grid">${Array.from({length:20},(_,k)=>k+1).map(n=>`<button class="block" style="--c:${col(n-1)}" data-n="${n}">${n}</button>`).join('')}</div>
   </div>`;
   const show=$('#show');let cur=1,emo='🍎';
   const paint=(n,count,newEmo)=>{
@@ -781,15 +979,15 @@ SCREENS.numbers=function(){
   $$('.num-grid .block',stage).forEach(b=>b.onclick=()=>{sfx.pop();paint(+b.dataset.n,true,true)});
   show.onclick=()=>paint(cur,true,false);
   paint(1,false,false);
-  setPrompt('Touche un chiffre !','Les chiffres ! Touche un chiffre, et on compte ensemble.');
+  setPrompt('Touche un nombre !','Les nombres ! Touche un nombre, et on compte ensemble.');
 };
 
 /* ---------- compter ---------- */
 SCREENS.count=function(first){
-  const max=Math.min(10,4+Math.floor(LV.count/3));
+  const max=Math.min(20,8+Math.floor(LV.count/2));
   let n;do{n=rnd(1,max)}while(n===lastPick.countN&&max>1);lastPick.countN=n;
   const o=pickFresh(OBJ,'count');
-  const set=new Set([n]);while(set.size<3)set.add(rnd(Math.max(1,n-3),Math.min(10,n+3)));
+  const set=new Set([n]);while(set.size<3)set.add(rnd(Math.max(1,n-3),Math.min(20,n+3)));
   const opts=shuffle([...set]);
   const qty=k=>k===1?(o[3]==='f'?'une ':'un ')+o[1]:NUM[k]+' '+o[2];
   stage.innerHTML=`<div class="quiz">
@@ -847,9 +1045,9 @@ SCREENS.syll=function(){
 
 /* ---------- lire ---------- */
 SCREENS.read=function(first){
-  const pool=LV.read<5?WORDS.filter(w=>w[0].length<=4):WORDS;
-  const target=fromBag(LV.read<5?'readShort':'readAll',pool);
-  const others=shuffle(WORDS.filter(w=>w!==target&&w[1]!==target[1]&&w[0][0]!==target[0][0])).slice(0,2);
+  const pool=LV.read<3?WORDS.filter(w=>w[0].length<=5):WORDS;
+  const target=fromBag(LV.read<3?'readShort':'readAll',pool);
+  const others=shuffle(WORDS.filter(w=>w!==target&&w[1]!==target[1]&&w[0][0]!==target[0][0])).slice(0,LV.read>=4?3:2);
   const opts=shuffle([target,...others]);
   const c=state.settings.case;
   const show=w=>c==='upper'?w.toUpperCase():c==='lower'?w:w[0].toUpperCase()+w.slice(1);
@@ -873,16 +1071,16 @@ SCREENS.read=function(first){
 
 /* ---------- memory ---------- */
 SCREENS.memory=function(first){
-  const pairs=LV.mem>=4?6:LV.mem>=2?4:3;
+  const pairs=LV.mem>=4?8:LV.mem>=2?6:4;
   const m=roundCase();
   const pool=[
-    ...shuffle(ALPHA).slice(0,4).map(a=>({k:'L'+a[0],show:caseIt(a[0],m),say:a[1],emo:false})),
-    ...shuffle([1,2,3,4,5,6,7,8,9]).slice(0,3).map(n=>({k:'N'+n,show:String(n),say:NUM[n],emo:false})),
-    ...shuffle(WORDS).slice(0,5).map(w=>({k:'W'+w[0],show:w[1],say:w[0],emo:true}))
+    ...shuffle(ALPHA).slice(0,6).map(a=>({k:'L'+a[0],show:caseIt(a[0],m),say:a[1],emo:false})),
+    ...shuffle(Array.from({length:20},(_,k)=>k+1)).slice(0,5).map(n=>({k:'N'+n,show:String(n),say:NUM[n],emo:false})),
+    ...shuffle(WORDS).slice(0,7).map(w=>({k:'W'+w[0],show:w[1],say:w[0],emo:true}))
   ];
   const chosen=shuffle(pool).slice(0,pairs);
   const deck=shuffle(chosen.flatMap((c,i)=>[{...c,col:i},{...c,col:i}]));
-  const cols=pairs===3?3:4;
+  const cols=4;
   stage.innerHTML=`<div class="mem"><div class="mem-grid" style="grid-template-columns:repeat(${cols},minmax(0,1fr));--mw:${cols*175}px">${deck.map((c,i)=>`<button class="card" data-i="${i}" aria-label="Carte" style="--c:${col(c.col)}"><span class="in"><span class="face back">?</span><span class="face front ${c.emo?'emo':''}">${c.show}</span></span></button>`).join('')}</div></div>`;
   setPrompt('Retrouve les paires !',(first?'Memory ! ':'')+'Retourne deux cartes pareilles !');
   const cards=$$('.card',stage);let open=[],busy=false,found=0;
@@ -898,11 +1096,107 @@ SCREENS.memory=function(first){
       setTimeout(()=>{
         a1.classList.replace('up','done');a2.classList.replace('up','done');found++;busy=false;
         if(found===pairs){LV.mem++;win(a2,'Tu as trouvé toutes les paires !',()=>SCREENS.memory())}
-        else{sfx.win();const r=a2.getBoundingClientRect();confetti(r.left+r.width/2,r.top+r.height/2,40);say(pick(['Une paire !','Bravo, pareil !','Super, une paire !']))}
+        else{sfx.win();picoMood('happy');const r=a2.getBoundingClientRect();confetti(r.left+r.width/2,r.top+r.height/2,40);say(pick(['Une paire !','Bravo, pareil !','Super, une paire !']))}
       },500);
     }else{
       setTimeout(()=>{sfx.oops();a1.classList.remove('up');a2.classList.remove('up');busy=false},1300);
     }
+  });
+};
+
+/* ---------- le premier son ---------- */
+const FIRST_SKIP=/^(an|en|in|on|un|ou|au|ch|ph|é|e|h|w|x|y|q)/i;
+SCREENS.first=function(first){
+  const n=LV.first>=5?4:3;
+  const okL=ALPHA.filter(a=>a[2].some(w=>!FIRST_SKIP.test(w[0])));
+  const letter=fromBag('firstL',okL);
+  const [word,emo]=pick(letter[2].filter(w=>!FIRST_SKIP.test(w[0])));
+  const opts=shuffle([letter,...shuffle(okL.filter(a=>a!==letter)).slice(0,n-1)]);
+  const m=roundCase(),w=word.toLowerCase();
+  stage.innerHTML=`<div class="quiz">
+    <button class="picture" id="pic" aria-label="Écouter le mot">${emo}</button>
+    <div class="choices">${opts.map((o,i)=>`<button class="block choice" style="--c:${col(i+1)}" data-i="${i}">${caseIt(o[0],m)}</button>`).join('')}</div>
+  </div>`;
+  const q=`${w} ! Par quelle lettre commence le mot ${w} ?`;
+  setPrompt('Par quelle lettre ça commence ?',(first?'Le premier son ! ':'')+q);
+  $('#pic').onclick=()=>{sfx.boing();restart($('#pic'),'pop');say(q)};
+  let wrong=0,done=false;
+  $$('.choice',stage).forEach(b=>b.onclick=()=>{
+    if(done)return;const o=opts[+b.dataset.i];
+    if(o===letter){done=true;win(b,`${w} commence par la lettre ${letter[1]} !`,()=>{LV.first++;SCREENS.first()})}
+    else{wrong++;lose(b,`Non, ça c'est la lettre ${o[1]}. Écoute bien : ${w} !`);if(wrong>=2)$(`[data-i="${opts.indexOf(letter)}"]`,stage).classList.add('hint')}
+  });
+};
+
+/* ---------- les rimes ---------- */
+const RHY=[
+ ['chat','🐱','a'],['rat','🐀','a'],['pizza','🍕','a'],['panda','🐼','a'],['koala','🐨','a'],['ananas','🍍','a'],
+ ['gâteau','🎂','o'],['bateau','⛵','o'],['château','🏰','o'],['vélo','🚲','o'],['moto','🏍️','o'],['robot','🤖','o'],['chapeau','🎩','o'],
+ ['souris','🐭','i'],['lit','🛏️','i'],['kiwi','🥝','i'],['ski','🎿','i'],['riz','🍚','i'],
+ ['poisson','🐟','on'],['ballon','🎈','on'],['camion','🚚','on'],['avion','✈️','on'],['mouton','🐑','on'],['lion','🦁','on'],['citron','🍋','on'],['cochon','🐷','on'],
+ ['lapin','🐰','in'],['sapin','🎄','in'],['raisin','🍇','in'],['pain','🍞','in'],['main','✋','in'],['train','🚂','in'],['dauphin','🐬','in'],['poussin','🐣','in'],
+ ['loup','🐺','ou'],['chou','🥬','ou'],['hibou','🦉','ou'],['kangourou','🦘','ou'],['genou','🦵','ou'],
+ ['fleur','🌸','eur'],['cœur','❤️','eur'],['tracteur','🚜','eur'],['ordinateur','💻','eur'],
+ ['bébé','👶','é'],['clé','🔑','é'],['café','☕','é'],['dé','🎲','é'],['fusée','🚀','é'],['nez','👃','é']
+];
+SCREENS.rhyme=function(first){
+  const keys=[...new Set(RHY.map(r=>r[2]))];
+  const t=fromBag('rhy',RHY);
+  const g=pick(RHY.filter(r=>r[2]===t[2]&&r!==t));
+  const opts=shuffle([g,...shuffle(keys.filter(k=>k!==t[2])).slice(0,2).map(k=>pick(RHY.filter(r=>r[2]===k)))]);
+  stage.innerHTML=`<div class="rimes">
+    <div class="target"><button class="picture" id="pic" aria-label="Écouter">${t[1]}</button><span class="w">${t[0]}</span></div>
+    <div class="rcards">${opts.map((o,i)=>`<button class="rcard" style="--c:${col(i*2)}" data-i="${i}"><span class="e">${o[1]}</span><span class="w">${o[0]}</span></button>`).join('')}</div>
+  </div>`;
+  const q=`Qu'est-ce qui rime avec ${t[0]} ? ${opts.map(o=>o[0]).join(' ? ... ')} ?`;
+  setPrompt(`Qu'est-ce qui rime avec « ${t[0]} » ?`,(first?'Les rimes ! ':'')+q);
+  $('#pic').onclick=()=>{sfx.boing();restart($('#pic'),'pop');say(q)};
+  let wrong=0,done=false;
+  $$('.rcard',stage).forEach(b=>b.onclick=()=>{
+    if(done)return;const o=opts[+b.dataset.i];
+    if(o===g){done=true;win(b,`${t[0]}, ${g[0]} : ça rime !`,()=>{LV.rhyme++;SCREENS.rhyme()})}
+    else{wrong++;lose(b,`${t[0]}, ${o[0]}... ça ne rime pas. Essaie encore !`);if(wrong>=2)$(`.rcard[data-i="${opts.indexOf(g)}"]`,stage).classList.add('hint')}
+  });
+};
+
+/* ---------- les additions ---------- */
+SCREENS.add=function(first){
+  const max=Math.min(10,5+Math.floor(LV.add/2));
+  const a=rnd(1,max-1),b=rnd(1,max-a),n=a+b;const o=pickFresh(OBJ,'add');
+  const set=new Set([n]);while(set.size<3)set.add(rnd(Math.max(1,n-3),n+3));const opts=shuffle([...set]);
+  const qty=k=>k===1?(o[3]==='f'?'une ':'un ')+o[1]:NUM[k]+' '+o[2];
+  const grp=k=>`<div class="grp">${Array.from({length:k},()=>`<span class="o">${o[0]}</span>`).join('')}</div>`;
+  stage.innerHTML=`<div class="quiz">
+    <div class="sum">${grp(a)}<span class="op">+</span>${grp(b)}<span class="op">=</span><span class="qmark" id="qm">?</span></div>
+    <div class="choices nums">${opts.map((v,i)=>`<button class="block choice" style="--c:${col(i+2)}" data-v="${v}">${v}</button>`).join('')}</div>
+  </div>`;
+  const q=`${qty(a)}, plus ${qty(b)}... ça fait combien ?`;
+  setPrompt(`${a} + ${b} = ?`,(first?'Les additions ! ':'')+q);
+  const objs=$$('.grp .o',stage);
+  const countAlong=()=>{objs.forEach(x=>{x.classList.remove('counted');const s=$('.badge',x);if(s)s.remove()});
+    sayList(objs.map((_,k)=>NUM[k+1]),k=>{objs[k].classList.add('counted');objs[k].insertAdjacentHTML('beforeend',`<span class="badge">${k+1}</span>`)},()=>say(`Ça fait ${NUM[n]} !`))};
+  let wrong=0,done=false;
+  $$('.choice',stage).forEach(b=>b.onclick=()=>{
+    if(done)return;const v=+b.dataset.v;
+    if(v===n){done=true;$('#qm').textContent=n;win(b,`${NUM[a]} plus ${NUM[b]}, ça fait ${NUM[n]} !`,()=>{LV.add++;SCREENS.add()})}
+    else{wrong++;lose(b,`Non, ça c'est ${NUM[v]}. Comptons tout ensemble !`,countAlong);if(wrong>=2)$(`.choice[data-v="${n}"]`,stage).classList.add('hint')}
+  });
+};
+
+/* ---------- plus ou moins ---------- */
+SCREENS.more=function(first){
+  let a,b;do{a=rnd(1,10);b=rnd(1,10)}while(Math.abs(a-b)<(LV.more>=4?1:2));
+  const most=LV.more<2||Math.random()<.6;const o=pickFresh(OBJ,'more');
+  const good=most?(a>b?0:1):(a<b?0:1),cnt=[a,b];
+  const qty=k=>k===1?(o[3]==='f'?'une ':'un ')+o[1]:NUM[k]+' '+o[2];
+  stage.innerHTML=`<div class="quiz"><div class="versus">${cnt.map((c,i)=>`<button class="ptray" style="--c:${col(i?4:1)}" data-s="${i}" aria-label="Groupe ${i+1}">${Array.from({length:c},()=>`<span>${o[0]}</span>`).join('')}</button>`).join('')}</div></div>`;
+  const q=`Où y a-t-il le ${most?'plus':'moins'} de ${o[2]} ?`;
+  setPrompt(`Où y en a-t-il le ${most?'PLUS':'MOINS'} ?`,(first?'Plus ou moins ! ':'')+q);
+  let wrong=0,done=false;
+  $$('.ptray',stage).forEach(t=>t.onclick=()=>{
+    if(done)return;const s=+t.dataset.s;
+    if(s===good){done=true;win(t,`Ici, il y a ${qty(cnt[s])}. C'est ${most?'plus':'moins'} que ${NUM[cnt[1-s]]} !`,()=>{LV.more++;SCREENS.more()})}
+    else{wrong++;lose(t,`Non, ici il y a ${qty(cnt[s])}, et là, ${qty(cnt[1-s])}. ${q}`);if(wrong>=2)$(`.ptray[data-s="${good}"]`,stage).classList.add('hint')}
   });
 };
 
@@ -926,38 +1220,49 @@ SCREENS.stickers=function(){
 /* ---------- espace parents ---------- */
 SCREENS.parents=function(){
   const s=state.settings,got=Math.min(STICKERS.length,Math.floor(state.stars/5));
-  const seg=(key,items)=>`<div class="seg" data-key="${key}">${items.map(([v,l])=>`<button data-val="${v}" aria-pressed="${String(s[key])===v}">${l}</button>`).join('')}</div>`;
+  const cur=Object.assign({},s,{music:Music.isOn(),kidVoice:s.kidVoice!==false});
+  const seg=(key,items)=>`<div class="seg" data-key="${key}">${items.map(([v,l])=>`<button data-val="${v}" aria-pressed="${String(cur[key])===v}">${l}</button>`).join('')}</div>`;
+  const vopts=frVoices().map(v=>`<option value="${v.name.replace(/"/g,'&quot;')}" ${s.voiceName===v.name?'selected':''}>${v.name}</option>`).join('');
   stage.innerHTML=`<div class="parents">
     <h2>Espace parents</h2>
     <section class="pcard"><h3>Lettres affichées</h3>
       ${seg('case',[['upper','MAJUSCULES'],['lower','minuscules'],['both','Les deux']])}
-      <p>En maternelle, on commence en général par les capitales d'imprimerie, puis on introduit les minuscules vers 5 ans.</p></section>
-    <section class="pcard"><h3>Vitesse de la voix</h3>
-      ${seg('rate',[['0.7','Lente'],['0.9','Normale']])}
+      <p>En grande section (5 ans), on consolide les capitales et on découvre les minuscules : « Les deux » est conseillé.</p></section>
+    <section class="pcard"><h3>Voix</h3>
+      ${seg('kidVoice',[['true',"Voix d'enfant (plus aiguë)"],['false','Voix normale']])}
+      <p>Vitesse : </p>${seg('rate',[['0.7','Lente'],['0.9','Normale']])}
+      <p><label for="vsel">Voix de l'appareil : </label><select id="vsel" class="psel"><option value="">Automatique (${voice?voice.name:'voix par défaut'})</option>${vopts}</select></p>
       <p><button class="pbtn" id="test">Tester la voix</button></p>
-      <p>Voix utilisée : <b>${voice?voice.name:'voix par défaut du navigateur'}</b>. Si rien ne parle, montez le volume, désactivez le mode silencieux, ou ajoutez une voix française dans les réglages de l'appareil.</p></section>
-    <section class="pcard"><h3>Bruitages</h3>
-      ${seg('sfx',[['true','Activés'],['false','Coupés']])}</section>
+      <p>Les voix viennent de l'appareil. La plus enfantine est « Eloise » (navigateur Microsoft Edge, sur ordinateur). Sur iPhone, iPad et Mac : « Amélie » ou « Audrey », à installer dans Réglages › Accessibilité › Contenu énoncé › Voix. Si rien ne parle, montez le volume et coupez le mode silencieux.</p></section>
+    <section class="pcard"><h3>Musique et bruitages</h3>
+      <p>Musique de fond : </p>${seg('music',[['true','Activée'],['false','Coupée']])}
+      <p>Bruitages : </p>${seg('sfx',[['true','Activés'],['false','Coupés']])}</section>
     <section class="pcard"><h3>Progrès</h3>
       <p>${state.stars} étoile${state.stars>1?'s':''} gagnée${state.stars>1?'s':''} · ${got} autocollant${got>1?'s':''} sur ${STICKERS.length}. Un autocollant toutes les 5 étoiles. Les progrès restent dans ce navigateur, sur cet appareil.</p>
       <div class="confirm" id="reset"><button class="pbtn" id="r1">Remettre à zéro</button></div></section>
-    <section class="pcard"><h3>Les jeux</h3><ul>
-      <li><b>L'alphabet</b> : chaque lettre avec son nom, un mot et une image (« B comme ballon »). Le mot change à chaque fois : tous les mots d'une lettre passent avant qu'un mot revienne.</li>
-      <li><b>Trouve la lettre</b> : la voix demande une lettre, l'enfant la touche parmi 3, puis 4 après quelques réussites.</li>
-      <li><b>Les syllabes</b> : une consonne bleue + une voyelle rouge = une syllabe entendue (M + A = MA). C'est la base de la méthode syllabique.</li>
-      <li><b>Lire des mots</b> : reconnaître un mot écrit parmi trois. Mots courts au début, puis plus longs.</li>
-      <li><b>Les chiffres</b> : de 1 à 10, avec des objets qui apparaissent un par un en comptant.</li>
-      <li><b>Memory</b> : retrouver les paires (lettres, chiffres, images). Chaque carte retournée est dite à voix haute. 3 paires au début, puis 4, puis 6.</li>
-      <li><b>Compter</b> : toucher les objets pour les compter, puis choisir le bon nombre. Jusqu'à 4 au début, puis jusqu'à 10.</li>
+    <section class="pcard"><h3>Les jeux (grande section, 5 ans)</h3><ul>
+      <li><b>L'alphabet</b> : chaque lettre en capitale et en minuscule, avec un mot et une image qui changent à chaque fois.</li>
+      <li><b>Trouve la lettre</b> : la voix demande une lettre, l'enfant la trouve parmi 4, puis 5.</li>
+      <li><b>Le premier son</b> : une image, et il faut trouver la lettre par laquelle le mot commence.</li>
+      <li><b>Les syllabes</b> : consonne bleue + voyelle rouge (M + A = MA), avec aussi CH, J, OU et ON.</li>
+      <li><b>Lire des mots</b> : reconnaître un mot écrit parmi 3, puis 4.</li>
+      <li><b>Les rimes</b> : trouver le mot qui rime (chat, rat). C'est la conscience phonologique travaillée en GS.</li>
+      <li><b>Les nombres</b> : de 1 à 20, avec des objets qui apparaissent en comptant.</li>
+      <li><b>Compter</b> : compter jusqu'à 8 au début, puis jusqu'à 20.</li>
+      <li><b>Additions</b> : additionner deux petits groupes d'objets (résultat jusqu'à 10).</li>
+      <li><b>Plus ou moins</b> : comparer deux groupes, où y en a-t-il le plus ou le moins ?</li>
+      <li><b>Memory</b> : retrouver les paires (lettres, nombres, images). 4 paires au début, puis 6, puis 8.</li>
     </ul><p>Pas de chrono, pas de points perdus : une erreur donne un indice, et après deux erreurs la bonne réponse clignote.</p></section>
   </div>`;
   $$('.seg',stage).forEach(g=>$$('button',g).forEach(b=>b.onclick=()=>{
     const k=g.dataset.key,v=b.dataset.val;
-    s[k]=k==='rate'?+v:k==='sfx'?v==='true':v;save();
+    if(k==='music'){Music.setOn(v==='true');if(v==='true')Music.start('alba')}
+    else{s[k]=k==='rate'?+v:(v==='true'||v==='false')?v==='true':v;save()}
     $$('button',g).forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
     if(k==='sfx'&&s.sfx)sfx.pop();
   }));
-  $('#test').onclick=()=>say('Bonjour ! B comme ballon. Un, deux, trois !');
+  $('#test').onclick=()=>say('Bonjour ! Je suis Pico. B comme ballon. Un, deux, trois !');
+  $('#vsel').onchange=e=>{s.voiceName=e.target.value;save();pickVoice();say('Bonjour ! Je suis Pico !')};
   const box=$('#reset');
   const ask=()=>{
     box.innerHTML='<span>Effacer toutes les étoiles et les autocollants ?</span><button class="pbtn danger" id="r2">Oui, effacer</button><button class="pbtn" id="r3">Annuler</button>';
@@ -976,22 +1281,29 @@ let wake=null;
 async function keepAwake(){try{if('wakeLock' in navigator)wake=await navigator.wakeLock.request('screen')}catch(e){}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&state.screen!=='splash')keepAwake()});
 function showPicker(){
-  state.token++;hush();closeModal();state.screen='splash';
+  state.token++;hush();closeModal();state.screen='splash';clearInterval(state.attract);Music.stop();
   $('#app').hidden=true;$('#mia').hidden=true;$('#splash').hidden=false;
+  setTimeout(()=>picoMood('wave'),300);
 }
+$$('.pico-slot').forEach(x=>x.innerHTML=pico(x.dataset.pico));
+$('#picoHead').innerHTML=pico('alba');
+buildDecor();
+new MutationObserver(()=>animateScreen()).observe(stage,{childList:true});
+setTimeout(()=>picoMood('wave'),500);
+setInterval(()=>{const c=pick(['look-l','look-r','','','']);$$('.pico').forEach(p=>{p.classList.remove('look-l','look-r');if(c)p.classList.add(c)})},2400);
 $('#whoAlba').onclick=()=>{
-  audio();sfx.win();
+  audio();sfx.win();profile='alba';
   $('#splash').hidden=true;$('#app').hidden=false;
-  keepAwake();greeted=false;
+  keepAwake();greeted=false;Music.start('alba');
   go('home');
 };
 $('#whoMia').onclick=()=>{
-  audio();sfx.win();
+  audio();sfx.win();profile='mia';
   $('#splash').hidden=true;state.screen='mia';
   keepAwake();
   window.MIA.open();
 };
-window.KIT={say,hush,sfx,tone,confetti,shuffle,pick,audio,restart,showPicker,WORDS};
+window.KIT={say,hush,sfx,tone,confetti,shuffle,pick,audio,restart,showPicker,WORDS,pico,picoMood,staggerIn,Music};
 })();
 </script>
 <script>
@@ -1020,42 +1332,59 @@ const near=(n,ds,min)=>uniq(ds.map(d=>n+d)).filter(x=>x!==n&&x>=(min===undefined
 
 const CAT={
   maths:{n:'Maths',e:'🔢'},francais:{n:'Français',e:'📚'},animaux:{n:'Animaux',e:'🐾'},monde:{n:'Le monde',e:'🌍'},
-  sciences:{n:'Sciences',e:'🔬'},temps:{n:'Le temps',e:'⏰'},culture:{n:'Contes et culture',e:'🎭'},logique:{n:'Logique',e:'🧩'}
+  sciences:{n:'Sciences',e:'🔬'},temps:{n:'Le temps',e:'⏰'},culture:{n:'Contes et culture',e:'🎭'},logique:{n:'Logique',e:'🧩'},histoire:{n:'Histoire',e:'🏰'}
 };
 const GEN={};Object.keys(CAT).forEach(c=>GEN[c]=[]);
 const add=(cat,lv,f)=>GEN[cat].push({lv,f});
 
-/* ---------------- MATHS ---------------- */
+/* ---------------- MATHS (7-8 ans : CE1 / CE2) ---------------- */
 const NAMES=[['Léa','elle'],['Tom','il'],['Inès','elle'],['Hugo','il'],['Jade','elle'],['Nathan','il'],['Lina','elle'],['Louis','il'],['Alba','elle'],['Mia','elle'],['Gabriel','il'],['Chloé','elle'],['Adam','il'],['Rose','elle'],['Jules','il'],['Zoé','elle']];
 const THINGS=['billes','bonbons','images','crayons','fleurs','perles','cartes','pommes','gâteaux','autocollants','coquillages','livres','ballons','châtaignes'];
+const fmtN=n=>n.toLocaleString('fr-FR');
 
-add('maths',[1,2,3],lv=>{const [a,b]=lv===1?[R(1,9),R(1,9)]:lv===2?[R(10,40),R(2,29)]:[R(25,69),R(16,29)];const n=a+b;
-  return mk('maths',`Combien font ${a} + ${b} ?`,n,near(n,[1,-1,2,-2,10,-10]))});
-add('maths',[1,2,3],lv=>{let a,b;if(lv===1){a=R(4,15);b=R(1,a-1)}else if(lv===2){a=R(20,60);b=R(5,19)}else{a=R(50,100);b=R(11,49)}const n=a-b;
+add('maths',[1,2,3],lv=>{const [a,b]=lv===1?[R(12,49),R(5,39)]:lv===2?[R(35,99),R(17,99)]:[R(120,499),R(45,399)];const n=a+b;
+  return mk('maths',`Combien font ${a} + ${b} ?`,n,near(n,[1,-1,2,-2,10,-10,100]))});
+add('maths',[1,2,3],lv=>{let a,b;if(lv===1){a=R(20,60);b=R(3,19)}else if(lv===2){a=R(50,100);b=R(12,49)}else{a=R(200,999);b=R(45,199)}const n=a-b;
   return mk('maths',`Combien font ${a} − ${b} ?`,n,near(n,[1,-1,2,-2,10,-10]),{say:`Combien font ${a} moins ${b} ?`})});
-add('maths',[2,3],lv=>{const t=lv===2?pick([2,5,10]):pick([3,4,6,7,8,9]);const k=lv===2?R(1,10):R(2,9);const n=t*k;
+add('maths',[1,2,3],lv=>{const t=lv===1?pick([2,5,10]):lv===2?pick([3,4,5]):pick([6,7,8,9]);const k=R(2,10);const n=t*k;
   return mk('maths',`Combien font ${t} × ${k} ?`,n,[t*(k+1),t*(k-1),n+1,n-1,t+k,n+10].filter(x=>x>0),{say:`Combien font ${t} fois ${k} ?`,explain:`${t} × ${k} = ${n}.`})});
-add('maths',[1,2],lv=>{if(lv===1){const a=R(1,10),n=2*a;return mk('maths',`Quel est le double de ${a} ?`,n,[n+1,n-1,a,n+2,a+1],{explain:`Le double, c'est ${a} + ${a} = ${n}.`})}
-  const a=R(2,25)*2,h=a/2;return mk('maths',`Quelle est la moitié de ${a} ?`,h,[h+1,h-1,a,h+2,a-2],{explain:`La moitié de ${a}, c'est ${h}, car ${h} + ${h} = ${a}.`})});
-add('maths',[1,2],lv=>{const n=lv===1?R(5,30):R(30,99);const after=Math.random()<.5;const g=after?n+1:n-1;
-  return mk('maths',`Quel nombre vient juste ${after?'après':'avant'} ${n} ?`,g,[after?n-1:n+1,g+1,g-1,n+10,n-10,g+10].filter(x=>x>=0))});
-add('maths',[1,2,3],lv=>{const hi=lv===1?20:lv===2?100:1000;const s=new Set();while(s.size<4)s.add(R(1,hi));const a=[...s];const big=Math.random()<.6;const g=big?Math.max(...a):Math.min(...a);
-  return mk('maths',`Quel est le plus ${big?'grand':'petit'} nombre ?`,g,a)});
-add('maths',[1,2,3],lv=>{const step=lv===1?pick([1,2,10]):lv===2?pick([2,5,10,3]):pick([3,4,5,25,9]);const down=lv>1&&Math.random()<.3;
-  const st=down?R(step*5,step*5+20):R(0,lv===1?10:20);const seq=[0,1,2,3].map(k=>down?st-k*step:st+k*step);const g=down?st-4*step:st+4*step;
+add('maths',[2,3],lv=>{const t=lv===2?pick([2,5,10]):pick([3,4,6,7,8,9]);const k=R(2,10);const n=t*k;
+  return mk('maths',`Combien font ${n} ÷ ${t} ?`,k,[k+1,k-1,k+2,t,k*2].filter(x=>x>0),{say:`Combien font ${n} divisé par ${t} ?`,explain:`${t} × ${k} = ${n}, donc ${n} ÷ ${t} = ${k}.`})});
+add('maths',[1,2,3],lv=>{
+  if(lv===1){const a=R(6,50),n=2*a;return mk('maths',`Quel est le double de ${a} ?`,n,[n+1,n-1,a,n+2,n+10,a+2],{explain:`Le double, c'est ${a} + ${a} = ${n}.`})}
+  if(lv===2){const h=R(5,60),a=2*h;return mk('maths',`Quelle est la moitié de ${a} ?`,h,[h+1,h-1,a,h+2,h+10],{explain:`La moitié de ${a}, c'est ${h}, car ${h} + ${h} = ${a}.`})}
+  const q=R(2,25),a=4*q;return mk('maths',`Quel est le quart de ${a} ?`,q,[q*2,q+1,q-1,a-4,q+4].filter(x=>x>0),{explain:`Le quart, c'est partager en 4 : ${a} ÷ 4 = ${q}.`})});
+add('maths',[1,2],lv=>{const n=lv===1?R(100,999):pick([R(1,9)*100,R(2,9)*100-1,R(2,9)*1000-1,R(1,9)*1000,R(10,99)*10-1]);const after=Math.random()<.5;const g=after?n+1:n-1;
+  return mk('maths',`Quel nombre vient juste ${after?'après':'avant'} ${fmtN(n)} ?`,fmtN(g),[after?n-1:n+1,g+1,g-1,g+10,g-10,g+100].filter(x=>x>=0).map(fmtN))});
+add('maths',[1,2,3],lv=>{let a;
+  if(lv===1){const s=new Set();while(s.size<4)s.add(R(100,999));a=[...s]}
+  else{const d=lv===2?3:4;let digs;do{digs=shuffle([1,2,3,4,5,6,7,8,9,0]).slice(0,d)}while(digs[0]===0);const s=new Set();let t=0;while(s.size<4&&t<300){t++;const p=shuffle(digs);if(p[0]!==0)s.add(+p.join(''))}a=[...s];if(a.length<4)return null}
+  const big=Math.random()<.6;const g=big?Math.max(...a):Math.min(...a);
+  return mk('maths',`Quel est le plus ${big?'grand':'petit'} nombre ?`,fmtN(g),a.map(fmtN),{explain:"On compare d'abord le premier chiffre à gauche, puis le suivant."})});
+add('maths',[1,2,3],lv=>{const step=lv===1?pick([2,5,10,3]):lv===2?pick([4,6,25,50,100]):pick([7,8,9,11,15,12]);const down=lv>1&&Math.random()<.35;
+  const st=down?R(step*5,step*5+40):R(0,lv===1?20:60);const seq=[0,1,2,3].map(k=>down?st-k*step:st+k*step);const g=down?st-4*step:st+4*step;
   return mk('maths','Quel nombre vient ensuite ?',g,[g+1,g-1,g+step,g-step,g+2].filter(x=>x>=0),{big:seq.join(', ')+', …',say:`Quel nombre vient ensuite : ${seq.join(', ')} ?`,explain:`On ${down?'enlève':'ajoute'} ${step} à chaque fois.`})});
-add('maths',[1,2,3],lv=>{const [nm,pr]=pick(NAMES);const th=pick(THINGS);const P=cap(pr);const kind=lv===1?R(0,1):lv===2?R(0,2):R(0,3);
-  if(kind===0){const a=R(2,lv===1?9:30),b=R(1,lv===1?9:20);return mk('maths',`${nm} a ${a} ${th}. ${P} en reçoit ${b} de plus. Combien en a-t-${pr} maintenant ?`,a+b,near(a+b,[1,-1,2,-2,10]),{explain:`${a} + ${b} = ${a+b}.`})}
-  if(kind===1){const a=R(5,lv===1?12:40),b=R(1,a-1);return mk('maths',`${nm} a ${a} ${th}. ${P} en donne ${b} à un ami. Combien lui en reste-t-il ?`,a-b,near(a-b,[1,-1,2,-2,10]),{explain:`${a} − ${b} = ${a-b}.`})}
-  if(kind===2){const t=pick([2,5,10]),k=R(2,6);return mk('maths',`${nm} range ses ${th} dans ${k} boîtes. Il y en a ${t} dans chaque boîte. Combien y en a-t-il en tout ?`,t*k,[t*k+t,t*k-t,t+k,t*k+1],{explain:`${k} boîtes de ${t}, c'est ${k} × ${t} = ${t*k}.`})}
-  const k=pick([2,3,4,5]),n=k*R(2,6);return mk('maths',`${nm} partage ${n} ${th} entre ${k} enfants. Chacun en reçoit autant. Combien chaque enfant en a-t-il ?`,n/k,[n/k+1,n/k-1,n-k,n/k+2,k],{explain:`${n} partagé en ${k}, c'est ${n/k} chacun.`})});
-add('maths',[2,3],()=>{const n=R(11,99);
-  if(Math.random()<.5){const g=Math.floor(n/10);return mk('maths',`Combien y a-t-il de dizaines dans ${n} ?`,g,[n%10,g+1,g-1,n,10].filter(x=>x>=0),{explain:`${n}, c'est ${g} dizaines et ${n%10} unités.`})}
-  const g=n%10;return mk('maths',`Quel est le chiffre des unités dans ${n} ?`,g,[Math.floor(n/10),(g+1)%10,(g+9)%10,n],{explain:`Dans ${n}, le chiffre des unités est le dernier : ${g}.`})});
-add('maths',[2,3],lv=>{const parts=[[lv===3?R(0,2):0,10,'billet'],[R(0,2),5,'billet'],[R(0,3),2,'pièce'],[R(0,3),1,'pièce']].filter(p=>p[0]>0);
+add('maths',[1,2,3],lv=>{const [nm,pr]=pick(NAMES);const th=pick(THINGS);const P=cap(pr);const kind=lv===1?R(0,2):lv===2?R(0,3):R(1,4);const big=lv===1?40:lv===2?90:300;
+  if(kind===0){const a=R(10,big),b=R(5,lv===1?20:60);return mk('maths',`${nm} a ${a} ${th}. ${P} en reçoit ${b} de plus. Combien en a-t-${pr} maintenant ?`,a+b,near(a+b,[1,-1,2,-2,10]),{explain:`${a} + ${b} = ${a+b}.`})}
+  if(kind===1){const a=R(15,big),b=R(4,a-3);return mk('maths',`${nm} a ${a} ${th}. ${P} en donne ${b} à un ami. Combien lui en reste-t-il ?`,a-b,near(a-b,[1,-1,2,-2,10]),{explain:`${a} − ${b} = ${a-b}.`})}
+  if(kind===2){const t=lv===1?pick([2,5,10]):pick([3,4,5,6]),k=R(3,9);return mk('maths',`${nm} range ses ${th} dans ${k} boîtes. Il y en a ${t} dans chaque boîte. Combien y en a-t-il en tout ?`,t*k,[t*k+t,t*k-t,t+k,t*k+1],{explain:`${k} boîtes de ${t}, c'est ${k} × ${t} = ${t*k}.`})}
+  if(kind===3){const k=pick([2,3,4,5]),n=k*R(3,10);return mk('maths',`${nm} partage ${n} ${th} entre ${k} enfants. Chacun en reçoit autant. Combien chaque enfant en a-t-il ?`,n/k,[n/k+1,n/k-1,n-k,n/k+2,k],{explain:`${n} partagé en ${k}, c'est ${n/k} chacun.`})}
+  const a=R(15,60),b=R(5,20),c=R(3,15),n=a+b-c;
+  return mk('maths',`${nm} a ${a} ${th}. ${P} en gagne ${b}, puis en perd ${c}. Combien en a-t-${pr} maintenant ?`,n,near(n,[1,-1,2,-2,10,2*c]),{explain:`${a} + ${b} = ${a+b}, puis ${a+b} − ${c} = ${n}.`})});
+add('maths',[1,2,3],lv=>{
+  if(lv===1){const n=R(11,99),g=Math.floor(n/10);return mk('maths',`Combien y a-t-il de dizaines dans ${n} ?`,g,[n%10,g+1,g-1,n,10].filter(x=>x>=0),{explain:`${n}, c'est ${g} dizaines et ${n%10} unités.`})}
+  const n=R(101,999),c=Math.floor(n/100),d=Math.floor(n/10)%10,u=n%10;
+  if(lv===2&&Math.random()<.5)return mk('maths',`Combien y a-t-il de centaines dans ${n} ?`,c,[d,u,c+1,c-1,n,10].filter(x=>x>=0),{explain:`${n}, c'est ${c} centaines, ${d} dizaines et ${u} unités.`});
+  return mk('maths',`Quel est le chiffre des dizaines dans ${n} ?`,d,[c,u,(d+1)%10,(d+9)%10,Math.floor(n/10)],{explain:`${n} : ${c} centaines, ${d} dizaines, ${u} unités.`})});
+add('maths',[1,2,3],lv=>{const parts=[[lv===3?R(0,2):0,20,'billet'],[lv>1?R(0,2):0,10,'billet'],[R(0,2),5,'billet'],[R(0,3),2,'pièce'],[R(0,3),1,'pièce']].filter(p=>p[0]>0);
   if(parts.length<2)return null;const sum=parts.reduce((s,p)=>s+p[0]*p[1],0);
-  const t=parts.map(p=>`${p[0]} ${p[2]}${p[0]>1?'s':''} de ${p[1]} €`);const list=t.slice(0,-1).join(', ')+' et '+t[t.length-1];
-  return mk('maths',`J'ai ${list}. Combien d'euros ai-je en tout ?`,sum+' €',[sum+1,sum-1,sum+2,sum+5,sum-2].filter(x=>x>0).map(x=>x+' €'),{explain:parts.map(p=>`${p[0]} × ${p[1]} €`).join(' + ')+` = ${sum} €.`})});
+  const t=parts.map(p=>`${p[0]} ${p[2]}${p[0]>1?'s':''} de ${p[1]} €`);const list=t.slice(0,-1).join(', ')+' et '+t[t.length-1];
+  return mk('maths',`J'ai ${list}. Combien d'euros ai-je en tout ?`,sum+' €',[sum+1,sum-1,sum+2,sum+5,sum-2,sum+10].filter(x=>x>0).map(x=>x+' €'),{explain:parts.map(p=>`${p[0]} × ${p[1]} €`).join(' + ')+` = ${sum} €.`})});
+add('maths',[2,3],lv=>{const bill=lv===2?10:pick([20,50]);const p=R(2,bill-1);const g=bill-p;
+  return mk('maths',`Un jouet coûte ${p} €. Je paie avec un billet de ${bill} €. Combien d'argent me rend-on ?`,g+' €',[g+1,g-1,g+10,p,bill,g+2].filter(x=>x>0).map(x=>x+' €'),{explain:`${bill} − ${p} = ${g} €.`})});
+const MES=[['mètre','centimètres',100,'m'],['kilo','grammes',1000,'m'],['heure','minutes',60,'f'],['minute','secondes',60,'f'],['litre','centilitres',100,'m'],['jour','heures',24,'m'],['semaine','jours',7,'f'],['année','mois',12,'f']];
+add('maths',[2,3],lv=>{const [u1,u2,f,gd]=pick(MES);const k=lv===2?R(1,2):R(2,5);const g=k*f;const de=/^[aeiouéh]/.test(u2)?"d'":'de ';
+  return mk('maths',`Combien y a-t-il ${de}${u2} dans ${k===1?(gd==='f'?'une':'un'):k} ${u1}${k>1?'s':''} ?`,g,[g+f,g-f,k*10,k+f,f*10,g*10].filter(x=>x>0),{explain:`1 ${u1} = ${f} ${u2}, donc ${k} ${u1}${k>1?'s':''} = ${g} ${u2}.`})});
 
 /* ---------------- FRANÇAIS ---------------- */
 const PLUR=[['cheval','chevaux'],['journal','journaux'],['animal','animaux'],['bateau','bateaux'],['gâteau','gâteaux'],['cadeau','cadeaux'],['jeu','jeux'],['cheveu','cheveux'],['chou','choux'],['bijou','bijoux'],['genou','genoux'],['caillou','cailloux'],['hibou','hiboux'],['œil','yeux'],['oiseau','oiseaux'],['château','châteaux'],['feu','feux'],['nez','nez'],['souris','souris'],['bras','bras'],['travail','travaux'],['chat','chats'],['ami','amis'],['clou','clous'],['trou','trous'],['bal','bals'],['festival','festivals'],['noix','noix']];
@@ -1076,29 +1405,50 @@ const ARTW=[['chat','le'],['livre','le'],['ballon','le'],['gâteau','le'],['vél
 const CONJ=[{inf:'être',f:['suis','es','est','sommes','êtes','sont'],tail:'à la maison'},{inf:'avoir',f:['ai','as','a','avons','avez','ont'],tail:'un vélo'},{inf:'aller',f:['vais','vas','va','allons','allez','vont'],tail:'à la plage'},{inf:'jouer',f:['joue','joues','joue','jouons','jouez','jouent'],tail:'au ballon'},{inf:'chanter',f:['chante','chantes','chante','chantons','chantez','chantent'],tail:'une chanson'},{inf:'faire',f:['fais','fais','fait','faisons','faites','font'],tail:'un gâteau'},{inf:'finir',f:['finis','finis','finit','finissons','finissez','finissent'],tail:'le puzzle'}];
 const PRON=['je','tu','il','nous','vous','ils'];
 
-add('francais',[2,3],()=>{const [s,p]=pick(PLUR);const un=(s==='souris'||s==='noix')?'une':'un';
+const HOMO=[
+ ['Léa ___ un chat.','a',1],["Je vais ___ l'école.",'à',1],['Il ___ très faim.','a',1],['Nous allons ___ la plage.','à',1],['Tom ___ perdu son ballon.','a',1],['Elle joue ___ la poupée.','à',1],['Mia ___ un nouveau vélo.','a',1],['On mange ___ midi.','à',1],['Papa ___ une voiture rouge.','a',1],['Le train part ___ huit heures.','à',1],
+ ['Le chat ___ noir.','est',1],["J'aime les pommes ___ les poires.",'et',1],['Mon frère ___ content.','est',1],['Le chien ___ le chat jouent.','et',1],['La mer ___ bleue.','est',1],['Papa ___ maman sont là.','et',1],['Le gâteau ___ délicieux.','est',1],['Il chante ___ il danse.','et',1],
+ ['Ils ___ partis à la mer.','sont',2],['Tom range ___ cartable.','son',2],['Les enfants ___ sages.','sont',2],['Léa cherche ___ doudou.','son',2],['Les fleurs ___ jolies.','sont',2],['Le chien ronge ___ os.','son',2],
+ ['Les oiseaux ___ des plumes.','ont',2],['___ va au parc ?','on',2],['Ils ___ un chien.','ont',2],['Ce soir, ___ mange des crêpes.','on',2],['Mes amis ___ gagné le match.','ont',2],['Demain, ___ ira à la piscine.','on',2],
+ ['___ est mon chapeau ?','où',3],['Tu veux du lait ___ du jus ?','ou',3],['Je ne sais pas ___ il habite.','où',3],['Rouge ___ bleu ?','ou',3],['___ vas-tu ?','où',3],['Une pomme ___ une banane ?','ou',3]
+];
+const HF={1:['a','à','et','est'],2:['son','sont','on','ont'],3:['ou','où','on','ont']};
+const HX={'a':'On peut dire « avait » : on écrit « a » sans accent.','à':'On ne peut pas dire « avait » : on écrit « à » avec un accent.','est':'On peut dire « était » : on écrit « est ».','et':'On peut dire « et puis » : on écrit « et ».','sont':'On peut dire « étaient » : on écrit « sont ».','son':'On peut dire « mon » : on écrit « son ».','ont':'On peut dire « avaient » : on écrit « ont ».','on':'On peut dire « il » : on écrit « on ».','où':"On parle d'un endroit : on écrit « où » avec un accent.",'ou':'On peut dire « ou bien » : on écrit « ou ».'};
+const SYN=[['content','joyeux'],['commencer','débuter'],['finir','terminer'],['joli','beau'],['regarder','observer'],['triste','malheureux'],['gentil','aimable'],['malin','rusé'],['construire','bâtir'],['crier','hurler'],['docteur','médecin'],['vélo','bicyclette'],['habit','vêtement'],['cadeau','présent'],['effrayé','apeuré'],['grand','immense'],['petit','minuscule'],['parler','bavarder'],['froid','glacé'],['fatigué','épuisé'],['peur','frayeur'],['voiture','automobile'],['bizarre','étrange'],['rapide','véloce'],['maison','demeure']];
+const TV=['chanter','jouer','danser','dessiner','regarder','parler','sauter','marcher','grimper','cuisiner'];
+const TPR=['tu','il','elle','nous','vous','ils'];
+const TE={pres:['es','e','e','ons','ez','ent'],imp:['ais','ait','ait','ions','iez','aient'],fut:['eras','era','era','erons','erez','eront'],pc:['as','a','a','avons','avez','ont']};
+const tform=(t,k,v)=>{const st=v.slice(0,-2);return t==='pc'?`${TE.pc[k]} ${st}é`:st+TE[t][k]};
+const CUE={pres:['Maintenant','En ce moment',"Aujourd'hui"],imp:['Autrefois','Il y a très longtemps'],fut:['Demain',"L'année prochaine",'Plus tard'],pc:['Hier','Ce matin','La semaine dernière']};
+const TNAME={pres:'le présent',imp:"l'imparfait",fut:'le futur',pc:'le passé composé'};
+
+add('francais',[1,2,3],()=>{const [s,p]=pick(PLUR);const un=(s==='souris'||s==='noix')?'une':'un';
   const bads=[s+'s',s+'x',s+'es',s.replace(/al$/,'aus'),s.replace(/(au|eu)$/,'$1s'),s.replace(/ou$/,'oux'),s.replace(/ou$/,'ous'),s.replace(/ail$/,'ails'),s.replace(/al$/,'als'),p+'s'];
   return mk('francais',`Quel est le pluriel de « ${un} ${s} » ?`,'des '+p,uniq(bads).filter(x=>x!==s||s===p).map(x=>'des '+x),{explain:`On écrit : ${un} ${s}, des ${p}.`,noRead:true})});
 add('francais',[1,2],()=>{const [m,f]=pick(FEM);return mk('francais',`Quel est le féminin de « ${m} » ?`,f,[m+'e',m+'esse',m+'euse',...shuffle(FEM).slice(0,6).map(x=>x[1])])});
 add('francais',[1,2,3],()=>{const pr=pick(CONTR);const [w,g]=Math.random()<.5?pr:[pr[1],pr[0]];
   return mk('francais',`Quel est le contraire de « ${w} » ?`,g,shuffle(CONTR).filter(p=>p!==pr).slice(0,6).map(p=>p[Math.random()<.5?0:1]))});
-add('francais',[1,2],lv=>{const A='ABCDEFGHIJKLMNOPQRSTUVWXYZ';const after=lv===1||Math.random()<.5;const i=after?R(0,24):R(1,25);const g=A[after?i+1:i-1];
-  return mk('francais',`Quelle lettre vient juste ${after?'après':'avant'} la lettre ${A[i]} ?`,g,[A[after?i-1:i+1],A[(i+2)%26],A[(i+24)%26],A[(i+5)%26],A[(i+13)%26]])});
-add('francais',[2,3],lv=>{const W=K.WORDS.map(w=>w[0]).filter(w=>!/^œ/.test(w));let ws;
-  for(let t=0;t<30;t++){ws=shuffle(W).slice(0,4);const f=new Set(ws.map(w=>w[0].normalize('NFD')[0]));if(lv===2?f.size===4:f.size<4)break}
+add('francais',[1,2,3],lv=>{const W=K.WORDS.map(w=>w[0]).filter(w=>!/^œ/.test(w));let ws;
+  for(let t=0;t<30;t++){ws=shuffle(W).slice(0,4);const f=new Set(ws.map(w=>w[0].normalize('NFD')[0]));if(lv<3?f.size===4:f.size<4)break}
   const sorted=[...ws].sort((a,b)=>a.localeCompare(b,'fr'));
   return mk('francais',"Quel mot vient en premier dans l'ordre alphabétique ?",sorted[0],ws,{explain:`Dans l'ordre du dictionnaire : ${sorted.join(', ')}.`})});
-add('francais',[1,2],()=>{const [w,n]=pick(SYLL);return mk('francais',`Combien de syllabes entends-tu dans « ${w} » ?`,n,[1,2,3,4,5],{say:`Combien de syllabes entends-tu dans le mot ${w} ?`,noRead:true})});
-add('francais',[2,3],()=>{const w=pick(SPELL);const v=misspell(w);if(v.length<3)return null;return mk('francais','Quel mot est bien écrit ?',w,v,{say:'Quel mot est bien écrit ? Regarde bien les lettres.',noRead:true})});
+add('francais',[1],()=>{const [w,n]=pick(SYLL);return mk('francais',`Combien de syllabes entends-tu dans « ${w} » ?`,n,[1,2,3,4,5],{say:`Combien de syllabes entends-tu dans le mot ${w} ?`,noRead:true})});
+add('francais',[1,2,3],()=>{const w=pick(SPELL);const v=misspell(w);if(v.length<3)return null;return mk('francais','Quel mot est bien écrit ?',w,v,{say:'Quel mot est bien écrit ? Regarde bien les lettres.',noRead:true})});
 add('francais',[2,3],lv=>{const kind=lv===2?pick(['verbe','nom']):pick(['verbe','nom','adjectif']);const pools={verbe:VERBS,nom:NOUNS,adjectif:ADJS};
   const g=pick(pools[kind]);const bads=Object.keys(pools).filter(k=>k!==kind).flatMap(k=>pools[k]);
   const ex={verbe:`« ${g} » est un verbe : c'est une action.`,nom:`« ${g} » est un nom : il désigne une chose, un animal ou une personne.`,adjectif:`« ${g} » est un adjectif : il dit comment est quelque chose.`};
   return mk('francais',`Lequel de ces mots est ${kind==='adjectif'?'un adjectif':kind==='nom'?'un nom':'un verbe'} ?`,g,bads,{explain:ex[kind]})});
-add('francais',[1],()=>{const [w,g]=pick(ARTW);return mk('francais',`Quel petit mot va devant « ${w} » ?`,g,['le','la',"l'",'les'],{explain:g==="l'"?"On met l' devant un mot qui commence par une voyelle.":g==='les'?'On met « les » quand il y en a plusieurs.':`On dit : ${g} ${w}.`,noRead:true})});
-add('francais',[1],()=>{const w=pick(K.WORDS.filter(x=>!/œ/.test(x[0])))[0];const n=[...w].length;return mk('francais',`Combien de lettres y a-t-il dans le mot « ${w} » ?`,n,near(n,[1,-1,2,-2,3],1))});
-add('francais',[2,3],lv=>{const v=lv===2?pick(CONJ.slice(0,2)):pick(CONJ);const k=R(0,5);const g=v.f[k];
+add('francais',[1,2,3],lv=>{const v=lv===1?pick(CONJ.slice(0,3)):pick(CONJ);const k=R(0,5);const g=v.f[k];
   const pr=(k===0&&/^[aeiouéè]/.test(g))?"J'":cap(PRON[k])+' ';
   return mk('francais',`Complète avec le verbe ${v.inf} : « ${pr}___ ${v.tail} »`,g,v.f,{say:`Complète avec le verbe ${v.inf}.`,explain:`On dit : « ${pr}${g} ${v.tail} ».`})});
+add('francais',[1,2,3],lv=>{const fam=lv===1?[1]:lv===2?[1,2]:[1,2,3];const [snt,g,f]=pick(HOMO.filter(h=>fam.includes(h[2])));const st=snt.startsWith('___');const fx=x=>st?cap(x):x;
+  return mk('francais',`Complète : « ${snt} »`,fx(g),HF[f].map(fx),{explain:HX[g],noRead:true,say:`Quel petit mot faut-il ? ${snt.replace('___','...')}`})});
+add('francais',[2,3],()=>{const pr=pick(SYN);const [w,g]=Math.random()<.5?pr:[pr[1],pr[0]];
+  return mk('francais',`Quel mot veut dire presque la même chose que « ${w} » ?`,g,shuffle(SYN).filter(p=>p!==pr).slice(0,6).map(p=>p[R(0,1)]))});
+add('francais',[2,3],lv=>{const t=lv===2?pick(['pres','fut']):pick(['imp','fut','pc','pres']);const v=pick(TV);const k=R(0,5);const cue=pick(CUE[t]);
+  const others=t==='imp'||t==='pc'?['pres','fut']:t==='fut'?['pres',pick(['imp','pc'])]:['fut',pick(['imp','pc'])];
+  const g=tform(t,k,v);const bads=[...others.map(o=>tform(o,k,v)),tform(t,(k+3)%6,v),tform(t,(k+4)%6,v)];
+  return mk('francais',`${cue}, ${TPR[k]} ___ (verbe ${v}).`,g,bads,{say:`Complète la phrase avec le verbe ${v}. ${cue}, ${TPR[k]} ...`,explain:`Avec « ${cue} », on utilise ${TNAME[t]} : ${TPR[k]} ${g}.`})});
 
 /* ---------------- ANIMAUX ---------------- */
 // nom, article, emoji, type, pattes(-1 = on ne demande pas), petit, cri, habitat, taille
@@ -1189,6 +1539,11 @@ add('temps',[1,2,3],lv=>{const h=R(1,12);const half=lv>1&&Math.random()<.5;const
     return mk('temps','Quelle heure indique cette horloge ?',lb(h,half),[lb(h%12+1,half),lb(h,!half),lb((h+5)%12+1,half),lb((h+10)%12+1,!half),lb((h+3)%12+1,half)],{big:emo,explain:half?'La grande aiguille sur le 6, cela veut dire « et demie ».':'La grande aiguille sur le 12, cela veut dire « pile ».'})}
   const d=R(1,4);const h2=(h+d-1)%12+1;return mk('temps',`Il est ${lb(h,false)}. Quelle heure sera-t-il dans ${d} heure${d>1?'s':''} ?`,lb(h2,false),[lb(h2%12+1,false),lb((h2+10)%12+1,false),lb(d,false),lb((h+d+1)%12+1,false),lb(h,false)])});
 
+add('temps',[2,3],lv=>{const h=R(7,18),m=lv===2?pick([0,30]):pick([0,15,30,45]);const d=lv===2?pick([30,60,120]):pick([15,30,45,75,90]);const t0=h*60+m,tot=t0+d;
+  const f=x=>{const H=Math.floor(x/60)%24,M=x%60;return `${H} h${M?' '+String(M).padStart(2,'0'):''}`};
+  const dl=d===60?'1 heure':d===120?'2 heures':d>60?`${Math.floor(d/60)} h ${d%60}`:d+' minutes';
+  return mk('temps',`Il est ${f(t0)}. Quelle heure sera-t-il dans ${dl} ?`,f(tot),[f(tot+15),f(tot-15),f(tot+60),f(tot-60),f(t0+2*d)],{explain:`${f(t0)} + ${dl} = ${f(tot)}.`})});
+
 /* ---------------- SCIENCES ---------------- */
 const MIX=[['rouge','jaune','orange'],['bleu','jaune','vert'],['rouge','bleu','violet'],['rouge','blanc','rose'],['noir','blanc','gris']];
 add('sciences',[1,2],()=>{const [a,b,g]=pick(MIX);const [x,y]=Math.random()<.5?[a,b]:[b,a];return mk('sciences',`Quelle couleur obtient-on en mélangeant du ${x} et du ${y} ?`,cap(g),['orange','vert','violet','rose','gris','marron'].filter(c=>c!==g).map(cap))});
@@ -1213,13 +1568,13 @@ add('logique',[1,2],()=>{const ks=Object.keys(CATG);const k1=pick(ks);let k2;do{
   return mk('logique',"Trouve l'intrus : quel mot n'est pas comme les autres ?",cap(pick(CATG[k2][0])),shuffle(CATG[k1][0]).slice(0,3).map(cap),{explain:`Les autres sont des ${CATG[k1][1]}.`})});
 add('logique',[2,3],()=>{const ks=Object.keys(CATG);const k=pick(ks);return mk('logique',`Lequel de ces mots est ${CATG[k][2]} ?`,cap(pick(CATG[k][0])),ks.filter(x=>x!==k).flatMap(x=>CATG[x][0]).map(cap))});
 const SYM=['🔴','🔵','🟡','🟢','🟣','⭐','❤️','🔺','🟧','🌙'];
-add('logique',[1,2,3],lv=>{const pat=pick(lv===1?['AB']:lv===2?['AAB','ABB','AB']:['ABC','AABB','ABCC','ABAC']);const L=uniq(pat.split(''));const sy=shuffle(SYM).slice(0,L.length+2);
+add('logique',[1,2,3],lv=>{const pat=pick(lv===1?['AAB','ABB','ABC']:lv===2?['AABB','ABCC','ABAC']:['AABC','ABBC','ABCD','AABBC']);const L=uniq(pat.split(''));const sy=shuffle(SYM).slice(0,L.length+2);
   const map={};L.forEach((l,k)=>map[l]=sy[k]);const len=pat.length*2+R(0,pat.length-1);const seq=Array.from({length:len},(_,k)=>map[pat[k%pat.length]]);
   return mk('logique',"Qu'est-ce qui vient ensuite dans cette suite ?",map[pat[len%pat.length]],sy,{big:seq.join(' ')+' ❓',say:"Regarde bien la suite. Qu'est-ce qui vient ensuite ?",noRead:true})});
-add('logique',[2,3],lv=>{const ns=shuffle(NAMES).slice(0,4).map(n=>n[0]);const [a,b,c,d]=ns;
+add('logique',[1,2,3],lv=>{const ns=shuffle(NAMES).slice(0,4).map(n=>n[0]);const [a,b,c,d]=ns;
   const T=pick([[x=>`plus de ${x} que`,x=>`Qui a le plus de ${x} ?`,x=>`Qui a le moins de ${x} ?`,'a'],[()=>'arrive avant',()=>'Qui arrive en premier ?',()=>'Qui arrive en dernier ?','race']]);
   const th=pick(THINGS);const rel=(x,y)=>T[3]==='a'?`${x} a ${T[0](th)} ${y}.`:`${x} ${T[0]()} ${y}.`;const top=Math.random()<.5;
-  if(lv===2)return mk('logique',`${rel(a,b)} ${top?T[1](th):T[2](th)}`,top?a:b,[top?b:a,d,'On ne peut pas savoir']);
+  if(lv<3&&Math.random()<(lv===1?.7:.3))return mk('logique',`${rel(a,b)} ${top?T[1](th):T[2](th)}`,top?a:b,[top?b:a,d,'On ne peut pas savoir']);
   return mk('logique',`${rel(a,b)} ${rel(b,c)} ${top?T[1](th):T[2](th)}`,top?a:c,[b,top?c:a,'On ne peut pas savoir'],{explain:`Dans l'ordre : ${a}, puis ${b}, puis ${c}.`})});
 
 /* ---------------- BANQUE ÉCRITE À LA MAIN ---------------- */
@@ -1350,7 +1705,62 @@ const FIX=[
  ['francais',1,"Combien y a-t-il de lettres dans l'alphabet ?","26",["20","24","30"]],
  ['francais',2,"Combien y a-t-il de voyelles dans l'alphabet ?","6",["4","5","10"],"A, E, I, O, U et Y."],
  ['francais',2,"Quel signe met-on à la fin d'une question ?","Un point d'interrogation",["Un point","Une virgule","Un point d'exclamation"]],
- ['francais',2,"Par quoi commence toujours une phrase ?","Une majuscule",["Un point","Une virgule","Un chiffre"]]
+ ['francais',2,"Par quoi commence toujours une phrase ?","Une majuscule",["Un point","Une virgule","Un chiffre"]],
+ ['histoire',1,"Comment appelle-t-on l'époque des chevaliers et des châteaux forts ?","Le Moyen Âge",["La Préhistoire","L'Antiquité","Le futur"]],
+ ['histoire',1,"Qui protégeait les châteaux forts ?","Les chevaliers",["Les astronautes","Les pirates","Les cow-boys"]],
+ ['histoire',1,"Où vivaient souvent les hommes de la Préhistoire ?","Dans des grottes",["Dans des immeubles","Dans des châteaux","Dans des fusées"]],
+ ['histoire',1,"Quels animaux géants vivaient sur Terre bien avant les humains ?","Les dinosaures",["Les dragons","Les licornes","Les robots"]],
+ ['histoire',1,"Avant l'électricité, avec quoi s'éclairait-on le soir ?","Des bougies",["Des lampes de poche","Des écrans","Des néons"]],
+ ['histoire',1,"Que construisaient les Égyptiens pour leurs pharaons ?","Des pyramides",["Des gratte-ciel","Des igloos","Des ponts suspendus"]],
+ ['histoire',1,"Avec quoi écrivait-on autrefois, en la trempant dans l'encre ?","Une plume",["Un feutre","Un clavier","Une craie grasse"]],
+ ['histoire',2,"Qu'est-ce qu'un pharaon ?","Un roi de l'Égypte ancienne",["Un dinosaure","Un chevalier","Un bateau"]],
+ ['histoire',2,"Qui a été le premier homme à marcher sur la Lune ?","Neil Armstrong",["Christophe Colomb","Napoléon","Jules Verne"],"C'était en 1969."],
+ ['histoire',2,"Quel roi de France a fait construire le château de Versailles ?","Louis XIV",["Charlemagne","Napoléon","Clovis"],"On l'appelait le Roi-Soleil."],
+ ['histoire',2,"Comment surnommait-on Louis XIV ?","Le Roi-Soleil",["Le Roi-Lune","Le Roi-Lion","Le Roi-Étoile"]],
+ ['histoire',2,"Comment s'appelaient les guerriers venus du Nord sur de longs bateaux ?","Les Vikings",["Les Romains","Les Gaulois","Les Mayas"]],
+ ['histoire',2,"Quel peuple a construit le Colisée ?","Les Romains",["Les Vikings","Les Égyptiens","Les Gaulois"]],
+ ['histoire',2,"Comment appelle-t-on les habitants de la France il y a plus de 2 000 ans ?","Les Gaulois",["Les Vikings","Les Aztèques","Les Romains"]],
+ ['histoire',2,"Quel grand animal à poils longs vivait pendant la Préhistoire ?","Le mammouth",["La girafe","Le kangourou","Le panda"]],
+ ['histoire',2,"Quel bateau a coulé en 1912 après avoir heurté un iceberg ?","Le Titanic",["Le Nautilus","Le Pourquoi-Pas","La Santa María"]],
+ ['histoire',2,"Pour quel grand événement a-t-on construit la tour Eiffel en 1889 ?","L'Exposition universelle",["Les Jeux olympiques","Noël","Le mariage du roi"]],
+ ['histoire',3,"Qui a traversé l'océan Atlantique jusqu'en Amérique en 1492 ?","Christophe Colomb",["Neil Armstrong","Jules César","Louis XIV"]],
+ ['histoire',3,"Quel chef gaulois a combattu Jules César ?","Vercingétorix",["Charlemagne","Clovis","Napoléon"]],
+ ['histoire',3,"Qui était Jeanne d'Arc ?","Une jeune héroïne du Moyen Âge",["Une reine d'Égypte","Une astronaute","Une peintre célèbre"]],
+ ['histoire',3,"Qui était Napoléon Ier ?","Un empereur des Français",["Un pharaon","Un chef viking","Un explorateur de la Lune"]],
+ ['histoire',3,"Quel savant français a créé le vaccin contre la rage ?","Louis Pasteur",["Marie Curie","Victor Hugo","Jules Verne"]],
+ ['histoire',3,"Qui a mis au point l'imprimerie en Europe ?","Gutenberg",["Pasteur","Napoléon","Léonard de Vinci"]],
+ ['histoire',3,"Qu'ont fait voler les frères Wright en 1903 ?","Un avion",["Une fusée","Une montgolfière","Un hélicoptère"]],
+ ['histoire',3,"Comment appelle-t-on la période où les hommes ne savaient pas encore écrire ?","La Préhistoire",["Le Moyen Âge","La Renaissance","L'Antiquité"]],
+ ['histoire',3,"Dans quel pays les Jeux olympiques sont-ils nés il y a très longtemps ?","La Grèce",["La France","La Chine","Le Brésil"]],
+ ['histoire',3,"Quelle scientifique a reçu deux prix Nobel ?","Marie Curie",["Jeanne d'Arc","Cléopâtre","Joséphine Baker"]],
+ ['sciences',2,"Comment appelle-t-on un animal qui mange de la viande ?","Un carnivore",["Un herbivore","Un végétarien","Un frugivore"]],
+ ['sciences',2,"Comment appelle-t-on un animal qui ne mange que des plantes ?","Un herbivore",["Un carnivore","Un omnivore","Un insectivore"]],
+ ['sciences',3,"Comment appelle-t-on un animal qui mange de tout ?","Un omnivore",["Un carnivore","Un herbivore","Un insectivore"]],
+ ['sciences',2,"De quel côté le Soleil se lève-t-il ?","À l'est",["À l'ouest","Au nord","Au sud"]],
+ ['sciences',2,"Quel objet indique toujours le nord ?","Une boussole",["Une montre","Une loupe","Un thermomètre"]],
+ ['sciences',2,"Avec quoi mesure-t-on la température ?","Un thermomètre",["Une règle","Une balance","Une boussole"]],
+ ['sciences',1,"Avec quoi mesure-t-on la longueur d'un trait ?","Une règle",["Une balance","Un thermomètre","Une horloge"]],
+ ['sciences',1,"Avec quoi pèse-t-on des fruits ?","Une balance",["Une règle","Une boussole","Un sablier"]],
+ ['sciences',2,"Autour de quoi la Lune tourne-t-elle ?","La Terre",["Mars","Une étoile filante","Elle ne bouge pas"]],
+ ['sciences',3,"Combien de cœurs a une pieuvre ?","3",["1","2","8"]],
+ ['sciences',3,"Quel est l'animal terrestre le plus rapide ?","Le guépard",["Le lion","Le cheval","Le lièvre"]],
+ ['sciences',2,"Dans un glaçon, l'eau est…","Solide",["Liquide","Gazeuse","Invisible"]],
+ ['sciences',3,"Quel matériau laisse passer l'électricité ?","Le métal",["Le bois","Le plastique","Le caoutchouc"]],
+ ['sciences',2,"Comment s'appelle l'ensemble des os du corps ?","Le squelette",["Le muscle","La peau","Le cerveau"]],
+ ['sciences',2,"Quel organe nous permet de réfléchir ?","Le cerveau",["Le cœur","L'estomac","Le genou"]],
+ ['sciences',1,"Que fabriquent les abeilles avec le nectar des fleurs ?","Du miel",["Du lait","De la soie","Du sucre en poudre"]],
+ ['sciences',3,"Comment appelle-t-on les animaux qui ont une colonne vertébrale ?","Les vertébrés",["Les invertébrés","Les insectes","Les mollusques"]],
+ ['culture',2,"Qui a écrit Le Petit Prince ?","Antoine de Saint-Exupéry",["Jules Verne","Victor Hugo","Charles Perrault"]],
+ ['culture',3,"Quel écrivain a imaginé « Vingt mille lieues sous les mers » ?","Jules Verne",["Jean de La Fontaine","Molière","Antoine de Saint-Exupéry"]],
+ ['culture',1,"Combien de couleurs y a-t-il sur le drapeau français ?","3",["2","4","5"]],
+ ['culture',3,"Quel instrument se joue avec un archet ?","Le violon",["La flûte","Le piano","La trompette"]],
+ ['culture',2,"Comment s'appelle l'hymne national de la France ?","La Marseillaise",["Frère Jacques","Au clair de la lune","Joyeux anniversaire"]],
+ ['culture',3,"Quel peintre a peint « La Nuit étoilée » ?","Vincent van Gogh",["Léonard de Vinci","Claude Monet","Pablo Picasso"]],
+ ['monde',2,"Combien y a-t-il d'océans sur la Terre ?","5",["2","3","10"],"Pacifique, Atlantique, Indien, Arctique et Austral."],
+ ['monde',3,"Quel est le plus haut sommet du monde ?","L'Everest",["Le mont Blanc","Le Kilimandjaro","Le mont Fuji"]],
+ ['monde',3,"Quel est le plus grand pays du monde ?","La Russie",["La Chine","Le Canada","La France"]],
+ ['monde',2,"Sur quel continent vivent les kangourous en liberté ?","L'Océanie",["L'Europe","L'Afrique","L'Amérique"]],
+ ['monde',3,"Quel fleuve traverse la forêt amazonienne ?","L'Amazone",["Le Nil","La Seine","Le Danube"]]
 ];
 Object.keys(CAT).forEach(cat=>add(cat,[1,2,3],lv=>{const it=FIX.filter(x=>x[0]===cat&&x[1]===lv);if(!it.length)return null;const x=pick(it);return mk(cat,x[2],x[3],x[4],x[5]?{explain:x[5]}:null)}));
 
@@ -1380,16 +1790,23 @@ window.__quiz={sample,keyOf};
 const LADDER=[100,200,300,500,1000,2000,4000,8000,16000,32000,64000,125000,250000,500000,1000000];
 const SAFE=[4,9];
 const fmt=n=>n.toLocaleString('fr-FR');
+const reduceM=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
+function coinRain(n){
+  if(reduceM())return;
+  for(let i=0;i<n;i++){const c=document.createElement('span');c.className='coin-drop';c.textContent='🪙';c.style.left=(Math.random()*96)+'vw';c.style.fontSize=(22+Math.random()*24)+'px';document.body.appendChild(c);
+    const a=c.animate([{transform:'translateY(-70px) rotate(0)'},{transform:`translateY(${innerHeight+90}px) rotate(${R(-400,400)}deg)`}],{duration:1300+Math.random()*1200,delay:Math.random()*450,easing:'cubic-bezier(.45,.05,.8,1)',fill:'both'});a.onfinish=()=>c.remove()}
+}
+function countUp(el,to){const t0=performance.now(),d=1400;const f=t=>{const p=Math.min(1,(t-t0)/d);el.textContent=fmt(Math.round(to*(1-Math.pow(1-p,3))));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
 const clean=s=>String(s).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}❓…«»]/gu,' ').replace(/___/g,' ... ').replace(/\s+/g,' ').trim();
 const lvl=i=>i<5?1:i<10?2:3;
 const safeWin=i=>i>=10?LADDER[9]:i>=5?LADDER[4]:0;
 let G=null,tok=0;
 
-function open(){root.hidden=false;say('Bonjour Mia ! Prête pour le grand quiz ?');menu()}
+function open(){root.hidden=false;K.Music.start('mia');menu();setTimeout(()=>K.picoMood('wave'),200);say('Bonjour Mia ! Je suis Pico, ton présentateur. Prête pour le grand quiz ?')}
 function menu(){
   tok++;hush();G=null;root.scrollTop=0;
   root.innerHTML=`<div class="mm">
-    <div class="mm-coin" aria-hidden="true">★</div>
+    <div class="mm-pico">${K.pico('mia')}</div>
     <h1>Le Grand Quiz<span>de Mia</span></h1>
     <p class="mm-sub">15 questions, 3 jokers, et un million de pièces d'or à gagner !</p>
     <button class="m-btn gold big" id="mplay">Jouer</button>
@@ -1399,6 +1816,7 @@ function menu(){
       <div class="stat"><b>${M.games}</b><span>Parties</span></div>
     </div>
     <button class="m-toggle" id="mreadset" aria-pressed="${M.read}"><span class="sw" aria-hidden="true"></span>Lire les questions à voix haute</button>
+    <button class="m-toggle" id="mmusic" aria-pressed="${K.Music.isOn()}"><span class="sw" aria-hidden="true"></span>Musique de fond</button>
     <div class="mm-rules">
       <p><b>Comment jouer :</b> choisis une réponse, puis appuie sur « Valider ». Chaque bonne réponse te fait monter d'une marche.</p>
       <p><b>Paliers :</b> à la question 5 et à la question 10, ton trésor est gardé pour de bon.</p>
@@ -1408,6 +1826,8 @@ function menu(){
   </div>`;
   $('#mplay').onclick=()=>{sfx.win();start()};
   $('#mreadset').onclick=e=>{M.read=!M.read;msave();e.currentTarget.setAttribute('aria-pressed',String(M.read));sfx.pop()};
+  $('#mmusic').onclick=e=>{const b=!K.Music.isOn();K.Music.setOn(b);if(b)K.Music.start('mia');e.currentTarget.setAttribute('aria-pressed',String(b));sfx.pop()};
+  K.staggerIn($$('.mm>*',root));
   $('#mswap').onclick=()=>{sfx.pop();hush();root.hidden=true;K.showPicker()};
 }
 function start(){G={i:0,used:{},gone:[],tok:++tok};M.games++;msave();ask()}
@@ -1425,7 +1845,7 @@ function render(){
     <div class="pips" aria-hidden="true">${LADDER.map((_,k)=>`<i class="${k<i?'done':k===i?'cur':''}${SAFE.includes(k)?' safe':''}"></i>`).join('')}</div>
     <div class="mg-main">
       <section class="mg-play">
-        <div class="mg-cat">${c.e} ${c.n}</div>
+        <div class="mg-host"><span class="mg-pico">${K.pico('mia')}</span><div class="mg-cat">${c.e} ${c.n}</div></div>
         <div class="mg-q">${q.big?`<div class="mg-big">${q.big}</div>`:''}<p>${q.q}</p></div>
         <div class="mg-ans">${q.answers.map((a,k)=>`<button class="ans" data-k="${k}"><span class="L">${'ABCD'[k]}</span><span class="t">${a}</span></button>`).join('')}</div>
         <div id="mzone"></div>
@@ -1442,6 +1862,7 @@ function render(){
     if(M.read)say(clean(G.q.answers[G.sel]));
   });
   controls();
+  K.staggerIn([$('.mg-q',root)]);K.staggerIn($$('.ans',root),'side');
 }
 function controls(){
   const z=$('#mzone',root),cur=G.i?LADDER[G.i-1]:0;
@@ -1480,7 +1901,7 @@ function joker(k){
     const sure=Math.random()<(lv===1?.95:lv===2?.85:.7);
     const ans=sure?c:pick(alive.filter(x=>x!==c));
     const txt=lv===1?`Facile ! Je suis sûr que c'est la réponse ${'ABCD'[ans]}.`:lv===2?`Je pense que c'est la réponse ${'ABCD'[ans]}.`:`Hmm… je crois que c'est la ${'ABCD'[ans]}, mais je ne suis pas complètement sûr.`;
-    G.help=`<div class="owlsay"><span class="e" aria-hidden="true">🦉</span><span>${txt}</span></div>`;say(txt);
+    G.help=`<div class="owlsay"><span class="e mg-pico" aria-hidden="true">${K.pico('mia')}</span><span>${txt}</span></div>`;say(txt);setTimeout(()=>K.picoMood('wave'),50);
   }else{
     let base=lv===1?R(55,80):lv===2?R(40,65):R(30,55);if(alive.length===2)base=Math.min(90,base+15);
     const pct=[0,0,0,0];pct[c]=base;let rest=100-base;const others=alive.filter(x=>x!==c);
@@ -1501,7 +1922,7 @@ function reveal(b){
   const q=G.q,c=q.correct,good=$(`.ans[data-k="${c}"]`,root);b.classList.remove('wait');
   const z=$('#mzone',root);const ex=q.explain?`<p>${q.explain}</p>`:'';
   if(G.sel===c){
-    b.classList.add('good');sfx.win();const r=b.getBoundingClientRect();confetti(r.left+r.width/2,r.top+r.height/2,70);
+    b.classList.add('good');sfx.win();K.picoMood('happy');coinRain(16);const r=b.getBoundingClientRect();confetti(r.left+r.width/2,r.top+r.height/2,70);
     G.i++;
     if(G.i===15){setTimeout(()=>finish(LADDER[14],'win'),1400);return}
     const won=LADDER[G.i-1],palier=SAFE.includes(G.i-1);const praise=pick(['Bravo !','Bonne réponse !','Super !','Exact !','Génial !']);
@@ -1510,7 +1931,7 @@ function reveal(b){
     $('#mnext').onclick=()=>{sfx.pop();ask()};
     z.scrollIntoView({block:'nearest',behavior:'smooth'});
   }else{
-    b.classList.add('bad');good.classList.add('good');sfx.oops();
+    b.classList.add('bad');good.classList.add('good');sfx.oops();K.picoMood('sad');
     const won=safeWin(G.i);
     z.innerHTML=`<div class="fb no"><h3>Oh non !</h3><p>La bonne réponse était <b>${'ABCD'[c]} : ${q.answers[c]}</b>.</p>${ex}<button class="m-btn gold" id="mend">Voir mon trésor</button></div>`;
     say('Oh non ! La bonne réponse était : '+clean(q.answers[c])+'. '+(q.explain?clean(q.explain):''));
@@ -1522,12 +1943,13 @@ function finish(amount,how){
   tok++;G=null;hush();M.total+=amount;M.best=Math.max(M.best,amount);msave();root.scrollTop=0;
   const title=how==='win'?'Tu as gagné le million !':how==='stop'?(amount?'Tu as gardé ton trésor !':'À bientôt, Mia !'):amount?'Bien joué, Mia !':"Ce n'est pas grave !";
   root.innerHTML=`<div class="mr">
-    <div class="mm-coin${how==='win'?' big':''}" aria-hidden="true">★</div>
+    <div class="mr-hero"><div class="mm-pico">${K.pico('mia')}</div><div class="mm-coin${how==='win'?' big':''}" aria-hidden="true">★</div></div>
     <h2>${title}</h2>
-    ${amount?`<p>Tu repars avec</p><div class="amount">${fmt(amount)}</div><p>pièces d'or</p>`:(how==='stop'?`<p>Reviens vite pour une nouvelle partie !</p>`:`<p>Tu feras mieux la prochaine fois. À chaque partie, tu apprends plein de choses !</p>`)}
+    ${amount?`<p>Tu repars avec</p><div class="amount" id="mamt">0</div><p>pièces d'or</p>`:(how==='stop'?`<p>Reviens vite pour une nouvelle partie !</p>`:`<p>Tu feras mieux la prochaine fois. À chaque partie, tu apprends plein de choses !</p>`)}
     <p class="mr-total">Trésor total : <b>${fmt(M.total)}</b> pièces</p>
     <div class="mconfirm"><button class="m-btn gold big" id="magain">Rejouer</button><button class="m-btn" id="mmenu">Menu</button></div>
   </div>`;
+  if(amount)countUp($('#mamt',root),amount);setTimeout(()=>K.picoMood(amount?'happy':'sad'),150);if(how==='win')coinRain(40);
   if(amount){sfx.fanfare();confetti(innerWidth/2,innerHeight/3,how==='win'?200:110);if(how==='win')setTimeout(()=>confetti(innerWidth/4,innerHeight/2,120),600)}
   say(`${title} ${amount?`Tu repars avec ${amount} pièces d'or !`:''}`);
   $('#magain').onclick=()=>{sfx.win();start()};
