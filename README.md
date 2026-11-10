@@ -11,7 +11,7 @@ Voix française, étoiles et autocollants à gagner. Espace parents : maintenir 
 
 ## Mia (7-8 ans) : Le Grand Quiz
 
-15 questions de plus en plus difficiles, paliers aux questions 5 et 10, trois jokers (50:50, le hibou, le vote de la classe),
+15 questions de plus en plus difficiles, paliers aux questions 5 et 10, trois jokers 50:50,
 jusqu'à un million de pièces d'or. Plusieurs milliers de questions (maths, français, animaux, monde, sciences,
 temps, contes et culture, logique), sans répétition tant que c'est possible.
 

@@ -199,7 +199,7 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
 .card .in{position:absolute;inset:0;transition:transform .45s;transform-style:preserve-3d}
 .card.up .in,.card.done .in{transform:rotateY(180deg)}
 .card .face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border:4px solid var(--ink);border-radius:20px;box-shadow:0 7px 0 var(--ink);display:grid;place-items:center}
-.card .back{background:var(--c);background-image:radial-gradient(circle at 50% 50%,var(--shine) 0 22%,transparent 23%);color:var(--paper);font:800 clamp(2rem,6vmin,3.4rem)/1 var(--f-display)}
+.card .back{background:var(--grape);background-image:radial-gradient(circle at 50% 50%,var(--shine) 0 22%,transparent 23%),repeating-linear-gradient(45deg,transparent 0 9px,var(--shade) 9px 18px);color:var(--paper);font:800 clamp(2rem,6vmin,3.4rem)/1 var(--f-display)}
 .card .front{background:var(--paper);transform:rotateY(180deg);font-family:var(--f-letter);font-weight:700;line-height:1;font-size:clamp(2.4rem,8vmin,4.6rem);color:var(--c)}
 .card .front.emo{font-size:clamp(2.6rem,9vmin,5rem)}
 .card.done .front{background:var(--mat);box-shadow:0 7px 0 var(--ink),0 0 0 5px var(--leaf)}
@@ -367,7 +367,7 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
 .joker{position:relative;width:64px;height:64px;border-radius:50%;border:3px solid var(--m-gold);background:var(--m-panel2);color:var(--m-cream);cursor:pointer;display:grid;place-items:center;line-height:1;font-weight:800;font-size:1rem;padding:0}
 .joker .e{font-size:1.6rem}
 .joker:disabled{opacity:.35;cursor:default}
-.joker:disabled::after{content:"";position:absolute;left:8px;right:8px;top:50%;height:4px;margin-top:-2px;background:var(--m-coral);transform:rotate(-35deg);border-radius:2px}
+.joker.used::after{content:"";position:absolute;left:8px;right:8px;top:50%;height:4px;margin-top:-2px;background:var(--m-coral);transform:rotate(-35deg);border-radius:2px}
 .owlsay{display:flex;gap:12px;align-items:center;background:var(--m-panel);border:2px solid var(--m-line);border-radius:18px;padding:10px 16px;font-family:var(--f-letter);font-size:1.15rem;line-height:1.35;margin-bottom:12px}
 .owlsay .e{font-size:2.6rem;line-height:1}
 .vote{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;height:150px;background:var(--m-panel);border:2px solid var(--m-line);border-radius:18px;padding:12px 12px 8px;margin-bottom:12px}
@@ -488,6 +488,19 @@ button:focus-visible,.block:focus-visible{outline:5px dashed var(--ink);outline-
 .rung.cur{animation:rungPulse 1.3s ease-in-out infinite}
 @keyframes rungPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 .m-btn.gold.big{animation:pulse 1.8s ease-in-out infinite}
+
+/* ---------- Mia : écouter, voix, suite auto ---------- */
+.m-listen{margin-top:14px;border:3px solid var(--m-gold);background:var(--m-shadow);color:var(--m-gold);border-radius:999px;padding:8px 20px;font-family:var(--f-display);font-weight:800;font-size:clamp(1rem,2.6vw,1.2rem);cursor:pointer;box-shadow:0 4px 0 var(--m-gold-d);transition:transform .08s,box-shadow .08s}
+.m-listen:active{transform:translateY(3px);box-shadow:0 1px 0 var(--m-gold-d)}
+.m-voice{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;font-weight:700}
+.m-chip{border:2px solid var(--m-line);background:var(--m-panel);color:var(--m-cream);border-radius:999px;padding:6px 14px;font-weight:700;font-size:1rem;cursor:pointer}
+.m-chip[aria-pressed="true"]{background:var(--m-gold);color:var(--m-night);border-color:var(--m-gold)}
+.joker.used{opacity:.25}
+.m-next{opacity:.85}
+.dots i{font-style:normal;animation:dot 1.2s infinite}
+.dots i:nth-child(2){animation-delay:.2s}
+.dots i:nth-child(3){animation-delay:.4s}
+@keyframes dot{0%,100%{opacity:.2}50%{opacity:1}}
 
 /* ---------- animations ---------- */
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-6px) rotate(3deg)}}
@@ -616,10 +629,11 @@ function load(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){re
 const saved=load();
 const state={
   stars:+saved.stars||0,
-  settings:Object.assign({case:'both',rate:0.9,sfx:true,kidVoice:true,voiceName:''},saved.settings||{}),
+  settings:Object.assign({case:'both',rate:0.9,sfx:true,voiceStyle:'fille',voiceName:''},saved.settings||{}),
   screen:'splash',token:0,lastPrompt:'',attract:0
 };
-if(!state.settings.v5){state.settings.case='both';state.settings.kidVoice=true;state.settings.v5=1}
+if(!state.settings.v5){state.settings.case='both';state.settings.v5=1}
+if(!state.settings.v6){state.settings.voiceStyle='fille';state.settings.v6=1}
 function save(){try{localStorage.setItem(KEY,JSON.stringify({stars:state.stars,settings:state.settings}))}catch(e){}}
 const LV={find:0,count:0,read:0,mem:0,first:0,rhyme:0,add:0,more:0};
 let pendingSticker=false,lastPick={};
@@ -648,15 +662,18 @@ function frVoices(){return synth?synth.getVoices().filter(v=>/^fr/i.test(v.lang)
 function pickVoice(){
   if(!synth)return;const vs=frVoices();if(!vs.length)return;
   const want=state.settings.voiceName,w=want&&vs.find(v=>v.name===want);if(w){voice=w;return}
-  const pref=['Eloise','Denise','Vivienne','Amélie','Amelie','Audrey','Aurélie','Marie','Google français','Hortense','Julie','Céline','Léa','Thomas'];
-  const frFR=vs.filter(v=>/fr[-_]FR/i.test(v.lang)),pool=frFR.length?frFR:vs;
+  const pref=['Eloise','Denise','Vivienne','Amélie','Amelie','Audrey','Aurélie','Marie','Julie','Hortense','Céline','Léa','Virginie','Google français'];
+  const male=/Thomas|Henri|Paul|Daniel|Nicolas|Jacques|Claude|Rémi|Remy|Antoine|Mathieu|Jean|Guillaume|Yves|Fabrice/i;
+  const frFR=vs.filter(v=>/fr[-_]FR/i.test(v.lang)),all=frFR.length?frFR:vs,fem=all.filter(v=>!male.test(v.name)),pool=fem.length?fem:all;
   for(const p of pref){const f=pool.find(v=>v.name.includes(p));if(f){voice=f;return}}
   voice=pool.find(v=>v.localService)||pool[0];
 }
 if(synth){pickVoice();try{synth.addEventListener('voiceschanged',pickVoice)}catch(e){synth.onvoiceschanged=pickVoice}}
 function voiceParams(){
-  const st=state.settings,kid=st.kidVoice!==false,natural=voice&&/Eloise/i.test(voice.name);
-  return{pitch:kid?(natural?1.08:(profile==='mia'?1.25:1.42)):1.02,rate:profile==='mia'?0.96:(+st.rate||0.9)};
+  const st=state.settings,style=st.voiceStyle||'fille',natural=voice&&/Eloise/i.test(voice.name);
+  const pitch={fille:natural?1.15:1.62,cartoon:natural?1.75:2,normale:1}[style]||1.6;
+  const r0=profile==='mia'?1:(+st.rate||0.9);
+  return{pitch,rate:style==='cartoon'?r0*1.08:r0};
 }
 function say(text,onend){
   const id=++speakId;let done=false;const vp=voiceParams();
@@ -688,10 +705,20 @@ function setPrompt(text,spoken){
 
 /* ================= bruitages ================= */
 let ac=null;
+function silentWav(){
+  const n=4000,b=new Uint8Array(44+n),v=new DataView(b.buffer),w=(o,t)=>[...t].forEach((c,i)=>b[o+i]=c.charCodeAt(0));
+  w(0,'RIFF');v.setUint32(4,36+n,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);
+  v.setUint32(24,8000,true);v.setUint32(28,8000,true);v.setUint16(32,1,true);v.setUint16(34,8,true);w(36,'data');v.setUint32(40,n,true);b.fill(128,44);
+  let s='';b.forEach(x=>s+=String.fromCharCode(x));return 'data:audio/wav;base64,'+btoa(s);
+}
+let unlockEl=null;
 function audio(){
-  try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume()}catch(e){ac=null}
+  try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
+  try{if(!unlockEl){unlockEl=new Audio(silentWav());unlockEl.loop=true;unlockEl.setAttribute('playsinline','');const pr=unlockEl.play();if(pr&&pr.catch)pr.catch(()=>{})}}catch(e){}
+  try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();if(ac.state!=='running')ac.resume()}catch(e){ac=null}
   return ac;
 }
+document.addEventListener('pointerdown',()=>{if(ac&&ac.state!=='running')try{ac.resume()}catch(e){}},true);
 function tone(f,d,type,vol,delay){
   if(!state.settings.sfx)return;const a=audio();if(!a)return;
   try{
@@ -715,21 +742,22 @@ const Music=(()=>{
   let master=null,timer=null,theme=null,step=0,nextT=0,ducked=false;
   const mf=m=>440*Math.pow(2,(m-69)/12);
   const TH={
-    alba:{bpm:112,vol:.5,chords:[[48,60,64,67],[45,57,60,64],[41,57,60,65],[43,55,59,62]],
+    alba:{bpm:112,vol:.9,chords:[[48,60,64,67],[45,57,60,64],[41,57,60,65],[43,55,59,62]],
       mel:[72,0,76,79,76,0,74,72, 69,0,72,76,74,0,72,0, 77,0,76,74,72,0,69,72, 71,0,74,0,79,77,76,74]},
-    mia:{bpm:92,vol:.42,chords:[[45,57,60,64],[41,57,60,65],[48,55,60,64],[43,55,59,62]],arp:[1,2,3,2,1,3,2,3]}
+    mia:{bpm:92,vol:.8,chords:[[45,57,60,64],[41,57,60,65],[48,55,60,64],[43,55,59,62]],arp:[1,2,3,2,1,3,2,3]}
   };
-  function pl(f,t,d,type,v){const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(master);o.start(t);o.stop(t+d+.05)}
+  function pl(f,t,d,type,v){const o=ac.createOscillator(),g=ac.createGain();o.type=type;o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(v,t+.015);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(master);o.start(t);o.stop(t+d+.05)}
   function play(s,t){
     const th=TH[theme],bar=Math.floor(s/8)%4,i=s%8,ch=th.chords[bar],e=60/th.bpm/2;
-    if(i===0||i===4)pl(mf(ch[0]+(i===4?7:0)),t,e*3.5,'sine',.32);
-    if(i===0)ch.slice(1).forEach(n=>pl(mf(n),t,e*7.5,'sine',.05));
-    if(theme==='alba'){const m=th.mel[s%32];if(m)pl(mf(m),t,e*1.6,'triangle',.15);if(i%2===1)pl(mf(96),t,.03,'square',.01)}
-    else{pl(mf(ch[th.arp[i]]+12),t,e*1.8,'sine',.08);if(i===0&&bar%2===0)pl(mf(ch[3]+24),t,e*6,'sine',.035)}
+    if(i===0||i===4)pl(mf(ch[0]+12+(i===4?7:0)),t,e*3,'triangle',.5);
+    if(i===0)ch.slice(1).forEach(n=>pl(mf(n),t,e*7.5,'triangle',.12));
+    if(theme==='alba'){const m=th.mel[s%32];if(m){pl(mf(m),t,e*1.7,'triangle',.55);pl(mf(m+12),t,e*1.1,'sine',.12)}if(i%2===1)pl(2400,t,.025,'square',.025)}
+    else{pl(mf(ch[th.arp[i]]+12),t,e*1.8,'triangle',.4);if(i===0&&bar%2===0)pl(mf(ch[3]+24),t,e*6,'sine',.18)}
   }
-  function level(){return (ducked?.3:1)*TH[theme].vol*.3}
+  function level(){return (ducked?.5:1)*TH[theme].vol}
   function tick(){
     if(!ac||!master)return;const e=60/TH[theme].bpm/2;
+    if(ac.state!=='running')try{ac.resume()}catch(x){}
     if(nextT<ac.currentTime-.05)nextT=ac.currentTime+.05;
     while(nextT<ac.currentTime+.3){try{play(step,nextT)}catch(x){}nextT+=e;step++}
   }
@@ -741,7 +769,8 @@ const Music=(()=>{
   function start(n){
     theme=n;if(!on)return;const a=audio();if(!a)return;
     if(timer)stopNow();
-    master=a.createGain();master.gain.setValueAtTime(.0001,a.currentTime);master.gain.exponentialRampToValueAtTime(level(),a.currentTime+1.5);master.connect(a.destination);
+    const comp=a.createDynamicsCompressor();comp.threshold.value=-14;comp.ratio.value=4;comp.connect(a.destination);
+    master=a.createGain();master.gain.setValueAtTime(.0001,a.currentTime);master.gain.exponentialRampToValueAtTime(level(),a.currentTime+1.2);master.connect(comp);
     step=0;nextT=a.currentTime+.15;timer=setInterval(tick,80);tick();
   }
   return{
@@ -1071,7 +1100,7 @@ SCREENS.read=function(first){
 
 /* ---------- memory ---------- */
 SCREENS.memory=function(first){
-  const pairs=LV.mem>=4?8:LV.mem>=2?6:4;
+  const pairs=LV.mem>=4?10:LV.mem>=2?8:6;
   const m=roundCase();
   const pool=[
     ...shuffle(ALPHA).slice(0,6).map(a=>({k:'L'+a[0],show:caseIt(a[0],m),say:a[1],emo:false})),
@@ -1080,8 +1109,8 @@ SCREENS.memory=function(first){
   ];
   const chosen=shuffle(pool).slice(0,pairs);
   const deck=shuffle(chosen.flatMap((c,i)=>[{...c,col:i},{...c,col:i}]));
-  const cols=4;
-  stage.innerHTML=`<div class="mem"><div class="mem-grid" style="grid-template-columns:repeat(${cols},minmax(0,1fr));--mw:${cols*175}px">${deck.map((c,i)=>`<button class="card" data-i="${i}" aria-label="Carte" style="--c:${col(c.col)}"><span class="in"><span class="face back">?</span><span class="face front ${c.emo?'emo':''}">${c.show}</span></span></button>`).join('')}</div></div>`;
+  const cols=pairs===10?5:4,rows=Math.ceil(pairs*2/cols);
+  stage.innerHTML=`<div class="mem"><div class="mem-grid" style="grid-template-columns:repeat(${cols},minmax(0,1fr));--mw:calc((100vh - 190px) * ${(0.75*cols/rows).toFixed(3)})">${deck.map((c,i)=>`<button class="card" data-i="${i}" aria-label="Carte" style="--c:${col(c.col)}"><span class="in"><span class="face back">?</span><span class="face front ${c.emo?'emo':''}">${c.show}</span></span></button>`).join('')}</div></div>`;
   setPrompt('Retrouve les paires !',(first?'Memory ! ':'')+'Retourne deux cartes pareilles !');
   const cards=$$('.card',stage);let open=[],busy=false,found=0;
   cards.forEach(b=>b.onclick=()=>{
@@ -1220,7 +1249,7 @@ SCREENS.stickers=function(){
 /* ---------- espace parents ---------- */
 SCREENS.parents=function(){
   const s=state.settings,got=Math.min(STICKERS.length,Math.floor(state.stars/5));
-  const cur=Object.assign({},s,{music:Music.isOn(),kidVoice:s.kidVoice!==false});
+  const cur=Object.assign({},s,{music:Music.isOn(),voiceStyle:s.voiceStyle||'fille'});
   const seg=(key,items)=>`<div class="seg" data-key="${key}">${items.map(([v,l])=>`<button data-val="${v}" aria-pressed="${String(cur[key])===v}">${l}</button>`).join('')}</div>`;
   const vopts=frVoices().map(v=>`<option value="${v.name.replace(/"/g,'&quot;')}" ${s.voiceName===v.name?'selected':''}>${v.name}</option>`).join('');
   stage.innerHTML=`<div class="parents">
@@ -1229,11 +1258,11 @@ SCREENS.parents=function(){
       ${seg('case',[['upper','MAJUSCULES'],['lower','minuscules'],['both','Les deux']])}
       <p>En grande section (5 ans), on consolide les capitales et on découvre les minuscules : « Les deux » est conseillé.</p></section>
     <section class="pcard"><h3>Voix</h3>
-      ${seg('kidVoice',[['true',"Voix d'enfant (plus aiguë)"],['false','Voix normale']])}
+      <p>Style : </p>${seg('voiceStyle',[['fille','Petite fille'],['cartoon','Cartoon'],['normale','Normale']])}
       <p>Vitesse : </p>${seg('rate',[['0.7','Lente'],['0.9','Normale']])}
       <p><label for="vsel">Voix de l'appareil : </label><select id="vsel" class="psel"><option value="">Automatique (${voice?voice.name:'voix par défaut'})</option>${vopts}</select></p>
       <p><button class="pbtn" id="test">Tester la voix</button></p>
-      <p>Les voix viennent de l'appareil. La plus enfantine est « Eloise » (navigateur Microsoft Edge, sur ordinateur). Sur iPhone, iPad et Mac : « Amélie » ou « Audrey », à installer dans Réglages › Accessibilité › Contenu énoncé › Voix. Si rien ne parle, montez le volume et coupez le mode silencieux.</p></section>
+      <p>Les voix viennent de l'appareil : le jeu les rend plus aiguës pour imiter une petite fille ou un personnage de dessin animé. La plus naturelle est « Eloise », une vraie voix d'enfant (navigateur Microsoft Edge, sur ordinateur). Sur iPhone, iPad et Mac : « Amélie » ou « Audrey », à installer dans Réglages › Accessibilité › Contenu énoncé › Voix. Si rien ne parle, montez le volume et coupez le mode silencieux.</p></section>
     <section class="pcard"><h3>Musique et bruitages</h3>
       <p>Musique de fond : </p>${seg('music',[['true','Activée'],['false','Coupée']])}
       <p>Bruitages : </p>${seg('sfx',[['true','Activés'],['false','Coupés']])}</section>
@@ -1251,13 +1280,13 @@ SCREENS.parents=function(){
       <li><b>Compter</b> : compter jusqu'à 8 au début, puis jusqu'à 20.</li>
       <li><b>Additions</b> : additionner deux petits groupes d'objets (résultat jusqu'à 10).</li>
       <li><b>Plus ou moins</b> : comparer deux groupes, où y en a-t-il le plus ou le moins ?</li>
-      <li><b>Memory</b> : retrouver les paires (lettres, nombres, images). 4 paires au début, puis 6, puis 8.</li>
+      <li><b>Memory</b> : retrouver les paires (lettres, nombres, images). 12 cartes au début, puis 16, puis 20. Tous les dos de cartes sont identiques.</li>
     </ul><p>Pas de chrono, pas de points perdus : une erreur donne un indice, et après deux erreurs la bonne réponse clignote.</p></section>
   </div>`;
   $$('.seg',stage).forEach(g=>$$('button',g).forEach(b=>b.onclick=()=>{
     const k=g.dataset.key,v=b.dataset.val;
     if(k==='music'){Music.setOn(v==='true');if(v==='true')Music.start('alba')}
-    else{s[k]=k==='rate'?+v:(v==='true'||v==='false')?v==='true':v;save()}
+    else{s[k]=k==='rate'?+v:(v==='true'||v==='false')?v==='true':v;save();if(k==='voiceStyle'||k==='rate')say('Bonjour ! Je suis Pico !')}
     $$('button',g).forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
     if(k==='sfx'&&s.sfx)sfx.pop();
   }));
@@ -1303,7 +1332,8 @@ $('#whoMia').onclick=()=>{
   keepAwake();
   window.MIA.open();
 };
-window.KIT={say,hush,sfx,tone,confetti,shuffle,pick,audio,restart,showPicker,WORDS,pico,picoMood,staggerIn,Music};
+window.KIT={say,hush,sfx,tone,confetti,shuffle,pick,audio,restart,showPicker,WORDS,pico,picoMood,staggerIn,Music,
+  voiceStyle:()=>state.settings.voiceStyle||'fille',setVoiceStyle:v=>{state.settings.voiceStyle=v;save()}};
 })();
 </script>
 <script>
@@ -1817,21 +1847,23 @@ function menu(){
     </div>
     <button class="m-toggle" id="mreadset" aria-pressed="${M.read}"><span class="sw" aria-hidden="true"></span>Lire les questions à voix haute</button>
     <button class="m-toggle" id="mmusic" aria-pressed="${K.Music.isOn()}"><span class="sw" aria-hidden="true"></span>Musique de fond</button>
+    <div class="m-voice"><span>Voix de Pico :</span>${[['fille','Petite fille'],['cartoon','Cartoon'],['normale','Normale']].map(([v,l])=>`<button class="m-chip" data-vs="${v}" aria-pressed="${K.voiceStyle()===v}">${l}</button>`).join('')}</div>
     <div class="mm-rules">
       <p><b>Comment jouer :</b> choisis une réponse, puis appuie sur « Valider ». Chaque bonne réponse te fait monter d'une marche.</p>
       <p><b>Paliers :</b> à la question 5 et à la question 10, ton trésor est gardé pour de bon.</p>
-      <p><b>Jokers :</b> 50:50 enlève deux mauvaises réponses, 🦉 le hibou te donne son avis, 🙋 la classe vote.</p>
+      <p><b>Jokers :</b> tu as trois jokers 50:50. Chacun enlève deux mauvaises réponses (un seul par question).</p>
     </div>
     <button class="m-link" id="mswap">Changer de joueuse</button>
   </div>`;
   $('#mplay').onclick=()=>{sfx.win();start()};
   $('#mreadset').onclick=e=>{M.read=!M.read;msave();e.currentTarget.setAttribute('aria-pressed',String(M.read));sfx.pop()};
   $('#mmusic').onclick=e=>{const b=!K.Music.isOn();K.Music.setOn(b);if(b)K.Music.start('mia');e.currentTarget.setAttribute('aria-pressed',String(b));sfx.pop()};
+  $$('.m-chip',root).forEach(b=>b.onclick=()=>{K.setVoiceStyle(b.dataset.vs);$$('.m-chip',root).forEach(x=>x.setAttribute('aria-pressed',String(x===b)));sfx.pop();say('Coucou Mia ! Voilà ma voix.')});
   K.staggerIn($$('.mm>*',root));
   $('#mswap').onclick=()=>{sfx.pop();hush();root.hidden=true;K.showPicker()};
 }
-function start(){G={i:0,used:{},gone:[],tok:++tok};M.games++;msave();ask()}
-function ask(){G.q=nextQ(lvl(G.i));G.sel=-1;G.lock=false;G.gone=[];G.help='';render();if(M.read)readQ()}
+function start(){G={i:0,f50:0,qf:false,gone:[],tok:++tok};M.games++;msave();ask()}
+function ask(){G.q=nextQ(lvl(G.i));G.sel=-1;G.lock=false;G.gone=[];G.qf=false;render();if(M.read)readQ()}
 function readQ(){const q=G.q;let t=clean(q.say||q.q);if(!q.noRead)t+=' ... '+q.answers.map((a,k)=>`${'ABCD'[k]} : ${clean(a)}`).join('. ');say(t+'.')}
 
 function render(){
@@ -1846,7 +1878,7 @@ function render(){
     <div class="mg-main">
       <section class="mg-play">
         <div class="mg-host"><span class="mg-pico">${K.pico('mia')}</span><div class="mg-cat">${c.e} ${c.n}</div></div>
-        <div class="mg-q">${q.big?`<div class="mg-big">${q.big}</div>`:''}<p>${q.q}</p></div>
+        <div class="mg-q">${q.big?`<div class="mg-big">${q.big}</div>`:''}<p>${q.q}</p><button class="m-listen" id="mlisten">🔊 Écouter la question</button></div>
         <div class="mg-ans">${q.answers.map((a,k)=>`<button class="ans" data-k="${k}"><span class="L">${'ABCD'[k]}</span><span class="t">${a}</span></button>`).join('')}</div>
         <div id="mzone"></div>
       </section>
@@ -1854,6 +1886,7 @@ function render(){
     </div>
   </div>`;
   $('#msay').onclick=()=>{sfx.pop();readQ()};
+  $('#mlisten').onclick=()=>{sfx.pop();readQ()};
   $('#mx').onclick=()=>{sfx.pop();askStop(true)};
   $$('.ans',root).forEach(b=>b.onclick=()=>{
     if(G.lock||b.classList.contains('gone'))return;
@@ -1866,19 +1899,14 @@ function render(){
 }
 function controls(){
   const z=$('#mzone',root),cur=G.i?LADDER[G.i-1]:0;
-  z.innerHTML=`${G.help}
-    <div class="mg-row">
-      <div class="jokers">
-        <button class="joker" id="j50" aria-label="Joker 50:50" ${G.used.f?'disabled':''}>50:50</button>
-        <button class="joker" id="jowl" aria-label="Joker du hibou" ${G.used.o?'disabled':''}><span class="e">🦉</span></button>
-        <button class="joker" id="jvote" aria-label="Joker vote de la classe" ${G.used.v?'disabled':''}><span class="e">🙋</span></button>
-      </div>
+  z.innerHTML=`<div class="mg-row">
+      <div class="jokers">${[0,1,2].map(j=>`<button class="joker${j<G.f50?' used':''}" aria-label="Joker 50:50 numéro ${j+1}" ${j<G.f50||G.qf?'disabled':''}>50:50</button>`).join('')}</div>
       <button class="m-btn gold" id="mok" ${G.sel<0?'disabled':''}>Valider</button>
     </div>
     <div class="mstop" id="mstop">${cur?`<button class="m-link" id="mkeep">💰 Garder mon trésor : ${fmt(cur)} pièces</button>`:''}</div>`;
   $('#mok').onclick=validate;
   const k=$('#mkeep');if(k)k.onclick=()=>{sfx.pop();askStop(false)};
-  $('#j50').onclick=()=>joker('f');$('#jowl').onclick=()=>joker('o');$('#jvote').onclick=()=>joker('v');
+  $$('.joker',root).forEach(b=>b.onclick=joker50);
 }
 function askStop(quit){
   if(G.lock)return;const cur=G.i?LADDER[G.i-1]:0;const s=$('#mstop',root);
@@ -1889,26 +1917,15 @@ function askStop(quit){
   $('#mstopY').onclick=()=>finish(cur,'stop');
   $('#mstopN').onclick=()=>{sfx.pop();controls()};
 }
-function joker(k){
-  if(G.lock||G.used[k])return;G.used[k]=1;sfx.pop();
-  const q=G.q,c=q.correct,lv=lvl(G.i),alive=[0,1,2,3].filter(x=>!G.gone.includes(x));
-  if(k==='f'){
-    G.gone=shuffle(alive.filter(x=>x!==c)).slice(0,2);
-    G.gone.forEach(x=>{const b=$(`.ans[data-k="${x}"]`,root);b.classList.add('gone');b.classList.remove('sel');b.disabled=true});
-    if(G.gone.includes(G.sel))G.sel=-1;
-    say('Pouf ! Deux mauvaises réponses ont disparu.');
-  }else if(k==='o'){
-    const sure=Math.random()<(lv===1?.95:lv===2?.85:.7);
-    const ans=sure?c:pick(alive.filter(x=>x!==c));
-    const txt=lv===1?`Facile ! Je suis sûr que c'est la réponse ${'ABCD'[ans]}.`:lv===2?`Je pense que c'est la réponse ${'ABCD'[ans]}.`:`Hmm… je crois que c'est la ${'ABCD'[ans]}, mais je ne suis pas complètement sûr.`;
-    G.help=`<div class="owlsay"><span class="e mg-pico" aria-hidden="true">${K.pico('mia')}</span><span>${txt}</span></div>`;say(txt);setTimeout(()=>K.picoMood('wave'),50);
-  }else{
-    let base=lv===1?R(55,80):lv===2?R(40,65):R(30,55);if(alive.length===2)base=Math.min(90,base+15);
-    const pct=[0,0,0,0];pct[c]=base;let rest=100-base;const others=alive.filter(x=>x!==c);
-    others.forEach((x,j)=>{const v=j===others.length-1?rest:R(0,rest);pct[x]=v;rest-=v});
-    G.help=`<div class="vote" role="img" aria-label="Vote de la classe">${pct.map((p,x)=>`<div class="vbar"><span>${p}%</span><i style="--h:${Math.max(p,2)}%"></i><b>${'ABCD'[x]}</b></div>`).join('')}</div>`;
-    say('Voici ce que pense la classe !');
-  }
+function joker50(){
+  if(G.lock||G.qf||G.f50>=3)return;G.f50++;G.qf=true;sfx.pop();
+  const c=G.q.correct,alive=[0,1,2,3].filter(x=>!G.gone.includes(x));
+  G.gone=shuffle(alive.filter(x=>x!==c)).slice(0,2);
+  G.gone.forEach(x=>{const b=$(`.ans[data-k="${x}"]`,root);b.classList.add('gone');b.classList.remove('sel');b.disabled=true});
+  if(G.gone.includes(G.sel))G.sel=-1;
+  K.picoMood('wave');
+  const left=3-G.f50;
+  say(`Pouf ! Deux mauvaises réponses ont disparu. ${left?`Il te reste ${left===1?'un':left} joker${left>1?'s':''}.`:"C'était ton dernier joker."}`);
   controls();
 }
 function validate(){
@@ -1926,9 +1943,11 @@ function reveal(b){
     G.i++;
     if(G.i===15){setTimeout(()=>finish(LADDER[14],'win'),1400);return}
     const won=LADDER[G.i-1],palier=SAFE.includes(G.i-1);const praise=pick(['Bravo !','Bonne réponse !','Super !','Exact !','Génial !']);
-    z.innerHTML=`<div class="fb"><h3>${praise}</h3>${ex}<p>Tu as <b>${fmt(won)}</b> pièces d'or.${palier?' C\'est un palier : elles sont à toi pour de bon !':''}</p><button class="m-btn gold" id="mnext">Question suivante ➜</button></div>`;
-    say(praise+(q.explain?' '+clean(q.explain):'')+(palier?' Tu as atteint un palier !':''));
-    $('#mnext').onclick=()=>{sfx.pop();ask()};
+    z.innerHTML=`<div class="fb"><h3>${praise}</h3>${ex}<p>Tu as <b>${fmt(won)}</b> pièces d'or.${palier?' C\'est un palier : elles sont à toi pour de bon !':''}</p><p class="m-next">Question suivante dans un instant<span class="dots"><i>.</i><i>.</i><i>.</i></span></p><button class="m-link" id="mnext">Vas-y tout de suite ➜</button></div>`;
+    const t=G.tok;let gone=false;const nx=()=>{if(gone||!G||t!==G.tok)return;gone=true;ask()};
+    say(praise+(q.explain?' '+clean(q.explain):'')+(palier?' Tu as atteint un palier !':''),()=>setTimeout(nx,600));
+    setTimeout(nx,9000);
+    $('#mnext').onclick=()=>{sfx.pop();hush();nx()};
     z.scrollIntoView({block:'nearest',behavior:'smooth'});
   }else{
     b.classList.add('bad');good.classList.add('good');sfx.oops();K.picoMood('sad');
@@ -1955,7 +1974,7 @@ function finish(amount,how){
   $('#magain').onclick=()=>{sfx.win();start()};
   $('#mmenu').onclick=()=>{sfx.pop();menu()};
 }
-window.MIA={open};
+window.MIA={open};window.__mia=()=>G;
 })();
 </script>
 
